@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group 'com.thursdaytestingroup1'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "com.toedter:jcalendar:1.4"
+    implementation "mysql:mysql-connector-java:8.0.23"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}

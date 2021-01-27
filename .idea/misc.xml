@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file:///mnt/windows/Users/Travis/Documents/School/FGCU/Senior 2021/Software Testing - CEN 4072/AirlineProject" />
+  </component>
+  <component name="ProjectPlainTextFileTypeManager">
+    <file url="file:///mnt/windows/Users/Travis/Documents/School/FGCU/Senior 2021/Software Testing - CEN 4072/AirlineProject/src/main/java/addCustomer.form" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
