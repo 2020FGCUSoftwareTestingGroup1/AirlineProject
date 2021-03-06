@@ -163,13 +163,12 @@ public class userCreation extends JInternalFrame {
     private void addUser(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-          String id = userIdInput.getText();
-         String firstname = firstNameInput.getText();
-         String lastname = lastNameInput.getText();
+        String id = userIdInput.getText();
+        String firstname = firstNameInput.getText();
+        String lastname = lastNameInput.getText();
         String username = txtusername.getText();
-         String password = passwordInput.getText();
-         
-      
+        String password = passwordInput.getText();
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
@@ -183,7 +182,7 @@ public class userCreation extends JInternalFrame {
             pst.executeUpdate();
             
             
-            JOptionPane.showMessageDialog(null,"User Createdd.........");
+            JOptionPane.showMessageDialog(null,"User Created");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(addflight.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
