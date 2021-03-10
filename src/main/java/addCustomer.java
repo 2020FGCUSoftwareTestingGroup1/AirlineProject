@@ -25,6 +25,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -60,8 +62,8 @@ public class addCustomer extends javax.swing.JInternalFrame {
     boolean canSubmitName(String name) {
         return name.matches("[a-zA-Z]+");
     }
-    
-    
+
+    boolean canSubmitPassportID(String PassportID) { return PassportID.matches("[a-zA-Z0-9]{6,9}");}
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -366,10 +368,6 @@ public class addCustomer extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
     }
     
     
@@ -441,8 +439,23 @@ public class addCustomer extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         
         String id = txtid.getText();
-         String firstname = txtfirstname.getText();
-         String lastname = txtlastname.getText();
+        String firstname = "";
+        String lastname = "";
+
+        if (canSubmitName(txtlastname.getText()) && canSubmitName(txtlastname.getText())) {
+            lastname = txtlastname.getText();
+            firstname = txtfirstname.getText();
+        } else if (!canSubmitName(txtlastname.getText()) && !canSubmitName(txtfirstname.getText())) {
+            showMessageDialog(null, "Check your first name \n Check your last name");
+            return;
+        } else if (!canSubmitName(txtlastname.getText())) {
+            showMessageDialog(null, "Check your last name");
+            return;
+        } else if (!canSubmitName(txtfirstname.getText())) {
+            showMessageDialog(null, "Check your first name");
+            return;
+        }
+
          String nic = txtnic.getText(); 
         String passport = txtpassport.getText();
          String address = txtaddress.getText();
@@ -480,7 +493,7 @@ public class addCustomer extends javax.swing.JInternalFrame {
             pst.executeUpdate();
             
             
-            JOptionPane.showMessageDialog(null,"Registation Createdd.........");
+            showMessageDialog(null,"Registation Createdd.........");
             
             
         } catch (ClassNotFoundException ex) {
@@ -488,9 +501,8 @@ public class addCustomer extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-         
-         
+
+
         
         
         

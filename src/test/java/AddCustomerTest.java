@@ -2,8 +2,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * This AddCustomerTest class contains the tests to ensure a valid customer is added to the
+ * This AddCustomerTest test case contains the tests to ensure a valid customer is added to the
  * database. This test class implements equivalence class testing. The subsequent classes are as follows
+ *
+ * Equivalence classes:
+ * - Only letters.
+ * - Not only letters.
+ *
+ * The following methods
+ * @see #canSubmitNameReturnsTrue()
+ * tests for valid inputs, and
+ * @see #canSubmitNameReturnsFalse()
+ * handles all of the invalid inputs for the first name and last name inputs in order to create a new customer.
  */
 
 public class AddCustomerTest {
@@ -71,6 +81,29 @@ public class AddCustomerTest {
         Assertions.assertFalse(isInvalidEmptyStringCase);
         Assertions.assertFalse(isInvalidSpecialCharaAndNumberCase);
         Assertions.assertFalse(isInvalidAlphaWithSpaceCase);
+    }
+
+
+    @Test
+    void canSubmitPassportIDReturnsTrue() {
+        addCustomer customerScreen = new addCustomer();
+
+        boolean validPassportIDLowerBVA = customerScreen.canSubmitPassportID("abcefg1");
+        boolean validPassportIDHigherBVA = customerScreen.canSubmitPassportID("abc123de");
+
+        Assertions.assertTrue(validPassportIDLowerBVA);
+        Assertions.assertTrue(validPassportIDHigherBVA);
+    }
+
+    @Test
+    void canSubmitPassprotIDReturnsFalse() {
+        addCustomer customerScreen = new addCustomer();
+
+        boolean inValidPassportIDLowerBVA = customerScreen.canSubmitPassportID("abc22");
+        boolean inValidPassprotIDHigherBVA = customerScreen.canSubmitPassportID("123abc4567");
+
+        Assertions.assertFalse(inValidPassportIDLowerBVA);
+        Assertions.assertFalse(inValidPassprotIDHigherBVA);
     }
 
 }
