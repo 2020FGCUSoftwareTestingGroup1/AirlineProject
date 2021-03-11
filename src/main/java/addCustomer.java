@@ -461,7 +461,7 @@ public class addCustomer extends javax.swing.JInternalFrame {
          String address = txtaddress.getText();
         
         DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
-        String date = da.format(txtdob.getDate());
+        //String date = da.format(txtdob.getDate());
         String Gender;
         
         if(r1.isSelected())
@@ -486,7 +486,7 @@ public class addCustomer extends javax.swing.JInternalFrame {
             pst.setString(4, nic);
             pst.setString(5, passport);
             pst.setString(6, address);
-            pst.setString(7, date);
+            //pst.setString(7, date);
             pst.setString(8, Gender);
             pst.setString(9, contact);
             pst.setBytes(10, userimage);
