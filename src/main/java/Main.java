@@ -159,7 +159,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-         ticket t = new ticket();
+         BookTicket t = new BookTicket();
         jDesktopPane1.add(t);
         t.setVisible(true);
         

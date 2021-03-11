@@ -30,12 +30,12 @@ import javax.swing.table.DefaultTableModel;
  */
 
 
-public class ticket extends JInternalFrame {
+public class BookTicket extends JInternalFrame {
 
     /**
      * Creates new form ticket
      */
-    public ticket() {
+    public BookTicket() {
         initComponents();
         autoID();
     }
@@ -451,9 +451,9 @@ public class ticket extends JInternalFrame {
              
              
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ticket.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ticket.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
         }
          
         
@@ -550,9 +550,9 @@ public class ticket extends JInternalFrame {
       
                 
             } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ticket.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(ticket.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -591,7 +591,8 @@ public class ticket extends JInternalFrame {
 
     private void onBookFlight(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
+        // TODO: Use Ticket.java class for modelling these.
         String ticketid = txtticketno.getText();
         String flightid = flightNumberText.getText();
         String custid = txtcustid.getText();
