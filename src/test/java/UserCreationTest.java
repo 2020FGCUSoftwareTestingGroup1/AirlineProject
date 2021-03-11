@@ -39,7 +39,7 @@ class UserCreationTest {
      */
 
     @Test
-    @DisplayName("Given a first name, last name, username, password, isValidUser returns true")
+    @DisplayName("Given a valid first name, last name, username, password, isValidUser returns true")
     void canSuccessfullyCreateUserGivenAllParameters() {
         var userCreation = new userCreation();
 
