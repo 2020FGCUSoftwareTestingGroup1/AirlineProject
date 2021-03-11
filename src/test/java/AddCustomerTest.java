@@ -96,14 +96,14 @@ public class AddCustomerTest {
     }
 
     @Test
-    void canSubmitPassprotIDReturnsFalse() {
+    void canSubmitPassportIDReturnsFalse() {
         addCustomer customerScreen = new addCustomer();
 
         boolean inValidPassportIDLowerBVA = customerScreen.canSubmitPassportID("abc22");
-        boolean inValidPassprotIDHigherBVA = customerScreen.canSubmitPassportID("123abc4567");
+        boolean inValidPassportIDHigherBVA = customerScreen.canSubmitPassportID("123abc4567");
 
         Assertions.assertFalse(inValidPassportIDLowerBVA);
-        Assertions.assertFalse(inValidPassprotIDHigherBVA);
+        Assertions.assertFalse(inValidPassportIDHigherBVA);
     }
 
 }
