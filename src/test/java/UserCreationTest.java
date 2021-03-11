@@ -45,7 +45,7 @@ class UserCreationTest {
 
         var username = "username";
         var lastname = "lastname";
-        var firstname = "firstname";
+        var firstname = "first-name";
         var password = "password";
 
         assertTrue(userCreation.isValidUser(firstname, lastname, username, password));
@@ -56,10 +56,10 @@ class UserCreationTest {
     void isValidUserFailsWhenMissingParameters() {
         var userCreation = new userCreation();
 
-        assertFalse(userCreation.isValidUser("firstname", "lastname", "username", ""        ));
-        assertFalse(userCreation.isValidUser("firstname", "lastname", ""        , "password"));
-        assertFalse(userCreation.isValidUser("firstname", "lastname", ""        , ""        ));
-        assertFalse(userCreation.isValidUser("firstname", ""        , "username", "password"));
+        assertFalse(userCreation.isValidUser("first-name", "lastname", "username", ""        ));
+        assertFalse(userCreation.isValidUser("first-name", "lastname", ""        , "password"));
+        assertFalse(userCreation.isValidUser("first-name", "lastname", ""        , ""        ));
+        assertFalse(userCreation.isValidUser("first-name", ""        , "username", "password"));
         assertFalse(userCreation.isValidUser("firstname", ""        , "username", ""        ));
         assertFalse(userCreation.isValidUser("firstname", ""        , ""        , "password"));
         assertFalse(userCreation.isValidUser("firstname", ""        , ""        , ""        ));

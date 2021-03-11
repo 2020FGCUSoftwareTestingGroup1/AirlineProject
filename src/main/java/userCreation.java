@@ -160,9 +160,20 @@ public class userCreation extends JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public boolean isValidName(String name) {
+        var namePattern = "^[a-zA-Z]+([- ])?[a-zA-Z]+$";
+        return name.matches(namePattern);
+    }
+
     /**
      * Returns true if the parameters to create a new user are all present. Only if this function returns true should
      * a new user be created.
+     *
+     * Related to Requirement #1
+     *
+     * Every field contains an entry and ensures that the first name and last does not contain numbers or special
+     * characters (‘-’ being an exception for a special character).
+     *
      * @param firstname The user's desired first name.
      * @param lastname The user's desired last name.
      * @param username The user's desired username.
@@ -170,7 +181,10 @@ public class userCreation extends JInternalFrame {
      * @return true if the supplied parameters are sufficient to create a new user.
      */
     public boolean isValidUser(String firstname, String lastname, String username, String password) {
-        return !firstname.isBlank() && !lastname.isBlank() && !username.isBlank() && !password.isBlank();
+        return isValidName(firstname) &&
+                isValidName(lastname) &&
+                !username.isBlank() &&
+                !password.isBlank();
     }
 
     private void addUser(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
