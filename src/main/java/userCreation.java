@@ -46,7 +46,7 @@ public class userCreation extends JInternalFrame {
         lastNameLabel = new JLabel();
         usernameLabel = new JLabel();
         passwordLabel = new JLabel();
-        userIdInput = new JLabel();
+        userGivenId = new JLabel();
         firstNameInput = new JTextField();
         lastNameInput = new JTextField();
         txtusername = new JTextField();
@@ -71,9 +71,9 @@ public class userCreation extends JInternalFrame {
         passwordLabel.setFont(new Font("Tahoma", Font.BOLD, 12)); // NOI18N
         passwordLabel.setText("Password");
 
-        userIdInput.setFont(new Font("Tahoma", Font.BOLD, 18)); // NOI18N
-        userIdInput.setForeground(new Color(255, 0, 0));
-        userIdInput.setText("jLabel6");
+        userGivenId.setFont(new Font("Tahoma", Font.BOLD, 18)); // NOI18N
+        userGivenId.setForeground(new Color(255, 0, 0));
+        userGivenId.setText("jLabel6");
 
         addUserButton.setText("Add");
         addUserButton.addActionListener(this::addUser);
@@ -95,7 +95,7 @@ public class userCreation extends JInternalFrame {
                     .addComponent(passwordLabel))
                 .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                    .addComponent(userIdInput)
+                    .addComponent(userGivenId)
                     .addComponent(firstNameInput)
                     .addComponent(lastNameInput)
                     .addComponent(txtusername)
@@ -118,7 +118,7 @@ public class userCreation extends JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(userIdLabel)
-                                    .addComponent(userIdInput))
+                                    .addComponent(userGivenId))
                                 .addGap(37, 37, 37)
                                 .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                     .addComponent(firstNameLabel)
@@ -160,14 +160,45 @@ public class userCreation extends JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Returns true if the parameters to create a new user are all present. Only if this function returns true should
+     * a new user be created.
+     * @param firstname The user's desired first name.
+     * @param lastname The user's desired last name.
+     * @param username The user's desired username.
+     * @param password The user's desired password.
+     * @return true if the supplied parameters are sufficient to create a new user.
+     */
+    public boolean isValidUser(String firstname, String lastname, String username, String password) {
+        return !firstname.isBlank() && !lastname.isBlank() && !username.isBlank() && !password.isBlank();
+    }
+
     private void addUser(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        String id = userIdInput.getText();
+        String id = userGivenId.getText();
         String firstname = firstNameInput.getText();
         String lastname = lastNameInput.getText();
         String username = txtusername.getText();
         String password = passwordInput.getText();
+
+        if (!isValidUser(firstname, lastname, username, password)) {
+            var errorMessage = new StringBuilder();
+
+            errorMessage.append("The following information must be supplied:\n");
+            errorMessage.append("- First Name\n");
+            errorMessage.append("- Last Name\n");
+            errorMessage.append("- Username\n");
+            errorMessage.append("- Password\n");
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    errorMessage.toString(),
+                    "Invalid Parameters",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -207,11 +238,11 @@ public class userCreation extends JInternalFrame {
             rs.getString("MAX(id)");
 
             if(rs.getString("MAX(id)") == null) {
-                userIdInput.setText("UO001");
+                userGivenId.setText("UO001");
             } else {
                 long id = Long.parseLong(rs.getString("MAX(id)").substring(2,rs.getString("MAX(id)").length()));
                 id++;
-                userIdInput.setText("UO" + String.format("%03d", id));
+                userGivenId.setText("UO" + String.format("%03d", id));
             }
             
         } catch (ClassNotFoundException ex) {
@@ -233,7 +264,7 @@ public class userCreation extends JInternalFrame {
     private JTextField firstNameInput;
     private JTextField lastNameInput;
     private JPasswordField passwordInput;
-    private JLabel userIdInput;
+    private JLabel userGivenId;
     private JTextField txtusername;
     // End of variables declaration//GEN-END:variables
 }
