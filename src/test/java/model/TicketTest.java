@@ -17,8 +17,16 @@ class TicketTest {
     @Test
     @DisplayName("Throws exception when given a negative number of seats")
     void throwsForNegativeSeats() {
+        var id = "";
+        var flightId = "";
+        var customerId = "";
+        var flightClass = "";
+        var price = 0;
+        var seats = -1;
+        var date = "";
+
         assertThrows(IllegalArgumentException.class, () -> {
-            new Ticket("", "", "", "", 0, -1, "");
+            new Ticket(id, flightId, customerId, flightClass, price, seats, date);
         }, "Number of seats cannot be below 0.");
     }
 
