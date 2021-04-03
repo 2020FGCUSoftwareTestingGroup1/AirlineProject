@@ -13,26 +13,51 @@ import org.junit.jupiter.api.Test;
  * The following method
  * @see #userNameAndPasswordReturnsTrue()
  */
-public class LoginTest {
+public class LoginTest implements LoginInterface{
 
     /**
      * This method checks to see if the username and password match in the database, thus prompting a successful login.
      * We do this to ensure security to our software system.
      */
+    @Test
     void userNameAndPasswordReturnsTrue() {
-
+        String name = "Luis";
+        String pw = "1234";
+        Assertions.assertTrue(checkUserNameAndPW(name,pw));
 
     }
+    @Test
     void userNameReturnsTrueButPasswordReturnsFalse(){
-
+        String name = "Luis";
+        String pw = "123";
+        Assertions.assertFalse(checkUserNameAndPW(name,pw));
 
     }
+    @Test
     void userNameReturnsFalseButPasswordReturnsTrue(){
-
+        String name = "Lui";
+        String pw = "1234";
+        Assertions.assertFalse(checkUserNameAndPW(name,pw));
 
     }
+    @Test
     void userNameAndPasswordReturnsFalse(){
+        String name = "Lui";
+        String pw = "123";
+        Assertions.assertFalse(checkUserNameAndPW(name,pw));
 
+    }
 
+    @Override
+    public boolean checkUserNameAndPW(String name, String pw) {
+        String username = "Luis";
+        String password = "1234";
+
+        if (username.equals(name) && password.equals(pw)){
+            return true;
+        }
+        else{
+        return false;
+        }
     }
 }
