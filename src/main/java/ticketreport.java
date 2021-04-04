@@ -1,13 +1,13 @@
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import database.Database;
+import database.IDatabase;
+
+import java.awt.event.ActionEvent;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JInternalFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -17,7 +17,8 @@ import javax.swing.table.DefaultTableModel;
  */
 
 
-public class ticketreport extends javax.swing.JInternalFrame {
+public class ticketreport extends JInternalFrame {
+    IDatabase database = Database.getDatabase();
 
     /**
      * Creates new form ticketreport
@@ -26,8 +27,7 @@ public class ticketreport extends javax.swing.JInternalFrame {
         initComponents();
         LoadData();
     }
-Connection con;
-PreparedStatement pst;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,11 +37,11 @@ PreparedStatement pst;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new JScrollPane();
+        ticketTable = new JTable();
+        jButton1 = new JButton();
 
-        jTable1.setModel(new DefaultTableModel(
+        ticketTable.setModel(new DefaultTableModel(
             new Object [][] {
 
             },
@@ -49,11 +49,11 @@ PreparedStatement pst;
                 "TicketNo", "Flight No", "Customer ID", "Class", "Price", "Seats", "Date"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(ticketTable);
 
         jButton1.setText("Cancel");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
@@ -85,81 +85,34 @@ PreparedStatement pst;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.hide();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
-    public void LoadData()
-    {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-             con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-             pst = con.prepareStatement("SELECT * from ticket");
-             ResultSet rs = pst.executeQuery();
-             
-             ResultSetMetaData rsm = rs.getMetaData();
-             int c;
-             c = rsm.getColumnCount();
-             
-             DefaultTableModel Df = (DefaultTableModel)jTable1.getModel();
-             Df.setRowCount(0);
-             
-             while(rs.next())
-             {
-                 Vector v2 = new Vector();
-                 
-                 for(int i = 1; i<= c; i ++)
-                 {
-                     v2.add(rs.getString("id"));
-                  v2.add(rs.getString("flightid"));
-                  v2.add(rs.getString("custid"));
-                  v2.add(rs.getString("class"));
-                  v2.add(rs.getString("price"));
-                  v2.add(rs.getString("seats"));
-                  v2.add(rs.getString("date"));
-             
-                 }
-                 
-                 Df.addRow(v2);
-                 
-              
-                 
-                 
-             }
-             
-             
-             
-             
-             
-             
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
+    public void LoadData() {
+        var tickets = database.getTickets();
+
+        DefaultTableModel Df = (DefaultTableModel) ticketTable.getModel();
+        Df.setRowCount(0);
+
+        for (var ticket: tickets) {
+            Vector<String> row = new Vector<>();
+            row.add(ticket.getId());
+            row.add(ticket.getFlightId());
+            row.add(ticket.getCustomerId());
+            row.add(ticket.getFlightClass());
+            row.add(String.valueOf(ticket.getPrice()));
+            row.add(String.valueOf(ticket.getSeats()));
+            row.add(ticket.getDate());
+            Df.addRow(row);
         }
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private JButton jButton1;
+    private JScrollPane jScrollPane1;
+    private JTable ticketTable;
     // End of variables declaration//GEN-END:variables
 }

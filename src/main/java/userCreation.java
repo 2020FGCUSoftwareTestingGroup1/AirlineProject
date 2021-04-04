@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 
 import javax.swing.*;
 
+import static shared.Validation.isValidName;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -159,11 +161,6 @@ public class userCreation extends JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    public boolean isValidName(String name) {
-        var namePattern = "^[a-zA-Z]+([- ])?[a-zA-Z]+$";
-        return name.matches(namePattern);
-    }
 
     /**
      * Returns true if the parameters to create a new user are all present. Only if this function returns true should

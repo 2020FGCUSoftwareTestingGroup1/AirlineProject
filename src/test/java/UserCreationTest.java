@@ -60,16 +60,16 @@ class UserCreationTest {
         assertFalse(userCreation.isValidUser("first-name", "lastname", ""        , "password"));
         assertFalse(userCreation.isValidUser("first-name", "lastname", ""        , ""        ));
         assertFalse(userCreation.isValidUser("first-name", ""        , "username", "password"));
-        assertFalse(userCreation.isValidUser("firstname", ""        , "username", ""        ));
-        assertFalse(userCreation.isValidUser("firstname", ""        , ""        , "password"));
-        assertFalse(userCreation.isValidUser("firstname", ""        , ""        , ""        ));
-        assertFalse(userCreation.isValidUser(""         , "lastname", "username", "password"));
-        assertFalse(userCreation.isValidUser(""         , "lastname", "username", ""        ));
-        assertFalse(userCreation.isValidUser(""         , "lastname", ""        , "password"));
-        assertFalse(userCreation.isValidUser(""         , "lastname", ""        , ""        ));
-        assertFalse(userCreation.isValidUser(""         , ""        , "username", "password"));
-        assertFalse(userCreation.isValidUser(""         , ""        , "username", ""        ));
-        assertFalse(userCreation.isValidUser(""         , ""        , ""        , "password"));
-        assertFalse(userCreation.isValidUser(""         , ""        , ""        , ""        ));
+        assertFalse(userCreation.isValidUser("firstname" , ""        , "username", ""        ));
+        assertFalse(userCreation.isValidUser("firstname" , ""        , ""        , "password"));
+        assertFalse(userCreation.isValidUser("firstname" , ""        , ""        , ""        ));
+        assertFalse(userCreation.isValidUser(""          , "lastname", "username", "password"));
+        assertFalse(userCreation.isValidUser(""          , "lastname", "username", ""        ));
+        assertFalse(userCreation.isValidUser(""          , "lastname", ""        , "password"));
+        assertFalse(userCreation.isValidUser(""          , "lastname", ""        , ""        ));
+        assertFalse(userCreation.isValidUser(""          , ""        , "username", "password"));
+        assertFalse(userCreation.isValidUser(""          , ""        , "username", ""        ));
+        assertFalse(userCreation.isValidUser(""          , ""        , ""        , "password"));
+        assertFalse(userCreation.isValidUser(""          , ""        , ""        , ""        ));
     }
 }

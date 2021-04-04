@@ -1,5 +1,9 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import database.Database;
+import database.IDatabase;
 import org.junit.jupiter.api.Test;
+
 
 /**
  * This LoginTest test case contains the tests to ensure a valid user is logging into the software product.
@@ -13,7 +17,14 @@ import org.junit.jupiter.api.Test;
  * The following method
  * @see #userNameAndPasswordReturnsTrue()
  */
-public class LoginTest implements LoginInterface {
+public class LoginTest {
+
+    @BeforeAll
+    static void setup() {
+        Database.setTesting();
+    }
+
+    IDatabase database = Database.getDatabase();
 
     /**
      * This method checks to see if the username and password match in the database, thus prompting a successful login.
@@ -23,7 +34,7 @@ public class LoginTest implements LoginInterface {
     void userNameAndPasswordReturnsTrue() {
         String name = "Luis";
         String pw = "1234";
-        Assertions.assertTrue(checkUserNameAndPW(name, pw));
+        Assertions.assertTrue(database.loginUser(name, pw));
 
     }
 
@@ -31,7 +42,7 @@ public class LoginTest implements LoginInterface {
     void userNameReturnsTrueButPasswordReturnsFalse() {
         String name = "Luis";
         String pw = "123";
-        Assertions.assertFalse(checkUserNameAndPW(name, pw));
+        Assertions.assertFalse(database.loginUser(name, pw));
 
     }
 
@@ -39,7 +50,7 @@ public class LoginTest implements LoginInterface {
     void userNameReturnsFalseButPasswordReturnsTrue() {
         String name = "Lui";
         String pw = "1234";
-        Assertions.assertFalse(checkUserNameAndPW(name, pw));
+        Assertions.assertFalse(database.loginUser(name, pw));
 
     }
 
@@ -47,15 +58,7 @@ public class LoginTest implements LoginInterface {
     void userNameAndPasswordReturnsFalse() {
         String name = "Lui";
         String pw = "123";
-        Assertions.assertFalse(checkUserNameAndPW(name, pw));
+        Assertions.assertFalse(database.loginUser(name, pw));
 
-    }
-
-    @Override
-    public boolean checkUserNameAndPW(String name, String pw) {
-        String username = "Luis";
-        String password = "1234";
-
-        return (username.equals(name) && password.equals(pw));
     }
 }
