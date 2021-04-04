@@ -1,19 +1,19 @@
 
 import com.toedter.calendar.JDateChooser;
+import database.Database;
+import database.IDatabase;
+import model.Customer;
+import model.Flight;
+import model.Ticket;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class BookTicket extends JInternalFrame {
+    IDatabase database = Database.getDatabase();
 
     /**
      * Creates new form ticket
@@ -39,9 +40,6 @@ public class BookTicket extends JInternalFrame {
         initComponents();
         autoID();
     }
-
-    Connection con;
-    PreparedStatement pst;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -181,7 +179,7 @@ public class BookTicket extends JInternalFrame {
         txtpassport.setText("jLabel11");
 
         searchCustomerButton.setText("Search");
-        searchCustomerButton.addActionListener(this::jButton4ActionPerformed);
+        searchCustomerButton.addActionListener(this::onSearchCustomer);
 
         GroupLayout jPanel3Layout = new GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -408,156 +406,47 @@ public class BookTicket extends JInternalFrame {
         String source = txtsource.getSelectedItem().toString().trim();
         String depart = txtdepart.getSelectedItem().toString().trim();
         
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-             con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-             pst = con.prepareStatement("SELECT * from flight WHERE source = ? and depart = ?");
-             
-             pst.setString(1, source);
-             pst.setString(2, depart);
-             ResultSet rs = pst.executeQuery();
-             
-             ResultSetMetaData rsm = rs.getMetaData();
-             int c;
-             c = rsm.getColumnCount();
-             
-             DefaultTableModel Df = (DefaultTableModel)jTable1.getModel();
-             Df.setRowCount(0);
-             
-             while(rs.next()) {
-                 Vector<String> v2 = new Vector<>();
-                 
-                 for(int i = 1; i<= c; i ++) {
-                     v2.add(rs.getString("id"));
-                  v2.add(rs.getString("flightname"));
-                  v2.add(rs.getString("source"));
-                  v2.add(rs.getString("depart"));
-                  v2.add(rs.getString("date"));
-                  v2.add(rs.getString("deptime"));
-                  v2.add(rs.getString("arrtime"));
-                  v2.add(rs.getString("flightcharge"));
-                 }
-                 
-                 Df.addRow(v2);
-                 
-              
-                 
-                 
-             }
-             
-             
-             
-             
-             
-             
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         
-        
-        
-        
-        
-        
-        
+         List<Flight> flights = database.searchFlightsBySourceAndDestination(source, depart);
+
+
+         DefaultTableModel Df = (DefaultTableModel)jTable1.getModel();
+         Df.setRowCount(0);
+
+         for (var flight: flights) {
+             Vector<String> v2 = new Vector<>();
+
+              v2.add(flight.getId());
+              v2.add(flight.getFlightName());
+              v2.add(flight.getSource());
+              v2.add(flight.getDepart());
+              v2.add(flight.getDate());
+              v2.add(flight.getDepartTime());
+              v2.add(flight.getArriveTime());
+              v2.add(flight.getFlightCharge());
+
+             Df.addRow(v2);
+         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     
-     public void autoID()
-    {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-            Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("select MAX(id) from ticket");
-            rs.next();
-            rs.getString("MAX(id)");
-            if(rs.getString("MAX(id)") == null)
-            {
-                txtticketno.setText("TO001");
-            }
-            else
-            {
-                long id = Long.parseLong(rs.getString("MAX(id)").substring(2,rs.getString("MAX(id)").length()));
-                id++;
-                 txtticketno.setText("TO" + String.format("%03d", id));
-                
-                
-            }
-            
-            
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    
-    
+     public void autoID() {
+         txtticketno.setText(database.getNextTicketId());
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    private void jButton4ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+    private void onSearchCustomer(ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-          String id = txtcustid.getText();
-        
-        
-        
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-            pst = con.prepareStatement("select * from customer where id = ?");
-            pst.setString(1, id);
-            ResultSet rs = pst.executeQuery();
-            
-            if(rs.next() == false)
-            {
-                JOptionPane.showMessageDialog(this, "Record not Found");
-            }
-            else
-            {
-                 String fname = rs.getString("firstname");
-                 String lname = rs.getString("lastname");
-               
-                 String passport = rs.getString("passport");
-        
-                 
-                 txtfirstname.setText(fname.trim());
-                 txtlastname.setText(lname.trim());
-               
-                  txtpassport.setText(passport.trim());
+        String id = txtcustid.getText();
 
+        Customer customer = database.getCustomer(id);
 
-            
-        } 
-            
-      
-                
-            } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(BookTicket.class.getName()).log(Level.SEVERE, null, ex);
+        if (customer == null) {
+            JOptionPane.showMessageDialog(this, "Record not Found");
+        } else {
+            txtfirstname.setText(customer.getFirstName().trim());
+            txtlastname.setText(customer.getLastName().trim());
+            txtpassport.setText(customer.getPassportId().trim());
         }
-        
-        
-        
-        
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void onTableLeftClick(MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -592,7 +481,6 @@ public class BookTicket extends JInternalFrame {
     private void onBookFlight(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
 
-        // TODO: Use Ticket.java class for modelling these.
         String ticketid = txtticketno.getText();
         String flightid = flightNumberText.getText();
         String custid = txtcustid.getText();
@@ -602,24 +490,15 @@ public class BookTicket extends JInternalFrame {
         DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
         String date = da.format(txtdate.getDate());
 
+        Ticket ticket = new Ticket(
+                ticketid, flightid, custid,
+                flightclass, Integer.parseInt(price),
+                Integer.parseInt(seats), date
+        );
+
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-            pst = con.prepareStatement("insert into ticket(id,flightid,custid,class,price,seats,date)values(?,?,?,?,?,?,?)");
-            
-            pst.setString(1, ticketid);
-            pst.setString(2, flightid);
-            pst.setString(3, custid);          
-            pst.setString(4, flightclass);
-            pst.setString(5, price);
-            pst.setString(6, seats);
-            pst.setString(7, date);
-         
-           
-            pst.executeUpdate();
+            database.saveTicket(ticket);
             JOptionPane.showMessageDialog(null, "Ticket Booked");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(addflight.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(addflight.class.getName()).log(Level.SEVERE, null, ex);
         }

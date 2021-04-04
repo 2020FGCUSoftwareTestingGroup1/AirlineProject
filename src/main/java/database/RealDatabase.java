@@ -1,10 +1,14 @@
 package database;
 
+import model.Customer;
+import model.Flight;
 import model.Ticket;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RealDatabase implements IDatabase {
     private Connection con;
@@ -67,5 +71,106 @@ public class RealDatabase implements IDatabase {
 
 
         return tickets;
+    }
+
+    @Override
+    public void saveTicket(Ticket ticket) throws SQLException {
+        var pst = con.prepareStatement("insert into ticket(id,flightid,custid,class,price,seats,date)values(?,?,?,?,?,?,?)");
+
+        pst.setString(1, ticket.getId());
+        pst.setString(2, ticket.getFlightId());
+        pst.setString(3, ticket.getCustomerId());
+        pst.setString(4, ticket.getFlightClass());
+        pst.setInt(5, ticket.getPrice());
+        pst.setInt(6, ticket.getSeats());
+        pst.setString(7, ticket.getDate());
+
+
+        pst.executeUpdate();
+    }
+
+    @Override
+    public Customer getCustomer(String customerId) {
+        try {
+            var pst = con.prepareStatement("select * from customer where id = ?");
+            pst.setString(1, customerId);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String fname = rs.getString("firstname");
+                String lname = rs.getString("lastname");
+                String passportId = rs.getString("passport");
+                String nic = rs.getString("nic");
+                String address = rs.getString("address");
+                String dob = rs.getString("dob");
+                String gender = rs.getString("gender");
+                int contact = rs.getInt("contact");
+                byte[] photo = rs.getBytes("photo");
+
+                return new Customer(customerId, fname, lname, nic, passportId, address, dob, gender, contact, photo);
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(RealDatabase.class.getName()).log(Level.SEVERE, null, e);
+            return null;
+        }
+    }
+
+    @Override
+    public String getNextTicketId() {
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("select MAX(id) from ticket");
+
+            if (rs.next()) {
+                var highestId = rs.getString("MAX(id)");
+                long idNumber = Long.parseLong(highestId.substring(2));
+                idNumber++;
+
+                return "TO" + String.format("%03d", idNumber);
+            } else {
+                return "TO001";
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(RealDatabase.class.getName()).log(Level.SEVERE, null, e);
+            return "TO001";
+        }
+    }
+
+    @Override
+    public List<Flight> searchFlightsBySourceAndDestination(String source, String depart) {
+        ArrayList<Flight> flights = new ArrayList<>();
+
+        try {
+            var pst = con.prepareStatement("SELECT * from flight WHERE source = ? and depart = ?");
+            pst.setString(1, source);
+            pst.setString(2, depart);
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                var id = rs.getString("id");
+                var flightname = rs.getString("flightname");
+                var flightSource = rs.getString("source");
+                var flightDepart = rs.getString("depart");
+                var date = rs.getString("date");
+                var deptime = rs.getString("deptime");
+                var arrtime = rs.getString("arrtime");
+                var flightcharge = rs.getString("flightcharge");
+
+                var flight = new Flight(
+                        id, flightname, flightSource, flightDepart,
+                        date, deptime, arrtime, flightcharge);
+
+                flights.add(flight);
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(RealDatabase.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        return flights;
     }
 }

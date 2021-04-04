@@ -7,12 +7,13 @@ public class Customer {
     private String nicNo;
     private String passportId;
     private String address;
+    private String dob;
     private String gender;
     private int contactNumber;
     private byte[] photo;
 
     public Customer(String id, String firstName, String lastName,
-                    String nicNo, String passportId, String address,
+                    String nicNo, String passportId, String address, String dob,
                     String gender, int contactNumber, byte[] photo) {
         this.id = id;
         this.firstName = firstName;
@@ -20,6 +21,7 @@ public class Customer {
         this.nicNo = nicNo;
         this.passportId = passportId;
         this.address = address;
+        this.dob = dob;
         this.gender = gender;
         this.contactNumber = contactNumber;
         this.photo = photo;
