@@ -32,15 +32,15 @@ public class LoginTest {
      */
     @Test
     void userNameAndPasswordReturnsTrue() {
-        String name = "Luis";
-        String pw = "1234";
+        String name = "username";
+        String pw = "password";
         Assertions.assertTrue(database.loginUser(name, pw));
 
     }
 
     @Test
     void userNameReturnsTrueButPasswordReturnsFalse() {
-        String name = "Luis";
+        String name = "username";
         String pw = "123";
         Assertions.assertFalse(database.loginUser(name, pw));
 
@@ -49,7 +49,7 @@ public class LoginTest {
     @Test
     void userNameReturnsFalseButPasswordReturnsTrue() {
         String name = "Lui";
-        String pw = "1234";
+        String pw = "password";
         Assertions.assertFalse(database.loginUser(name, pw));
 
     }
