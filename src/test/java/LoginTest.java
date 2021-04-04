@@ -1,6 +1,8 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import database.Database;
 import database.IDatabase;
+import org.junit.jupiter.api.Test;
 
 
 /**
@@ -28,18 +30,35 @@ public class LoginTest {
      * This method checks to see if the username and password match in the database, thus prompting a successful login.
      * We do this to ensure security to our software system.
      */
+    @Test
     void userNameAndPasswordReturnsTrue() {
+        String name = "Luis";
+        String pw = "1234";
+        Assertions.assertTrue(database.loginUser(name, pw));
 
     }
-    void userNameReturnsTrueButPasswordReturnsFalse(){
+
+    @Test
+    void userNameReturnsTrueButPasswordReturnsFalse() {
+        String name = "Luis";
+        String pw = "123";
+        Assertions.assertFalse(database.loginUser(name, pw));
 
     }
 
+    @Test
     void userNameReturnsFalseButPasswordReturnsTrue() {
+        String name = "Lui";
+        String pw = "1234";
+        Assertions.assertFalse(database.loginUser(name, pw));
 
     }
 
-    void userNameAndPasswordReturnsFalse(){
+    @Test
+    void userNameAndPasswordReturnsFalse() {
+        String name = "Lui";
+        String pw = "123";
+        Assertions.assertFalse(database.loginUser(name, pw));
 
     }
 }
