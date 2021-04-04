@@ -53,11 +53,6 @@ public class LoginTest implements LoginInterface{
         String username = "Luis";
         String password = "1234";
 
-        if (username.equals(name) && password.equals(pw)){
-            return true;
-        }
-        else{
-        return false;
-        }
+        return username.equals(name) && password.equals(pw);
     }
 }
