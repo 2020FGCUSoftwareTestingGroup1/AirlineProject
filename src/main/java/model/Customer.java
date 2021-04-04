@@ -98,4 +98,12 @@ public class Customer {
     public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
 }

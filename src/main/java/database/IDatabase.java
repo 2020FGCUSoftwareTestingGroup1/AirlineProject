@@ -17,4 +17,5 @@ public interface IDatabase {
     String getNextTicketId();
 
     List<Flight> searchFlightsBySourceAndDestination(String source, String depart);
+    void updateCustomer(Customer customer) throws SQLException;
 }

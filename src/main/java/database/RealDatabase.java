@@ -173,4 +173,22 @@ public class RealDatabase implements IDatabase {
 
         return flights;
     }
+
+    @Override
+    public void updateCustomer(Customer customer) throws SQLException {
+        var pst = con.prepareStatement("update customer set firstname = ?,lastname = ?,nic = ?,passport = ?,address= ?,dob = ?,gender = ?,contact = ?,photo = ? where id = ?");
+
+
+        pst.setString(1, customer.getFirstName());
+        pst.setString(2, customer.getLastName());
+        pst.setString(3, customer.getNicNo());
+        pst.setString(4, customer.getPassportId());
+        pst.setString(5, customer.getAddress());
+        pst.setString(6, customer.getDob());
+        pst.setString(7, customer.getGender());
+        pst.setInt(8, customer.getContactNumber());
+        pst.setBytes(9, customer.getPhoto());
+        pst.setString(10, customer.getId());
+        pst.executeUpdate();
+    }
 }

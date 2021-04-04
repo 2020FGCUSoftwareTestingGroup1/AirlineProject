@@ -2,23 +2,21 @@
 
 
 import com.toedter.calendar.JDateChooser;
+import database.Database;
+import database.IDatabase;
+import model.Customer;
 
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -36,6 +34,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 public class searchCustomer extends javax.swing.JInternalFrame {
+    private IDatabase database = Database.getDatabase();
 
     /**
      * Creates new form addCustomer
@@ -44,9 +43,6 @@ public class searchCustomer extends javax.swing.JInternalFrame {
         initComponents();
        
     }
-    
-   Connection con;
-    PreparedStatement pst;
     
     String path=null;
     byte[] userimage=null;
@@ -114,13 +110,13 @@ public class searchCustomer extends javax.swing.JInternalFrame {
         addressLabel.setText("Address");
 
         lastNameInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 txtlastnameActionPerformed(evt);
             }
         });
 
         passportIdInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 txtpassportActionPerformed(evt);
             }
         });
@@ -248,29 +244,29 @@ public class searchCustomer extends javax.swing.JInternalFrame {
 
         browseButton.setText("Browse");
         browseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 onBrowseClicked(evt);
             }
         });
 
         updateButton.setText("Update");
         updateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 onUpdateClicked(evt);
             }
         });
 
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(ActionEvent evt) {
                 onCancelClicked(evt);
             }
         });
 
         findButton.setText("Find");
         findButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+            public void actionPerformed(ActionEvent evt) {
+                onFindClicked(evt);
             }
         });
 
@@ -336,32 +332,16 @@ public class searchCustomer extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     
-    
-    
-    
- 
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    private void txtlastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlastnameActionPerformed
+    private void txtlastnameActionPerformed(ActionEvent evt) {//GEN-FIRST:event_txtlastnameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtlastnameActionPerformed
 
-    private void txtpassportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpassportActionPerformed
+    private void txtpassportActionPerformed(ActionEvent evt) {//GEN-FIRST:event_txtpassportActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtpassportActionPerformed
 
-    private void onBrowseClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void onBrowseClicked(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
     
@@ -410,7 +390,7 @@ public class searchCustomer extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void onUpdateClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void onUpdateClicked(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         
          String id = customerIdInput.getText();
@@ -422,151 +402,79 @@ public class searchCustomer extends javax.swing.JInternalFrame {
         
         DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
         String date = da.format(txtdob.getDate());
-        String Gender;
+        String gender;
         
-        if(maleRadioButton.isSelected())
-        {
-            Gender = "Male";
-        }
-        else
-        {
-            Gender = "FeMale";
+        if(maleRadioButton.isSelected()) {
+            gender = "Male";
+        } else {
+            gender = "Female";
         }
         
          String contact = contactInput.getText();
          
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-            pst = con.prepareStatement("update customer set firstname = ?,lastname = ?,nic = ?,passport = ?,address= ?,dob = ?,gender = ?,contact = ?,photo = ? where id = ?");
-            
+            var customer = new Customer(
+                    id, firstname, lastname, nic, passport,
+                    address, date, gender, Integer.parseInt(contact), userimage
+            );
 
-            pst.setString(1, firstname);
-            pst.setString(2, lastname);
-            pst.setString(3, nic);
-            pst.setString(4, passport);
-            pst.setString(5, address);
-            pst.setString(6, date);
-            pst.setString(7, Gender);
-            pst.setString(8, contact);
-            pst.setBytes(9, userimage);
-             pst.setString(10, id);
-            pst.executeUpdate();
+            database.updateCustomer(customer);
             
             
-            JOptionPane.showMessageDialog(null,"Registation Updateddddd.........");
+            JOptionPane.showMessageDialog(null,"Registation Updated.");
             
             
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            // TODO: Missing notification to user.
             Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void onCancelClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void onCancelClicked(ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         
         this.hide();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        
+    private void onFindClicked(ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         String id = customerIdInput.getText();
-        
-        
+
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-            pst = con.prepareStatement("select * from customer where id = ?");
-            pst.setString(1, id);
-            ResultSet rs = pst.executeQuery();
-            
-            if(rs.next() == false)
-            {
+            var customer = database.getCustomer(id);
+
+            if (customer == null) {
                 JOptionPane.showMessageDialog(this, "Record not Found");
-            }
-            else
-            {
-                 String fname = rs.getString("firstname");
-                 String lname = rs.getString("lastname");
-                 String nic = rs.getString("nic");
-                 String passport = rs.getString("passport");
-                 
-                String address = rs.getString("address");
-                 String dob = rs.getString("dob");
-                 Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dob);
-                 String gender =rs.getString("gender");
-                 
-                Blob blob = rs.getBlob("photo");
-                byte[ ]  _imagebytes=blob.getBytes( 1, (int) blob.length( ) );
-                ImageIcon image = new ImageIcon(_imagebytes);
+            } else {
+                ImageIcon image = new ImageIcon(customer.getPhoto());
                 Image im = image.getImage();
                 Image myImg = im.getScaledInstance(photoLabel.getWidth(), photoLabel.getHeight(),Image.SCALE_SMOOTH);
                 ImageIcon newImage = new ImageIcon(myImg);
+
+                 
+                if(customer.getGender().equals("Female")) {
+                    maleRadioButton.setSelected(false);
+                    femaleRadioButton.setSelected(true);
+                } else {
+                    maleRadioButton.setSelected(true);
+                    femaleRadioButton.setSelected(false);
+                }
                  
                  
-                 
-                 
-                 
-                 
-                 if(gender.equals("Female"))
-                 {
-                     maleRadioButton.setSelected(false);
-                     femaleRadioButton.setSelected(true);
-                     
-                 }
-                 else
-                 {
-                      maleRadioButton.setSelected(true);
-                     femaleRadioButton.setSelected(false);
-                 }
-                 String contact = rs.getString("contact");
-                 
-                 
-                 
-                 
-                 firstNameInput.setText(fname.trim());
-                 lastNameInput.setText(lname.trim());
-                  nicNoInput.setText(nic.trim());
-                  passportIdInput.setText(passport.trim());
-                  addressInput.setText(address.trim());
-                  contactInput.setText(contact.trim());
-                  txtdob.setDate(date1);
-                  photoLabel.setIcon(newImage);
-              
-                  
-                 
-                 
-                
-                
+                firstNameInput.setText(customer.getFirstName().trim());
+                lastNameInput.setText(customer.getLastName().trim());
+                nicNoInput.setText(customer.getNicNo().trim());
+                passportIdInput.setText(customer.getPassportId().trim());
+                addressInput.setText(customer.getAddress().trim());
+                contactInput.setText(String.valueOf(customer.getContactNumber()));
+                txtdob.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(customer.getDob()));
+                photoLabel.setIcon(newImage);
             }
-                    
-            
-            
-            
-            
-              
-              
-              
-              
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(searchCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(searchCustomer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(searchCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
-          
-        
-        
-        
-        
-        
-        
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
 
