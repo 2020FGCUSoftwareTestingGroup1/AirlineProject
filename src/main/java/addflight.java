@@ -117,9 +117,11 @@ public class addflight extends JInternalFrame {
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(this::onCancel);
 
-        arrivalLocationComboBox.setModel(new DefaultComboBoxModel<>(new String[] { "India\t", "Srilanka", "Uk", "Usa", "Canada", "Chinna" }));
+        var flightLocations = new String[] { "India", "Sri Lanka", "United Kingdom", "USA", "Canada", "China" };
 
-        departureLocationComboBox.setModel(new DefaultComboBoxModel<>(new String[] { "India\t", "Srilanka", "Uk", "Usa", "Canada", "Chinna" }));
+        arrivalLocationComboBox.setModel(new DefaultComboBoxModel<>(flightLocations));
+
+        departureLocationComboBox.setModel(new DefaultComboBoxModel<>(flightLocations));
 
         GroupLayout groupLayout = new GroupLayout(rootPanel);
         rootPanel.setLayout(groupLayout);
