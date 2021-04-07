@@ -53,4 +53,9 @@ public class TestDatabase implements IDatabase {
     public void updateCustomer(Customer customer) throws SQLException {
 
     }
+
+    @Override
+    public void saveFlight(Flight flight) throws SQLException {
+        throw new RuntimeException("Not implemented");
+    }
 }

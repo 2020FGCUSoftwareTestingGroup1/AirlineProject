@@ -57,7 +57,7 @@ public class BookTicket extends JInternalFrame {
         departureLabel = new JLabel();
         searchFlightButton = new JButton();
         jScrollPane1 = new JScrollPane();
-        jTable1 = new JTable();
+        searchResultTable = new JTable();
         jLabel3 = new JLabel();
         txtticketno = new JLabel();
         jPanel3 = new JPanel();
@@ -137,20 +137,24 @@ public class BookTicket extends JInternalFrame {
                 .addContainerGap())
         );
 
-        jTable1.setModel(new DefaultTableModel(
-            new Object [][] {
-
-            },
+        searchResultTable.setModel(new DefaultTableModel(
+            new Object [][] {},
             new String [] {
-                "Flight No", "Flight Name", "Source", "Departure", "Date", "DepTime", "ArrTime", "Charge"
+                "Flight No", "Flight Name", "Source", "Departure", "Date", "Dep Time", "Arr Time", "Charge"
             }
-        ));
-        jTable1.addMouseListener(new MouseAdapter() {
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+
+        searchResultTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 onTableLeftClick(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(searchResultTable);
 
         jLabel3.setText("Ticket No");
 
@@ -409,7 +413,7 @@ public class BookTicket extends JInternalFrame {
          List<Flight> flights = database.searchFlightsBySourceAndDestination(source, depart);
 
 
-         DefaultTableModel Df = (DefaultTableModel)jTable1.getModel();
+         DefaultTableModel Df = (DefaultTableModel) searchResultTable.getModel();
          Df.setRowCount(0);
 
          for (var flight: flights) {
@@ -452,9 +456,9 @@ public class BookTicket extends JInternalFrame {
     private void onTableLeftClick(MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         
-       DefaultTableModel Df = (DefaultTableModel)jTable1.getModel();
+       DefaultTableModel Df = (DefaultTableModel) searchResultTable.getModel();
        
-       int selectIndex = jTable1.getSelectedRow();
+       int selectIndex = searchResultTable.getSelectedRow();
        
        
        flightNumberText.setText(Df.getValueAt(selectIndex, 0).toString());
@@ -533,7 +537,7 @@ public class BookTicket extends JInternalFrame {
     private JPanel jPanel2;
     private JPanel jPanel3;
     private JScrollPane jScrollPane1;
-    private JTable jTable1;
+    private JTable searchResultTable;
     private JComboBox<String> ticketClassCombobox;
     private JTextField txtcustid;
     private JComboBox<String> txtdepart;

@@ -42,13 +42,16 @@ public class ticketreport extends JInternalFrame {
         jButton1 = new JButton();
 
         ticketTable.setModel(new DefaultTableModel(
-            new Object [][] {
-
-            },
+            new Object [][] {},
             new String [] {
                 "TicketNo", "Flight No", "Customer ID", "Class", "Price", "Seats", "Date"
             }
-        ));
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
         jScrollPane1.setViewportView(ticketTable);
 
         jButton1.setText("Cancel");
