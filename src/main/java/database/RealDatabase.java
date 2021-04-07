@@ -191,4 +191,20 @@ public class RealDatabase implements IDatabase {
         pst.setString(10, customer.getId());
         pst.executeUpdate();
     }
+
+    @Override
+    public void saveFlight(Flight flight) throws SQLException {
+        var pst = con.prepareStatement("insert into flight(id,flightname,source,depart,date,deptime,arrtime,flightcharge)values(?,?,?,?,?,?,?,?)");
+
+        pst.setString(1, flight.getId());
+        pst.setString(2, flight.getFlightName());
+        pst.setString(3, flight.getSource());
+        pst.setString(4, flight.getDepart());
+        pst.setString(5, flight.getDate());
+        pst.setString(6, flight.getDepartTime());
+        pst.setString(7, flight.getArriveTime());
+        pst.setString(8, flight.getFlightCharge());
+
+        pst.executeUpdate();
+    }
 }

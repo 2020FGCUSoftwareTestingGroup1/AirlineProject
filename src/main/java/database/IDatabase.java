@@ -11,6 +11,7 @@ public interface IDatabase {
     boolean loginUser(String username, String password);
     List<Ticket> getTickets();
     void saveTicket(Ticket ticket) throws SQLException;
+    void saveFlight(Flight flight) throws SQLException;
 
 
     Customer getCustomer(String userId);

@@ -1,5 +1,8 @@
 
 import com.toedter.calendar.JDateChooser;
+import database.Database;
+import database.IDatabase;
+import model.Flight;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,6 +35,7 @@ import javax.swing.LayoutStyle;
 
 
 public class addflight extends JInternalFrame {
+    private IDatabase database = Database.getDatabase();
 
     /**
      * Creates new form addflight
@@ -269,36 +273,16 @@ public class addflight extends JInternalFrame {
         String arrtime = arriveTimeInput.getText();
         String flightcharge = flightChargeInput.getText();
          
-         
-      
+        var flight = new Flight(id, flightname, source, depart, date, departtime, arrtime, flightcharge);
+
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-            pst = con.prepareStatement("insert into flight(id,flightname,source,depart,date,deptime,arrtime,flightcharge)values(?,?,?,?,?,?,?,?)");
+            database.saveFlight(flight);
             
-            pst.setString(1, id);
-            pst.setString(2, flightname);
-            pst.setString(3, source);
-            pst.setString(4, depart);
-            pst.setString(5, date);
-            pst.setString(6, departtime);
-            pst.setString(7, arrtime);
-            pst.setString(8, flightcharge);
-           
-            pst.executeUpdate();
-            
-            
-            JOptionPane.showMessageDialog(null,"Flight Createdd.........");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(addflight.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,"Flight Created");
         } catch (SQLException ex) {
+            // TODO: User feedback if flight fails.
             Logger.getLogger(addflight.class.getName()).log(Level.SEVERE, null, ex);
         }
-           
-            
-            
-        
-        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
