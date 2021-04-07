@@ -186,8 +186,10 @@ public class searchCustomer extends JInternalFrame {
         contactLabel.setText("Contact");
 
         maleRadioButton.setText("Male");
+        maleRadioButton.addActionListener((listener) -> setGenderRadio(true));
 
         femaleRadioButton.setText("Female");
+        femaleRadioButton.addActionListener((listener) -> setGenderRadio(false));
 
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -409,15 +411,8 @@ public class searchCustomer extends JInternalFrame {
                 Image myImg = im.getScaledInstance(photoLabel.getWidth(), photoLabel.getHeight(),Image.SCALE_SMOOTH);
                 ImageIcon newImage = new ImageIcon(myImg);
 
-                 
-                if (customer.getGender().equals("Female")) {
-                    maleRadioButton.setSelected(false);
-                    femaleRadioButton.setSelected(true);
-                } else {
-                    maleRadioButton.setSelected(true);
-                    femaleRadioButton.setSelected(false);
-                }
-                 
+
+                setGenderRadio(customer.getGender().equals("Male"));
                  
                 firstNameInput.setText(customer.getFirstName().trim());
                 lastNameInput.setText(customer.getLastName().trim());
@@ -434,6 +429,10 @@ public class searchCustomer extends JInternalFrame {
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void setGenderRadio(boolean isMale) {
+        maleRadioButton.setSelected(isMale);
+        femaleRadioButton.setSelected(!isMale);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton browseButton;
