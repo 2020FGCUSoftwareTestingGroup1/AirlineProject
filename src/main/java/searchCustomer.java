@@ -1,12 +1,9 @@
-
-
-
 import com.toedter.calendar.JDateChooser;
 import database.Database;
 import database.IDatabase;
 import model.Customer;
 
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -20,28 +17,17 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-public class searchCustomer extends javax.swing.JInternalFrame {
-    private IDatabase database = Database.getDatabase();
+public class searchCustomer extends JInternalFrame {
+    private final IDatabase database = Database.getDatabase();
 
     /**
      * Creates new form addCustomer
      */
     public searchCustomer() {
         initComponents();
-       
     }
     
     String path=null;
@@ -60,52 +46,53 @@ public class searchCustomer extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        rootPanel = new javax.swing.JPanel();
-        firstNameLabel = new javax.swing.JLabel();
-        lastNameLabel = new javax.swing.JLabel();
-        nicNoLabel = new javax.swing.JLabel();
-        passportIdLabel = new javax.swing.JLabel();
-        addressLabel = new javax.swing.JLabel();
-        lastNameInput = new javax.swing.JTextField();
-        firstNameInput = new javax.swing.JTextField();
-        nicNoInput = new javax.swing.JTextField();
-        passportIdInput = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        addressInput = new javax.swing.JTextArea();
-        customerIdLabel = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        dateOfBirthLabel = new javax.swing.JLabel();
-        genderLabel = new javax.swing.JLabel();
-        contactLabel = new javax.swing.JLabel();
-        maleRadioButton = new javax.swing.JRadioButton();
-        femaleRadioButton = new javax.swing.JRadioButton();
-        contactInput = new javax.swing.JTextField();
-        photoLabel = new javax.swing.JLabel();
-        browseButton = new javax.swing.JButton();
-        updateButton = new javax.swing.JButton();
-        cancelButton = new javax.swing.JButton();
-        customerIdInput = new javax.swing.JTextField();
-        findButton = new javax.swing.JButton();
+        rootPanel = new JPanel();
+        firstNameLabel = new JLabel();
+        lastNameLabel = new JLabel();
+        nicNoLabel = new JLabel();
+        passportIdLabel = new JLabel();
+        addressLabel = new JLabel();
+        lastNameInput = new JTextField();
+        firstNameInput = new JTextField();
+        nicNoInput = new JTextField();
+        passportIdInput = new JTextField();
+        jScrollPane1 = new JScrollPane();
+        addressInput = new JTextArea();
+        customerIdLabel = new JLabel();
+        jPanel2 = new JPanel();
+        dateOfBirthLabel = new JLabel();
+        txtdob = new JDateChooser();
+        genderLabel = new JLabel();
+        contactLabel = new JLabel();
+        maleRadioButton = new JRadioButton();
+        femaleRadioButton = new JRadioButton();
+        contactInput = new JTextField();
+        photoLabel = new JLabel();
+        browseButton = new JButton();
+        updateButton = new JButton();
+        cancelButton = new JButton();
+        customerIdInput = new JTextField();
+        findButton = new JButton();
 
         rootPanel.setBackground(new java.awt.Color(51, 0, 255));
 
-        firstNameLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        firstNameLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 11)); // NOI18N
         firstNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         firstNameLabel.setText("FirstName");
 
-        lastNameLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lastNameLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 11)); // NOI18N
         lastNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         lastNameLabel.setText("LastName");
 
-        nicNoLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        nicNoLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 11)); // NOI18N
         nicNoLabel.setForeground(new java.awt.Color(255, 255, 255));
         nicNoLabel.setText("Nic No");
 
-        passportIdLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        passportIdLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 11)); // NOI18N
         passportIdLabel.setForeground(new java.awt.Color(255, 255, 255));
         passportIdLabel.setText("Passport ID");
 
-        addressLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        addressLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 11)); // NOI18N
         addressLabel.setForeground(new java.awt.Color(255, 255, 255));
         addressLabel.setText("Address");
 
@@ -125,59 +112,59 @@ public class searchCustomer extends javax.swing.JInternalFrame {
         addressInput.setRows(5);
         jScrollPane1.setViewportView(addressInput);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(rootPanel);
+        GroupLayout jPanel1Layout = new GroupLayout(rootPanel);
         rootPanel.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(firstNameLabel)
                                 .addGap(47, 47, 47)
                                 .addComponent(firstNameInput))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                     .addComponent(addressLabel)
                                     .addComponent(passportIdLabel)
                                     .addComponent(nicNoLabel))
                                 .addGap(38, 38, 38)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jScrollPane1)
                                     .addComponent(passportIdInput)
                                     .addComponent(nicNoInput))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lastNameLabel)
                         .addGap(48, 48, 48)
-                        .addComponent(lastNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lastNameInput, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(firstNameLabel)
-                    .addComponent(firstNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(firstNameInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(lastNameLabel)
-                    .addComponent(lastNameInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lastNameInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(nicNoLabel)
-                    .addComponent(nicNoInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nicNoInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(passportIdLabel)
-                    .addComponent(passportIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passportIdInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(addressLabel)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34))
         );
 
@@ -202,131 +189,116 @@ public class searchCustomer extends javax.swing.JInternalFrame {
 
         femaleRadioButton.setText("Female");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(dateOfBirthLabel)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(genderLabel)
                             .addComponent(contactLabel))
                         .addGap(43, 43, 43)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(maleRadioButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(femaleRadioButton))
+                        .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(maleRadioButton)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(femaleRadioButton)
+                                )
                             .addComponent(contactInput))))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(dateOfBirthLabel)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(genderLabel)
                     .addComponent(maleRadioButton)
                     .addComponent(femaleRadioButton))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(contactLabel)
-                    .addComponent(contactInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(contactInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
 
-        photoLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        photoLabel.setBorder(BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         browseButton.setText("Browse");
-        browseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                onBrowseClicked(evt);
-            }
-        });
+        browseButton.addActionListener(this::onBrowseClicked);
 
         updateButton.setText("Update");
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                onUpdateClicked(evt);
-            }
-        });
+        updateButton.addActionListener(this::onUpdateClicked);
 
         cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                onCancelClicked(evt);
-            }
-        });
+        cancelButton.addActionListener(this::onCancelClicked);
 
         findButton.setText("Find");
-        findButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                onFindClicked(evt);
-            }
-        });
+        findButton.addActionListener(this::onFindClicked);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(customerIdLabel)
                         .addGap(29, 29, 29)
-                        .addComponent(customerIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(customerIdInput, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(rootPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(photoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(photoLabel, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(337, 337, 337)
-                                .addComponent(browseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(browseButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
-                        .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(findButton, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(17, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(customerIdLabel)
-                    .addComponent(customerIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(customerIdInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(findButton))
                 .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(rootPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                    .addComponent(rootPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(photoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(photoLabel, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(browseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cancelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(browseButton, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(updateButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))))
                 .addGap(49, 49, 49))
         );
 
@@ -343,29 +315,25 @@ public class searchCustomer extends javax.swing.JInternalFrame {
 
     private void onBrowseClicked(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-    
-      
+
         try {
-        JFileChooser picchooser = new JFileChooser();
-       picchooser.showOpenDialog(null);
-       File pic = picchooser.getSelectedFile();       
-       FileNameExtensionFilter filter = new FileNameExtensionFilter("*.images","png","jpg");
-       picchooser.addChoosableFileFilter(filter);     
-       path= pic.getAbsolutePath();
-       BufferedImage img;                    
-       img = ImageIO.read(picchooser.getSelectedFile());
-       ImageIcon imageIcon = new ImageIcon(new
-       ImageIcon(img).getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
-              photoLabel.setIcon(imageIcon);
-              
-              
-             File image = new File(path);
+            JFileChooser picchooser = new JFileChooser();
+            picchooser.showOpenDialog(null);
+            File pic = picchooser.getSelectedFile();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("*.images","png","jpg");
+            picchooser.addChoosableFileFilter(filter);
+            path= pic.getAbsolutePath();
+            BufferedImage img;
+            img = ImageIO.read(picchooser.getSelectedFile());
+            ImageIcon imageIcon = new ImageIcon(new
+            ImageIcon(img).getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
+            photoLabel.setIcon(imageIcon);
+
+            File image = new File(path);
             FileInputStream fis = new FileInputStream(image);
             ByteArrayOutputStream baos= new ByteArrayOutputStream();
             byte[] buff = new byte[1024];
-            for(int readNum; (readNum=fis.read(buff)) !=-1 ; )
-            {
+            for(int readNum; (readNum=fis.read(buff)) !=-1 ; ) {
                 baos.write(buff,0,readNum);
             }
             userimage=baos.toByteArray();
@@ -375,30 +343,19 @@ public class searchCustomer extends javax.swing.JInternalFrame {
         } catch (IOException ex) {
             Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-       
-       
-       
-       
-       
-       
-       
-        
-        
-        
-        
+
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void onUpdateClicked(ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         
-         String id = customerIdInput.getText();
-         String firstname = firstNameInput.getText();
-         String lastname = lastNameInput.getText();
-         String nic = nicNoInput.getText();
+        String id = customerIdInput.getText();
+        String firstname = firstNameInput.getText();
+        String lastname = lastNameInput.getText();
+        String nic = nicNoInput.getText();
         String passport = passportIdInput.getText();
-         String address = addressInput.getText();
+        String address = addressInput.getText();
         
         DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
         String date = da.format(txtdob.getDate());
@@ -453,7 +410,7 @@ public class searchCustomer extends javax.swing.JInternalFrame {
                 ImageIcon newImage = new ImageIcon(myImg);
 
                  
-                if(customer.getGender().equals("Female")) {
+                if (customer.getGender().equals("Female")) {
                     maleRadioButton.setSelected(false);
                     femaleRadioButton.setSelected(true);
                 } else {
@@ -479,32 +436,32 @@ public class searchCustomer extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton browseButton;
-    private javax.swing.JButton updateButton;
-    private javax.swing.JButton cancelButton;
-    private javax.swing.JButton findButton;
-    private javax.swing.JLabel firstNameLabel;
-    private javax.swing.JLabel contactLabel;
-    private javax.swing.JLabel lastNameLabel;
-    private javax.swing.JLabel nicNoLabel;
-    private javax.swing.JLabel passportIdLabel;
-    private javax.swing.JLabel addressLabel;
-    private javax.swing.JLabel customerIdLabel;
-    private javax.swing.JLabel dateOfBirthLabel;
-    private javax.swing.JLabel genderLabel;
-    private javax.swing.JPanel rootPanel;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton maleRadioButton;
-    private javax.swing.JRadioButton femaleRadioButton;
-    private javax.swing.JTextArea addressInput;
-    private javax.swing.JTextField contactInput;
-    private javax.swing.JTextField customerIdInput;
-    private javax.swing.JTextField firstNameInput;
-    private javax.swing.JTextField lastNameInput;
-    private javax.swing.JTextField nicNoInput;
-    private javax.swing.JTextField passportIdInput;
-    private javax.swing.JLabel photoLabel;
+    private JButton browseButton;
+    private JButton updateButton;
+    private JButton cancelButton;
+    private JButton findButton;
+    private JLabel firstNameLabel;
+    private JLabel contactLabel;
+    private JLabel lastNameLabel;
+    private JLabel nicNoLabel;
+    private JLabel passportIdLabel;
+    private JLabel addressLabel;
+    private JLabel customerIdLabel;
+    private JLabel dateOfBirthLabel;
+    private JLabel genderLabel;
+    private JPanel rootPanel;
+    private JPanel jPanel2;
+    private JScrollPane jScrollPane1;
+    private JRadioButton maleRadioButton;
+    private JRadioButton femaleRadioButton;
+    private JTextArea addressInput;
+    private JTextField contactInput;
+    private JTextField customerIdInput;
+    private JTextField firstNameInput;
+    private JTextField lastNameInput;
+    private JTextField nicNoInput;
+    private JTextField passportIdInput;
+    private JLabel photoLabel;
     // End of variables declaration//GEN-END:variables
     private JDateChooser txtdob;
 }

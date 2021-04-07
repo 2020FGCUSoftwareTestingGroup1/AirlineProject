@@ -48,4 +48,9 @@ public class TestDatabase implements IDatabase {
     public List<Flight> searchFlightsBySourceAndDestination(String source, String depart) {
         return null;
     }
+
+    @Override
+    public void updateCustomer(Customer customer) throws SQLException {
+
+    }
 }
