@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -86,6 +87,10 @@ public class BookTicket extends JInternalFrame {
         bookTicketButton = new JButton();
         cancelTicketButton = new JButton();
         txttotal = new JLabel();
+        txtdate = new JDateChooser();
+
+        txtseats.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+        ((JSpinner.DefaultEditor) txtseats.getEditor()).getTextField().setEditable(false);
 
         jPanel1.setBorder(BorderFactory.createTitledBorder(null, "Select Country", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", Font.BOLD, 12))); // NOI18N
 
@@ -482,8 +487,33 @@ public class BookTicket extends JInternalFrame {
         
     }//GEN-LAST:event_txtseatsStateChanged
 
+    public boolean isFormValid() {
+        String ticketid = txtticketno.getText();
+        String flightid = flightNumberText.getText();
+        String custid = txtcustid.getText();
+        String flightclass = ticketClassCombobox.getSelectedItem().toString().trim();
+        String price = txtprice.getText();
+        String seats = txtseats.getValue().toString();
+        Date date = txtdate.getDate();
+
+
+        return !ticketid.isBlank() && !flightid.isBlank() &&
+                !custid.isBlank() && !flightclass.isBlank() && !price.isBlank() &&
+                !seats.isBlank() && date != null;
+    }
+
     private void onBookFlight(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+
+        if (!isFormValid()) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    "A flight has not been selected",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
 
         String ticketid = txtticketno.getText();
         String flightid = flightNumberText.getText();
