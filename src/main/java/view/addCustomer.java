@@ -18,16 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import static javax.swing.JOptionPane.showMessageDialog;
@@ -66,6 +57,19 @@ public class addCustomer extends javax.swing.JInternalFrame {
 
     public boolean canSubmitPassportID(String PassportID) { return PassportID.matches("[a-zA-Z0-9]{6,9}");}
     
+    public boolean canSubmit() {
+        return !txtfirstname.getText().isBlank() &&
+            !txtlastname.getText().isBlank() &&
+            txtnic.getText().matches("^\\d+$") &&
+            txtpassport.getText().matches("^\\d+$") &&
+            txtcontact.getText().matches("^\\d+$") &&
+            !txtlastname.getText().isBlank() &&
+            (maleRadioButton.isSelected() || femaleRadioButton.isSelected()) &&
+            txtdob != null &&
+            userimage != null &&
+            userimage.length > 0;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -94,8 +98,17 @@ public class addCustomer extends javax.swing.JInternalFrame {
         browseButton = new JButton();
         addButton = new JButton();
         cancelButton = new JButton();
+        txtdob = new JDateChooser();
 
         rootLabel.setBackground(new Color(51, 0, 255));
+
+        txtfirstname.setName("addCustomerFirstNameInput");
+        txtlastname.setName("addCustomerLastNameInput");
+        txtnic.setName("addCustomerNicInput");
+        txtpassport.setName("addCustomerPassportInput");
+        txtaddress.setName("addCustomerAddressInput");
+        maleRadioButton.setName("addCustomerMaleGenderLabel");
+        femaleRadioButton.setName("addCustomerFemaleGenderLabel");
 
         firstNameLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 11)); // NOI18N
         firstNameLabel.setForeground(new Color(255, 255, 255));
@@ -201,8 +214,9 @@ public class addCustomer extends javax.swing.JInternalFrame {
         contactLabel.setText("Contact");
 
         maleRadioButton.setText("Male");
-
         femaleRadioButton.setText("Female");
+        maleRadioButton.addActionListener(l ->  updateGenderRadios(true));
+        femaleRadioButton.addActionListener(l ->  updateGenderRadios(false));
 
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -211,7 +225,10 @@ public class addCustomer extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(dobLabel)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(dobLabel)
+                                .addGap(22, 22, 22)
+                                .addComponent(txtdob))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(genderLabel)
@@ -229,7 +246,9 @@ public class addCustomer extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(dobLabel)
+                .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(dobLabel)
+                        .addComponent(txtdob))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(genderLabel)
@@ -312,6 +331,11 @@ public class addCustomer extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void updateGenderRadios(boolean male) {
+        maleRadioButton.setSelected(male);
+        femaleRadioButton.setSelected(!male);
+    }
+
     public void autoID() {
         nextCustomerIdLabel.setText(database.getNextCustomerId());
     }
@@ -355,11 +379,29 @@ public class addCustomer extends javax.swing.JInternalFrame {
 
     private void onAddClicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+
+        if (!canSubmit()) {
+            var message = new StringBuilder();
+
+            message.append("Invalid customer:\n");
+            message.append("- First Name cannot be empty\n");
+            message.append("- Last Name cannot be empty\n");
+            message.append("- Nic No must be a number\n");
+            message.append("- Passport ID cannot be a number\n");
+            message.append("- A Date of birth must be specified\n");
+            message.append("- A gender must be selected\n");
+            message.append("- Contact number cannot be empty\n");
+            message.append("- A photo must be specified\n");
+
+            JOptionPane.showMessageDialog(null, message.toString(), "Form not completed", JOptionPane.ERROR_MESSAGE);
+
+
+            return;
+        }
         
         String id = nextCustomerIdLabel.getText();
-        String firstname = "";
-        String lastname = "";
 
+        /*
         if (canSubmitName(txtlastname.getText()) && canSubmitName(txtlastname.getText())) {
             lastname = txtlastname.getText();
             firstname = txtfirstname.getText();
@@ -373,10 +415,13 @@ public class addCustomer extends javax.swing.JInternalFrame {
             showMessageDialog(null, "Check your first name");
             return;
         }
+        */
 
          String nic = txtnic.getText(); 
         String passport = txtpassport.getText();
          String address = txtaddress.getText();
+         String firstname = txtfirstname.getText();
+         String lastname = txtlastname.getText();
         
         DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
         String date = da.format(txtdob.getDate());
