@@ -1,3 +1,8 @@
+package view;
+
+import database.Database;
+import database.IDatabase;
+import model.User;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -22,6 +27,7 @@ import static shared.Validation.isValidName;
 
 
 public class userCreation extends JInternalFrame {
+    IDatabase database = Database.getDatabase();
 
     /**
      * Creates new form userCreation
@@ -56,6 +62,12 @@ public class userCreation extends JInternalFrame {
         cancelButton = new JButton();
         passwordInput = new JPasswordField();
 
+        firstNameInput.setName("userCreationFirstNameInput");
+        lastNameInput.setName("userCreationLastNameInput");
+        txtusername.setName("userCreationUserNameInput");
+        passwordInput.setName("userCreationPasswordInput");
+
+
         rootPanel.setBorder(BorderFactory.createTitledBorder("User Creation"));
 
         userIdLabel.setFont(new Font("Tahoma", Font.BOLD, 12)); // NOI18N
@@ -78,6 +90,7 @@ public class userCreation extends JInternalFrame {
         userGivenId.setText("jLabel6");
 
         addUserButton.setText("Add");
+        addUserButton.setName("addUserButton");
         addUserButton.addActionListener(this::addUser);
 
         cancelButton.setText("Cancel");
@@ -211,22 +224,12 @@ public class userCreation extends JInternalFrame {
             return;
         }
 
+        User user = new User(id, firstname, lastname, username, password);
+
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-            pst = con.prepareStatement("insert into user(id,firstname,lastname,username,password)values(?,?,?,?,?)");
-            
-            pst.setString(1, id);
-            pst.setString(2, firstname);
-            pst.setString(3, lastname);
-            pst.setString(4, username);
-            pst.setString(5, password);
-            pst.executeUpdate();
-            
-            
+            database.saveUser(user);
+
             JOptionPane.showMessageDialog(null,"User Created");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(addflight.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(addflight.class.getName()).log(Level.SEVERE, null, ex);
         }

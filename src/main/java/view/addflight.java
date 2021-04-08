@@ -1,3 +1,4 @@
+package view;
 
 import com.toedter.calendar.JDateChooser;
 import database.Database;

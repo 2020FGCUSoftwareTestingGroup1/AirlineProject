@@ -3,6 +3,7 @@ package database;
 import model.Customer;
 import model.Flight;
 import model.Ticket;
+import model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -205,6 +206,18 @@ public class RealDatabase implements IDatabase {
         pst.setString(7, flight.getArriveTime());
         pst.setString(8, flight.getFlightCharge());
 
+        pst.executeUpdate();
+    }
+
+    @Override
+    public void saveUser(User user) throws SQLException {
+        var pst = con.prepareStatement("insert into user(id,firstname,lastname,username,password)values(?,?,?,?,?)");
+
+        pst.setString(1, user.getId());
+        pst.setString(2, user.getFirstName());
+        pst.setString(3, user.getLastName());
+        pst.setString(4, user.getUsername());
+        pst.setString(5, user.getPassword());
         pst.executeUpdate();
     }
 }

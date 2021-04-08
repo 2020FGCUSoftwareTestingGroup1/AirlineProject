@@ -1,3 +1,4 @@
+package view;
 
 import database.Database;
 import database.IDatabase;

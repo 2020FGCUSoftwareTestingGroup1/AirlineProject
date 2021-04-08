@@ -3,6 +3,7 @@ package database;
 import model.Customer;
 import model.Flight;
 import model.Ticket;
+import model.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -57,5 +58,10 @@ public class TestDatabase implements IDatabase {
     @Override
     public void saveFlight(Flight flight) throws SQLException {
         throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public void saveUser(User user) throws SQLException {
+
     }
 }
