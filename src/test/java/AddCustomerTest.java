@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import view.addCustomer;
 
 /**
  * This AddCustomerTest test case contains the tests to ensure a valid customer is added to the

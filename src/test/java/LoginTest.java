@@ -21,7 +21,7 @@ public class LoginTest {
 
     @BeforeAll
     static void setup() {
-        Database.setTesting();
+//        Database.setTesting();
     }
 
     IDatabase database = Database.getDatabase();
