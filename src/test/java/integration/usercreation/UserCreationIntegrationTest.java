@@ -16,12 +16,10 @@ import org.mockito.junit.MockitoRule;
 import view.Main;
 
 import java.sql.SQLException;
+import java.util.Collections;
 
 public class UserCreationIntegrationTest {
     FrameFixture window;
-
-    @Rule
-    public MockitoRule initRule = MockitoJUnit.rule();
 
     @Mock
     IDatabase mockDatabase;
@@ -45,6 +43,8 @@ public class UserCreationIntegrationTest {
      */
     @Test
     void newUserCreatedGivenValidInputs() throws SQLException {
+        Mockito.when(mockDatabase.getTickets()).thenReturn(Collections.emptyList());
+
         window.menuItem("userMenuItem").click();
         window.menuItem("userCreationScreenButton").click();
 

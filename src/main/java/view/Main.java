@@ -22,11 +22,11 @@ public class Main extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        setName("mainFrame");
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        customerRootMenu = new javax.swing.JMenu();
+        addCustomerMenuItem = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -54,15 +54,17 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 279, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("Customer");
+        customerRootMenu.setText("Customer");
+        customerRootMenu.setName("customerRootMenu");
 
-        jMenuItem1.setText("Add Customer");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        addCustomerMenuItem.setText("Add Customer");
+        addCustomerMenuItem.setName("addCustomerMenuItem");
+        addCustomerMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        customerRootMenu.add(addCustomerMenuItem);
 
         jMenuItem2.setText("Search Customer");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -70,9 +72,9 @@ public class Main extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        customerRootMenu.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(customerRootMenu);
 
         jMenu2.setText("Tickets");
 
@@ -228,12 +230,12 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu customerRootMenu;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem addCustomerMenuItem;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
