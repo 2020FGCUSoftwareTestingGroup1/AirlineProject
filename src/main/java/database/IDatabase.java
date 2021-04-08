@@ -14,10 +14,12 @@ public interface IDatabase {
     void saveTicket(Ticket ticket) throws SQLException;
     void saveFlight(Flight flight) throws SQLException;
     void saveUser(User user) throws SQLException;
+    void saveCustomer(Customer customer) throws SQLException;
 
 
     Customer getCustomer(String userId);
     String getNextTicketId();
+    String getNextCustomerId();
 
     List<Flight> searchFlightsBySourceAndDestination(String source, String depart);
     void updateCustomer(Customer customer) throws SQLException;

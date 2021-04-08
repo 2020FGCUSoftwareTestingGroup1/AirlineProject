@@ -4,6 +4,7 @@ import model.Customer;
 import model.Flight;
 import model.Ticket;
 import model.User;
+import view.addCustomer;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -142,6 +143,27 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
+    public String getNextCustomerId() {
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("select MAX(id) from customer");
+            rs.next();
+            rs.getString("MAX(id)");
+            if(rs.getString("MAX(id)") == null) {
+                return "CS001";
+            } else {
+                long id = Long.parseLong(rs.getString("MAX(id)").substring(2));
+                id++;
+                return "CS" + String.format("%03d", id);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        return null;
+    }
+
+    @Override
     public List<Flight> searchFlightsBySourceAndDestination(String source, String depart) {
         ArrayList<Flight> flights = new ArrayList<>();
 
@@ -218,6 +240,23 @@ public class RealDatabase implements IDatabase {
         pst.setString(3, user.getLastName());
         pst.setString(4, user.getUsername());
         pst.setString(5, user.getPassword());
+        pst.executeUpdate();
+    }
+
+    @Override
+    public void saveCustomer(Customer customer) throws SQLException {
+        var pst = con.prepareStatement("insert into customer(id,firstname,lastname,nic,passport,address,dob,gender,contact,photo)values(?,?,?,?,?,?,?,?,?,?)");
+
+        pst.setString(1, customer.getId());
+        pst.setString(2, customer.getFirstName());
+        pst.setString(3, customer.getLastName());
+        pst.setString(4, customer.getNicNo());
+        pst.setString(5, customer.getPassportId());
+        pst.setString(6, customer.getAddress());
+        pst.setString(7, customer.getDob());
+        pst.setString(8, customer.getGender());
+        pst.setInt(9, customer.getContactNumber());
+        pst.setBytes(10, customer.getPhoto());
         pst.executeUpdate();
     }
 }

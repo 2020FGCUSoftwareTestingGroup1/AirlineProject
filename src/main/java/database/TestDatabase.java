@@ -45,6 +45,11 @@ public class TestDatabase implements IDatabase {
     }
 
     @Override
+    public String getNextCustomerId() {
+        return null;
+    }
+
+    @Override
     public List<Flight> searchFlightsBySourceAndDestination(String source, String depart) {
         return null;
     }
@@ -63,4 +68,11 @@ public class TestDatabase implements IDatabase {
     public void saveUser(User user) throws SQLException {
 
     }
+
+    @Override
+    public void saveCustomer(Customer customer) throws SQLException {
+
+    }
+
+
 }
