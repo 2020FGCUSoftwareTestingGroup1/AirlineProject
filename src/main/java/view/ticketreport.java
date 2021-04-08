@@ -42,6 +42,8 @@ public class ticketreport extends JInternalFrame {
         ticketTable = new JTable();
         jButton1 = new JButton();
 
+        ticketTable.setName("TicketTable");
+
         ticketTable.setModel(new DefaultTableModel(
             new Object [][] {},
             new String [] {

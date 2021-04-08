@@ -20,7 +20,6 @@ public class TestDatabase implements IDatabase {
         var list = new ArrayList<Ticket>();
 
         list.add(new Ticket("1", "CL_1" , "BOB", "CLASS",1, 1, "2020-01-20"));
-
         return list;
     }
 

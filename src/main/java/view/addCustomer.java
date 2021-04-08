@@ -2,6 +2,10 @@ package view;
 
 
 import com.toedter.calendar.JDateChooser;
+import database.Database;
+import database.IDatabase;
+import model.Customer;
+import model.User;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -35,6 +39,8 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 
 public class addCustomer extends javax.swing.JInternalFrame {
+
+    IDatabase database = Database.getDatabase();
 
     /**
      * Creates new form addCustomer
@@ -160,6 +166,7 @@ public class addCustomer extends javax.swing.JInternalFrame {
                         .addComponent(txtlastname, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -489,8 +496,7 @@ public class addCustomer extends javax.swing.JInternalFrame {
             pst.setString(9, contact);
             pst.setBytes(10, userimage);
             pst.executeUpdate();
-            
-            
+
             showMessageDialog(null,"Registation Createdd.........");
             
             
