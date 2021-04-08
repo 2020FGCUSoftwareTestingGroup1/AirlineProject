@@ -57,6 +57,20 @@ public class UserCreationIntegrationTest {
         Mockito.verify(mockDatabase).saveUser(Mockito.any());
     }
 
+    /**
+     * Integration test that creates navigates to the UserCreation screen and attempts to create a user without
+     * providing a valid input, which should fail due to userCreation.isValidUser requiring a valid username, password,
+     * first name, and last name.
+     */
+    @Test
+    void noUserCreatedGivenInvalid() {
+        window.menuItem("userMenuItem").click();
+        window.menuItem("userCreationScreenButton").click();
+
+        window.button("addUserButton").click();
+        Mockito.verifyNoInteractions(mockDatabase);
+    }
+
     @AfterEach
     void cleanup() {
         window.cleanUp();
