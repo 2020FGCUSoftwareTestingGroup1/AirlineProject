@@ -58,16 +58,23 @@ public class addCustomer extends javax.swing.JInternalFrame {
     public boolean canSubmitPassportID(String PassportID) { return PassportID.matches("[a-zA-Z0-9]{6,9}");}
     
     public boolean canSubmit() {
-        return !txtfirstname.getText().isBlank() &&
-            !txtlastname.getText().isBlank() &&
-            txtnic.getText().matches("^\\d+$") &&
-            txtpassport.getText().matches("^\\d+$") &&
-            txtcontact.getText().matches("^\\d+$") &&
-            !txtlastname.getText().isBlank() &&
-            (maleRadioButton.isSelected() || femaleRadioButton.isSelected()) &&
-            txtdob != null &&
-            userimage != null &&
-            userimage.length > 0;
+        var validFirstName = canSubmitName(txtfirstname.getText());
+        var validLastName = canSubmitName(txtlastname.getText());
+        var validNic = txtnic.getText().matches("^\\d+$");
+        var validPassport = canSubmitPassportID(txtpassport.getText());
+        var validContact = txtcontact.getText().matches("^\\d+$");
+        var validButtons = (maleRadioButton.isSelected() || femaleRadioButton.isSelected());
+        var validDob = txtdob != null;
+        var validImage = userimage != null && userimage.length > 0;
+
+        return validFirstName &&
+            validLastName &&
+            validNic &&
+            validPassport &&
+            validContact &&
+            validButtons &&
+            validDob &&
+            validImage;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -107,8 +114,13 @@ public class addCustomer extends javax.swing.JInternalFrame {
         txtnic.setName("addCustomerNicInput");
         txtpassport.setName("addCustomerPassportInput");
         txtaddress.setName("addCustomerAddressInput");
+        txtcontact.setName("addCustomerContactInput");
+        txtdob.setName("addCustomerDateInput");
         maleRadioButton.setName("addCustomerMaleGenderLabel");
         femaleRadioButton.setName("addCustomerFemaleGenderLabel");
+        picchooser.setName("addCustomerPicChooser");
+        browseButton.setName("addCustomerBrowseButton");
+        addButton.setName("addCustomerAddButton");
 
         firstNameLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 11)); // NOI18N
         firstNameLabel.setForeground(new Color(255, 255, 255));
@@ -346,16 +358,14 @@ public class addCustomer extends javax.swing.JInternalFrame {
     
       
         try {
-        JFileChooser picchooser = new JFileChooser();
-       picchooser.showOpenDialog(null);
-       File pic = picchooser.getSelectedFile();       
-       FileNameExtensionFilter filter = new FileNameExtensionFilter("*.images","png","jpg");
-       picchooser.addChoosableFileFilter(filter);     
-       path= pic.getAbsolutePath();
-       BufferedImage img;                    
-       img = ImageIO.read(picchooser.getSelectedFile());
-       ImageIcon imageIcon = new ImageIcon(new
-       ImageIcon(img).getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
+            picchooser.showOpenDialog(this);
+            File pic = picchooser.getSelectedFile();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("*.images","png","jpg");
+            picchooser.addChoosableFileFilter(filter);
+            path= pic.getAbsolutePath();
+            BufferedImage img = ImageIO.read(pic);
+            ImageIcon imageIcon = new ImageIcon(new
+            ImageIcon(img).getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
               txtphoto.setIcon(imageIcon); 
               
               
@@ -477,4 +487,5 @@ public class addCustomer extends javax.swing.JInternalFrame {
     private JLabel txtphoto;
     // End of variables declaration//GEN-END:variables
     private JDateChooser txtdob;
+    private JFileChooser picchooser = new JFileChooser();
 }

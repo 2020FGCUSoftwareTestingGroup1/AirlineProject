@@ -1,6 +1,20 @@
+import database.Database;
+import database.IDatabase;
+import org.assertj.swing.annotation.GUITest;
+import org.assertj.swing.edt.GuiActionRunner;
+import org.assertj.swing.finder.WindowFinder;
+import org.assertj.swing.fixture.FrameFixture;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import view.Main;
 import view.addCustomer;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.sql.SQLException;
 
 /**
  * This AddCustomerTest test case contains the tests to ensure a valid customer is added to the
@@ -105,6 +119,54 @@ public class AddCustomerTest {
 
         Assertions.assertFalse(inValidPassportIDLowerBVA);
         Assertions.assertFalse(inValidPassportIDHigherBVA);
+    }
+
+    @Test
+    void saveCustomerIsCalledGivenValidCustomer() throws SQLException {
+        // Create and set mock database.
+        IDatabase database = Mockito.mock(IDatabase.class);
+        Database.setDatabase(database);
+
+        // Create window for UI testing.
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+        window.show();
+
+        // Mock customer ID.
+        Mockito.when(database.getNextCustomerId()).thenReturn("CS001");
+
+        // Navigate to Add Customer screen.
+        window.menuItem("customerRootMenu").click();
+        window.menuItem("addCustomerMenuItem").click();
+
+        // Enter test data in screen.
+        window.textBox("addCustomerFirstNameInput").setText("John");
+        window.textBox("addCustomerLastNameInput").setText("Smith");
+        window.textBox("addCustomerNicInput").setText("11111");
+        window.textBox("addCustomerPassportInput").setText("aaaaa123");
+        window.textBox("addCustomerContactInput").setText("55555555");
+        window.textBox("addCustomerAddressInput").setText("USA");
+
+        window.radioButton("addCustomerMaleGenderLabel").click();
+
+        window.button("addCustomerBrowseButton").click();
+
+        // Select test customer image.
+        var root = Path.of("").toAbsolutePath();
+        var testFilePath = root.resolve(Path.of("src", "test", "resources", "CustomerExampleImage.jpg"));
+        var testFile = testFilePath.toFile();
+
+        window.fileChooser("addCustomerPicChooser").selectFile(testFile);
+        window.fileChooser("addCustomerPicChooser").approve();
+
+        window.panel("addCustomerDateInput").textBox().setText("Apr 22, 2021");
+
+        // Submit customer.
+        window.button("addCustomerAddButton").click();
+
+        Mockito.verify(database).saveCustomer(Mockito.any());
+
+        window.cleanUp();
     }
 
 }

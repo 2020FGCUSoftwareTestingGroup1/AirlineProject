@@ -1,3 +1,4 @@
+import database.TestDatabase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import database.Database;
@@ -21,7 +22,7 @@ public class LoginTest {
 
     @BeforeAll
     static void setup() {
-//        Database.setTesting();
+        Database.setDatabase(new TestDatabase());
     }
 
     IDatabase database = Database.getDatabase();
@@ -35,7 +36,6 @@ public class LoginTest {
         String name = "username";
         String pw = "password";
         Assertions.assertTrue(database.loginUser(name, pw));
-
     }
 
     @Test

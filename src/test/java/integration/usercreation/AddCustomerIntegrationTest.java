@@ -7,6 +7,7 @@ import org.assertj.swing.fixture.FrameFixture;
 import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -46,6 +47,26 @@ public class AddCustomerIntegrationTest {
         window.menuItem("customerRootMenu").click();
         window.menuItem("addCustomerMenuItem").click();
         window.label("nextCustomerIdLabel").requireText("CS001");
+    }
+
+    @Disabled
+    @Test
+    void createdCustomerAppearsWhenSearched() {
+        window.menuItem("customerRootMenu").click();
+        window.menuItem("addCustomerMenuItem").click();
+
+        window.textBox("addCustomerFirstNameInput").setText("John");
+        window.textBox("addCustomerFirstNameInput").setText("John");
+        window.textBox("addCustomerFirstNameInput").setText("John");
+        window.textBox("addCustomerFirstNameInput").setText("John");
+        window.textBox("addCustomerFirstNameInput").setText("John");
+        window.textBox("addCustomerFirstNameInput").setText("John");
+        window.textBox("addCustomerFirstNameInput").setText("John");
+        window.textBox("addCustomerFirstNameInput").setText("John");
+        window.textBox("addCustomerFirstNameInput").setText("John");
+
+        window.panel("addCustomerDateInput").textBox().setText("Apr 22, 2021");
+
     }
 
 }

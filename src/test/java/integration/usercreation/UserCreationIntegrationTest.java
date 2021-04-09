@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import view.Main;
 
 import java.sql.SQLException;
@@ -54,7 +52,7 @@ public class UserCreationIntegrationTest {
         window.textBox("userCreationPasswordInput").enterText("password");
         window.button("addUserButton").click();
 
-        Mockito.verify(mockDatabase).saveUser(Mockito.any());
+        Mockito.verify(mockDatabase, Mockito.timeout(500)).saveUser(Mockito.any());
     }
 
     /**
