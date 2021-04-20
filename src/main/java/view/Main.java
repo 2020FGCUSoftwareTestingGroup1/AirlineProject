@@ -65,8 +65,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
         customerRootMenu.add(addCustomerMenuItem);
-
         jMenuItem2.setText("Search Customer");
+        jMenuItem2.setName("searchCustomer");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem2ActionPerformed(evt);

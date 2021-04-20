@@ -30,11 +30,13 @@ public class searchCustomer extends JInternalFrame {
      */
     public searchCustomer() {
         initComponents();
+        customerIdInput.setName("customerIdInput");
+        findButton.setName("findButton");
     }
-    
+
     String path=null;
     byte[] userimage=null;
-    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
