@@ -1,9 +1,9 @@
-import database.TestDatabase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import database.Database;
 import database.IDatabase;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 
 /**
@@ -20,12 +20,7 @@ import org.junit.jupiter.api.Test;
  */
 public class LoginTest {
 
-    @BeforeAll
-    static void setup() {
-        Database.setDatabase(new TestDatabase());
-    }
-
-    IDatabase database = Database.getDatabase();
+    IDatabase database = Mockito.mock(IDatabase.class);
 
     /**
      * This method checks to see if the username and password match in the database, thus prompting a successful login.
@@ -33,6 +28,8 @@ public class LoginTest {
      */
     @Test
     void userNameAndPasswordReturnsTrue() {
+        Mockito.when(database.loginUser("username", "password")).thenReturn(true);
+
         String name = "username";
         String pw = "password";
         Assertions.assertTrue(database.loginUser(name, pw));
@@ -40,6 +37,8 @@ public class LoginTest {
 
     @Test
     void userNameReturnsTrueButPasswordReturnsFalse() {
+        Mockito.when(database.loginUser("username", "password")).thenReturn(true);
+
         String name = "username";
         String pw = "123";
         Assertions.assertFalse(database.loginUser(name, pw));
@@ -48,6 +47,8 @@ public class LoginTest {
 
     @Test
     void userNameReturnsFalseButPasswordReturnsTrue() {
+        Mockito.when(database.loginUser("username", "password")).thenReturn(true);
+
         String name = "Lui";
         String pw = "password";
         Assertions.assertFalse(database.loginUser(name, pw));
@@ -56,6 +57,9 @@ public class LoginTest {
 
     @Test
     void userNameAndPasswordReturnsFalse() {
+        Mockito.when(database.loginUser("username", "password")).thenReturn(true);
+
+
         String name = "Lui";
         String pw = "123";
         Assertions.assertFalse(database.loginUser(name, pw));

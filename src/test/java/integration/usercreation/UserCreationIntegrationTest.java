@@ -61,12 +61,12 @@ public class UserCreationIntegrationTest {
      * first name, and last name.
      */
     @Test
-    void noUserCreatedGivenInvalid() {
+    void noUserCreatedGivenInvalid() throws SQLException {
         window.menuItem("userMenuItem").click();
         window.menuItem("userCreationScreenButton").click();
 
         window.button("addUserButton").click();
-        Mockito.verifyNoInteractions(mockDatabase);
+        Mockito.verify(mockDatabase, Mockito.never()).saveUser(Mockito.any());
     }
 
     @AfterEach

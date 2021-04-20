@@ -4,9 +4,7 @@ import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.finder.WindowFinder;
 import org.assertj.swing.fixture.FrameFixture;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import view.Main;
@@ -32,6 +30,12 @@ import java.sql.SQLException;
  */
 
 public class AddCustomerTest {
+
+    @BeforeEach
+    void setup() {
+        Database.setDatabase(Mockito.mock(IDatabase.class));
+    }
+
     /**
      * This method checks to see if the first and last name contain only letters for the new customer
      * submission. We are doing this by making sure that no spaces, special characters, and numbers exists.
