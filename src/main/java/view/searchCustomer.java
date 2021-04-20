@@ -410,10 +410,15 @@ public class searchCustomer extends JInternalFrame {
             if (customer == null) {
                 JOptionPane.showMessageDialog(this, "Record not Found");
             } else {
-                ImageIcon image = new ImageIcon(customer.getPhoto());
-                Image im = image.getImage();
-                Image myImg = im.getScaledInstance(photoLabel.getWidth(), photoLabel.getHeight(),Image.SCALE_SMOOTH);
-                ImageIcon newImage = new ImageIcon(myImg);
+                if (customer.getPhoto() != null) {
+                    ImageIcon image = new ImageIcon(customer.getPhoto());
+                    Image im = image.getImage();
+                    Image myImg = im.getScaledInstance(photoLabel.getWidth(), photoLabel.getHeight(),Image.SCALE_SMOOTH);
+                    ImageIcon newImage = new ImageIcon(myImg);
+                    photoLabel.setIcon(newImage);
+                } else {
+                    photoLabel.setIcon(null);
+                }
 
 
                 setGenderRadio(customer.getGender().equals("Male"));
@@ -425,7 +430,7 @@ public class searchCustomer extends JInternalFrame {
                 addressInput.setText(customer.getAddress().trim());
                 contactInput.setText(String.valueOf(customer.getContactNumber()));
                 txtdob.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(customer.getDob()));
-                photoLabel.setIcon(newImage);
+
             }
         } catch (ParseException ex) {
             Logger.getLogger(searchCustomer.class.getName()).log(Level.SEVERE, null, ex);
