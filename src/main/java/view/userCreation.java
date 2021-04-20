@@ -4,18 +4,12 @@ import database.Database;
 import database.IDatabase;
 import model.User;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.swing.*;
 
 import static shared.Validation.isValidName;
 
@@ -36,8 +30,6 @@ public class userCreation extends JInternalFrame {
         initComponents();
         autoID();
     }
-    Connection con;
-    PreparedStatement pst;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -243,27 +235,7 @@ public class userCreation extends JInternalFrame {
 
     
      public void autoID() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-            Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("select MAX(id) from user");
-            rs.next();
-            rs.getString("MAX(id)");
-
-            if(rs.getString("MAX(id)") == null) {
-                userGivenId.setText("UO001");
-            } else {
-                long id = Long.parseLong(rs.getString("MAX(id)").substring(2,rs.getString("MAX(id)").length()));
-                id++;
-                userGivenId.setText("UO" + String.format("%03d", id));
-            }
-            
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        userGivenId.setText(database.getNextUserId());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

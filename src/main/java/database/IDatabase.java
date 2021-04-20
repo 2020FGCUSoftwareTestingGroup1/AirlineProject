@@ -20,6 +20,7 @@ public interface IDatabase {
     Customer getCustomer(String userId);
     String getNextTicketId();
     String getNextCustomerId();
+    String getNextUserId();
 
     List<Flight> searchFlightsBySourceAndDestination(String source, String depart);
     void updateCustomer(Customer customer) throws SQLException;

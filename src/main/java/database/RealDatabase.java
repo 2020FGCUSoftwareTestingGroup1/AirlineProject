@@ -164,6 +164,28 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
+    public String getNextUserId() {
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("select MAX(id) from user");
+            rs.next();
+            rs.getString("MAX(id)");
+
+            if(rs.getString("MAX(id)") == null) {
+                return "UO001";
+            } else {
+                long id = Long.parseLong(rs.getString("MAX(id)").substring(2,rs.getString("MAX(id)").length()));
+                id++;
+                return "UO" + String.format("%03d", id);
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        return null;
+    }
+
+    @Override
     public List<Flight> searchFlightsBySourceAndDestination(String source, String depart) {
         ArrayList<Flight> flights = new ArrayList<>();
 
