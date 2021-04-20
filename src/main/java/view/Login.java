@@ -1,16 +1,14 @@
 package view;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import database.Database;
+import database.IDatabase;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,6 +18,7 @@ import javax.swing.border.TitledBorder;
 
 
 public class Login extends javax.swing.JFrame {
+    IDatabase database = Database.getDatabase();
 
     /**
      * Creates new form Login
@@ -27,8 +26,6 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
     }
-    Connection con;
-    PreparedStatement pst;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,6 +42,11 @@ public class Login extends javax.swing.JFrame {
         cancelButton = new  JButton();
         usernameInput = new JTextField();
         passwordInput = new JPasswordField();
+
+        loginButton.setName("loginButton");
+        cancelButton.setName("cancelButton");
+        usernameInput.setName("usernameInput");
+        passwordInput.setName("passwordInput");
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -150,31 +152,18 @@ public class Login extends javax.swing.JFrame {
         if(username.isEmpty() ||  password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "UserName or Password Blank");
         } else {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-                pst = con.prepareStatement("select * from user where username = ? and password = ?");
-                 pst.setString(1, username);
-                 pst.setString(2, password);
+            var validLogin = database.loginUser(username, password);
 
-                 ResultSet rs;
-                 rs = pst.executeQuery();
-
-                 if(rs.next()) {
-                     Main m = new Main();
-                     this.hide();
-                     m.setVisible(true);
-                 } else {
-                    String errorMessage = "UserName or Password do not Match";
-                    JOptionPane.showMessageDialog(this, errorMessage);
-                    usernameInput.setText("");
-                    passwordInput.setText("");
-                    usernameInput.requestFocus();
-                 }
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            if (validLogin) {
+                Main m = new Main();
+                this.hide();
+                m.setVisible(true);
+            } else {
+                String errorMessage = "UserName or Password do not Match";
+                JOptionPane.showMessageDialog(this, errorMessage);
+                usernameInput.setText("");
+                passwordInput.setText("");
+                usernameInput.requestFocus();
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
