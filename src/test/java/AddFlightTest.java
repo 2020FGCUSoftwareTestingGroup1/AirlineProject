@@ -81,5 +81,112 @@ public class AddFlightTest {
         window.cleanUp();
     }
 
+    @Test
+    void checksInvalidFlightNamePopUP(){
+        IDatabase database = Mockito.mock(IDatabase.class);
+        Database.setDatabase(database);
 
+        //
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+
+        window.show();
+        window.menuItem("flightRootMenu").click();
+        window.menuItem("addFlightMenuItem").click();
+        window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
+        window.textBox("addDepartureInput").setText("12:00");
+        window.textBox("addArrivalInput").setText("2:34");
+        window.textBox("addFlightChargeInput").setText("23.2");
+
+        window.button("addFlightButton").click();
+        window.button("cancelFlightButton").click();
+        window.cleanUp();
+    }
+
+    @Test
+    void checksInvalidFlightDatePopUp(){
+        IDatabase database = Mockito.mock(IDatabase.class);
+        Database.setDatabase(database);
+
+        //
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+
+        window.show();
+        window.menuItem("flightRootMenu").click();
+        window.menuItem("addFlightMenuItem").click();
+        window.textBox("addFlightNameInput").setText("lkj");
+        window.textBox("addDepartureInput").setText("12:00");
+        window.textBox("addArrivalInput").setText("2:34");
+        window.textBox("addFlightChargeInput").setText("23.2");
+
+        window.button("addFlightButton").click();
+        window.button("cancelFlightButton").click();
+        window.cleanUp();
+    }
+
+    void checksInvalidDepartureTimePopUp(){
+        IDatabase database = Mockito.mock(IDatabase.class);
+        Database.setDatabase(database);
+
+        //
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+
+        window.show();
+        window.menuItem("flightRootMenu").click();
+        window.menuItem("addFlightMenuItem").click();
+        window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
+        window.textBox("addFlightNameInput").setText("lkj");
+        window.textBox("addArrivalInput").setText("2:34");
+        window.textBox("addFlightChargeInput").setText("23.2");
+
+        window.button("addFlightButton").click();
+        window.button("cancelFlightButton").click();
+        window.cleanUp();
+    }
+
+    @Test
+    void checksArrivalTimePopUp(){
+        IDatabase database = Mockito.mock(IDatabase.class);
+        Database.setDatabase(database);
+
+        //
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+
+        window.show();
+        window.menuItem("flightRootMenu").click();
+        window.menuItem("addFlightMenuItem").click();
+        window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
+        window.textBox("addFlightNameInput").setText("lkj");
+        window.textBox("addDepartureInput").setText("12:00");
+        window.textBox("addFlightChargeInput").setText("23.2");
+
+        window.button("addFlightButton").click();
+        window.button("cancelFlightButton").click();
+        window.cleanUp();
+    }
+
+    @Test
+    void checksInvalidFlightChargePopUp(){
+        IDatabase database = Mockito.mock(IDatabase.class);
+        Database.setDatabase(database);
+
+        //
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+
+        window.show();
+        window.menuItem("flightRootMenu").click();
+        window.menuItem("addFlightMenuItem").click();
+        window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
+        window.textBox("addFlightNameInput").setText("lkj");
+        window.textBox("addDepartureInput").setText("12:00");
+        window.textBox("addArrivalInput").setText("2:34");
+
+        window.button("addFlightButton").click();
+        window.button("cancelFlightButton").click();
+        window.cleanUp();
+    }
 }
