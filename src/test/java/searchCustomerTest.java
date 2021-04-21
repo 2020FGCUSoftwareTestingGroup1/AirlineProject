@@ -6,6 +6,7 @@ import model.Customer;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -47,6 +48,27 @@ class searchCustomerTest {
 
       Mockito.verify(mockDatabase).getCustomer(Mockito.any());
     }
+
+    @Test
+    public void updateCustomer() {
+      Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
+          "AJ24", "123 First Street", "1990-01-01", "Male",
+          200, null);
+
+      Mockito.when(mockDatabase.getCustomer("CS001")).thenReturn(customer);
+
+      window.menuItem("customerRootMenu").click();
+      window.menuItem("searchCustomer").click();
+      window.textBox("customerIdInput").setText("CS001");
+      window.button("findButton").click();
+
+      window.textBox("firstNameInput").setText("Joseph");
+      window.button("updateButton").click();
+
+      Mockito.verify(mockDatabase).getCustomer(Mockito.any());
+
+    }
+
 
     @AfterEach
     void cleanup() {

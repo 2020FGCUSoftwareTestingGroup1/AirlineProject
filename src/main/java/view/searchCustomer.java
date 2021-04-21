@@ -32,6 +32,10 @@ public class searchCustomer extends JInternalFrame {
         initComponents();
         customerIdInput.setName("customerIdInput");
         findButton.setName("findButton");
+        browseButton.setName("browseButton");
+        firstNameInput.setName("firstNameInput");
+        updateButton.setName("updateButton");
+        femaleRadioButton.setName("femaleRadioButton");
     }
 
     String path=null;
@@ -328,6 +332,7 @@ public class searchCustomer extends JInternalFrame {
             File pic = picchooser.getSelectedFile();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("*.images","png","jpg");
             picchooser.addChoosableFileFilter(filter);
+            if (path != null) {
             path= pic.getAbsolutePath();
             BufferedImage img;
             img = ImageIO.read(picchooser.getSelectedFile());
@@ -335,15 +340,16 @@ public class searchCustomer extends JInternalFrame {
             ImageIcon(img).getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT));
             photoLabel.setIcon(imageIcon);
 
-            File image = new File(path);
-            FileInputStream fis = new FileInputStream(image);
-            ByteArrayOutputStream baos= new ByteArrayOutputStream();
-            byte[] buff = new byte[1024];
-            for(int readNum; (readNum=fis.read(buff)) !=-1 ; ) {
-                baos.write(buff,0,readNum);
+
+                File image = new File(path);
+                FileInputStream fis = new FileInputStream(image);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                byte[] buff = new byte[1024];
+                for (int readNum; (readNum = fis.read(buff)) != -1; ) {
+                    baos.write(buff, 0, readNum);
+                }
+                userimage = baos.toByteArray();
             }
-            userimage=baos.toByteArray();
-              
               
               
         } catch (IOException ex) {
