@@ -35,7 +35,7 @@ class searchCustomerTest {
     @Test
     public void findValidCustomer() {
       Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
-          "AJ24", "123 First Street", "1/1/1990", "Male",
+          "AJ24", "123 First Street", "1990-01-01", "Male",
           200, null);
 
       Mockito.when(mockDatabase.getCustomer("CS001")).thenReturn(customer);

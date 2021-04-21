@@ -77,7 +77,7 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1.add(customerRootMenu);
 
         jMenu2.setText("Tickets");
-
+        jMenuItem3.setName("BookTicket");
         jMenuItem3.setText("Book Ticket");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

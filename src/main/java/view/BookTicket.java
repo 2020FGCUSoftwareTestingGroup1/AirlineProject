@@ -54,12 +54,16 @@ public class BookTicket extends JInternalFrame {
 
         jPanel1 = new JPanel();
         txtsource = new JComboBox<>();
+        txtsource.setName("flightSource");
         txtdepart = new JComboBox<>();
+        txtdepart.setName("flightDepart");
         sourceLabel = new JLabel();
         departureLabel = new JLabel();
         searchFlightButton = new JButton();
+        searchFlightButton.setName("searchFlightBTN");
         jScrollPane1 = new JScrollPane();
         searchResultTable = new JTable();
+        searchResultTable.setName("searchResultTable");
         jLabel3 = new JLabel();
         txtticketno = new JLabel();
         jPanel3 = new JPanel();
@@ -67,11 +71,16 @@ public class BookTicket extends JInternalFrame {
         firstNameLabel = new JLabel();
         lastNameLabel = new JLabel();
         txtcustid = new JTextField();
+        txtcustid.setName("customerIDbox");
         passportNumberLabel = new JLabel();
         txtfirstname = new JLabel();
+        txtfirstname.setName("fNameLabel");
         txtlastname = new JLabel();
+        txtlastname.setName("lNameLabel");
         txtpassport = new JLabel();
+        txtpassport.setName("passportIDLabel");
         searchCustomerButton = new JButton();
+        searchCustomerButton.setName("customerSearchBTN");
         jPanel2 = new JPanel();
         flightNumberLabel = new JLabel();
         flightNameLabel = new JLabel();
@@ -84,10 +93,14 @@ public class BookTicket extends JInternalFrame {
         txtdept = new JLabel();
         ticketClassCombobox = new JComboBox<>();
         txtprice = new JTextField();
+        txtprice.setName("priceOfSeats");
         txtseats = new JSpinner();
+        txtseats.setName("chooseNumSeats");
         bookTicketButton = new JButton();
+        bookTicketButton.setName("bookTicketBTN");
         cancelTicketButton = new JButton();
         txttotal = new JLabel();
+        txttotal.setName("totalPrice");
         txtdate = new JDateChooser();
 
         txtseats.setModel(new SpinnerNumberModel(0, 0, 100, 1));
