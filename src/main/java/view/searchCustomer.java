@@ -332,7 +332,6 @@ public class searchCustomer extends JInternalFrame {
             File pic = picchooser.getSelectedFile();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("*.images","png","jpg");
             picchooser.addChoosableFileFilter(filter);
-            if (path != null) {
             path= pic.getAbsolutePath();
             BufferedImage img;
             img = ImageIO.read(picchooser.getSelectedFile());
@@ -349,7 +348,6 @@ public class searchCustomer extends JInternalFrame {
                     baos.write(buff, 0, readNum);
                 }
                 userimage = baos.toByteArray();
-            }
               
               
         } catch (IOException ex) {
