@@ -2,6 +2,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import database.Database;
 import database.IDatabase;
+import java.nio.file.Path;
 import model.Customer;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
@@ -98,6 +99,31 @@ class searchCustomerTest {
       window.radioButton("femaleRadioButton").click();
       window.button("updateButton").click();
 
+      Mockito.verify(mockDatabase).getCustomer(Mockito.any());
+    }
+
+    @Test
+    public void updateCustomerPhoto() {
+      Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
+          "AJ24", "123 First Street", "1990-01-01", "Male",
+          200, null);
+
+      Mockito.when(mockDatabase.getCustomer("CS001")).thenReturn(customer);
+
+      window.menuItem("customerRootMenu").click();
+      window.menuItem("searchCustomer").click();
+      window.textBox("customerIdInput").setText("CS001");
+      window.button("findButton").click();
+      window.button("browseButton").click();
+
+      var root = Path.of("").toAbsolutePath();
+      var testFilePath = root.resolve(Path.of("src", "test", "resources", "CustomerExampleImage.jpg"));
+      var testFile = testFilePath.toFile();
+
+      window.fileChooser("picchooser").selectFile(testFile);
+      window.fileChooser("picchooser").approve();
+
+      window.button("updateButton").click();
       Mockito.verify(mockDatabase).getCustomer(Mockito.any());
     }
 

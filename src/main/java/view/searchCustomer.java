@@ -36,6 +36,7 @@ public class searchCustomer extends JInternalFrame {
         firstNameInput.setName("firstNameInput");
         updateButton.setName("updateButton");
         femaleRadioButton.setName("femaleRadioButton");
+        picchooser.setName("picchooser");
     }
 
     String path=null;
@@ -327,8 +328,7 @@ public class searchCustomer extends JInternalFrame {
         // TODO add your handling code here:
 
         try {
-            JFileChooser picchooser = new JFileChooser();
-            picchooser.showOpenDialog(null);
+            picchooser.showOpenDialog(this);
             File pic = picchooser.getSelectedFile();
             FileNameExtensionFilter filter = new FileNameExtensionFilter("*.images","png","jpg");
             picchooser.addChoosableFileFilter(filter);
@@ -478,4 +478,5 @@ public class searchCustomer extends JInternalFrame {
     private JLabel photoLabel;
     // End of variables declaration//GEN-END:variables
     private JDateChooser txtdob;
+    private JFileChooser picchooser = new JFileChooser();
 }
