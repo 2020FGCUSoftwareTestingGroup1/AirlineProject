@@ -4,7 +4,6 @@ import database.Database;
 import database.IDatabase;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
-import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -12,15 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import view.Main;
 
 public class AddCustomerIntegrationTest {
     private FrameFixture window;
-
-    @Rule
-    MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
     IDatabase mockDatabase;
@@ -47,6 +41,23 @@ public class AddCustomerIntegrationTest {
         window.menuItem("customerRootMenu").click();
         window.menuItem("addCustomerMenuItem").click();
         window.label("nextCustomerIdLabel").requireText("CS001");
+    }
+
+    @Test
+    void errorShownWhenMissingField() {
+        Mockito.when(mockDatabase.getNextCustomerId()).thenReturn("CS001");
+        window.menuItem("customerRootMenu").click();
+        window.menuItem("addCustomerMenuItem").click();
+        window.button("addCustomerAddButton").click();
+        window.dialog().requireModal().optionPane().requireMessage("Invalid customer:\n" +
+                "- First Name cannot be empty\n" +
+                "- Last Name cannot be empty\n" +
+                "- Nic No must be a number\n" +
+                "- Passport ID cannot be a number\n" +
+                "- A Date of birth must be specified\n" +
+                "- A gender must be selected\n" +
+                "- Contact number cannot be empty\n" +
+                "- A photo must be specified");
     }
 
     @Disabled

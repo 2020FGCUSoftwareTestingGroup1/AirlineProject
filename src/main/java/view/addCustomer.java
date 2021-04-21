@@ -282,6 +282,7 @@ public class addCustomer extends javax.swing.JInternalFrame {
         addButton.addActionListener(this::onAddClicked);
 
         cancelButton.setText("Cancel");
+        cancelButton.setName("cancelButton");
         cancelButton.addActionListener(this::onCancelClicked);
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -401,9 +402,9 @@ public class addCustomer extends javax.swing.JInternalFrame {
             message.append("- A Date of birth must be specified\n");
             message.append("- A gender must be selected\n");
             message.append("- Contact number cannot be empty\n");
-            message.append("- A photo must be specified\n");
+            message.append("- A photo must be specified");
 
-            JOptionPane.showMessageDialog(null, message.toString(), "Form not completed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, message.toString(), "Form not completed", JOptionPane.ERROR_MESSAGE);
 
 
             return;

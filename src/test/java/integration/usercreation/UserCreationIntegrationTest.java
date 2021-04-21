@@ -4,7 +4,6 @@ import database.Database;
 import database.IDatabase;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
-import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,10 +45,10 @@ public class UserCreationIntegrationTest {
         window.menuItem("userMenuItem").click();
         window.menuItem("userCreationScreenButton").click();
 
-        window.textBox("userCreationFirstNameInput").enterText("username");
-        window.textBox("userCreationLastNameInput").enterText("lastname");
-        window.textBox("userCreationUserNameInput").enterText("username");
-        window.textBox("userCreationPasswordInput").enterText("password");
+        window.textBox("userCreationFirstNameInput").setText("username");
+        window.textBox("userCreationLastNameInput").setText("lastname");
+        window.textBox("userCreationUserNameInput").setText("username");
+        window.textBox("userCreationPasswordInput").setText("password");
         window.button("addUserButton").click();
 
         Mockito.verify(mockDatabase, Mockito.timeout(500)).saveUser(Mockito.any());

@@ -1,18 +1,20 @@
 import database.Database;
 import database.IDatabase;
-import org.assertj.swing.annotation.GUITest;
+import model.Customer;
 import org.assertj.swing.edt.GuiActionRunner;
-import org.assertj.swing.finder.WindowFinder;
 import org.assertj.swing.fixture.FrameFixture;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import view.Main;
 import view.addCustomer;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * This AddCustomerTest test case contains the tests to ensure a valid customer is added to the
@@ -29,6 +31,7 @@ import java.sql.SQLException;
  * handles all of the invalid inputs for the first name and last name inputs in order to create a new customer.
  */
 
+@Tag("unittest")
 public class AddCustomerTest {
 
     @BeforeEach
@@ -173,4 +176,71 @@ public class AddCustomerTest {
         window.cleanUp();
     }
 
+    private void enterCustomerInfo(FrameFixture window, Customer customer) throws ParseException {
+        // Enter test data in screen.
+        window.textBox("addCustomerFirstNameInput").setText(customer.getFirstName());
+        window.textBox("addCustomerLastNameInput").setText(customer.getLastName());
+        window.textBox("addCustomerNicInput").setText(customer.getNicNo());
+        window.textBox("addCustomerPassportInput").setText(customer.getPassportId());
+        window.textBox("addCustomerContactInput").setText(String.valueOf(customer.getContactNumber()));
+        window.textBox("addCustomerAddressInput").setText(customer.getAddress());
+
+        var genderLabel = customer.getGender().equals("Female") ? "addCustomerFemaleGenderLabel" : "addCustomerMaleGenderLabel";
+        window.radioButton(genderLabel).click();
+
+        window.button("addCustomerBrowseButton").click();
+
+        // Select test customer image.
+        var root = Path.of("").toAbsolutePath();
+        var testFilePath = root.resolve(Path.of("src", "test", "resources", "CustomerExampleImage.jpg"));
+        var testFile = testFilePath.toFile();
+
+        window.fileChooser("addCustomerPicChooser").selectFile(testFile);
+        window.fileChooser("addCustomerPicChooser").approve();
+
+        window.panel("addCustomerDateInput").textBox().setText("Apr 01, 2020");
+    }
+
+    @Test
+    void saveCustomerIsCalledGivenValidFemaleCustomer() throws SQLException, ParseException {
+        // Create and set mock database.
+        IDatabase database = Mockito.mock(IDatabase.class);
+        Database.setDatabase(database);
+
+        // Create window for UI testing.
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+        window.show();
+
+        // Mock customer ID.
+        Mockito.when(database.getNextCustomerId()).thenReturn("CS001");
+
+        // Navigate to Add Customer screen.
+        window.menuItem("customerRootMenu").click();
+        window.menuItem("addCustomerMenuItem").click();
+
+        var customer = new Customer(
+                "CS001",
+                "John",
+                "Smith",
+                "11111",
+                "aaaaa123",
+                "USA",
+                "2021-04-22",
+                "Female",
+                55555555,
+                null
+        );
+
+        enterCustomerInfo(window, customer);
+
+        // Submit customer.
+        window.button("addCustomerAddButton").click();
+
+        Mockito.verify(database).saveCustomer(Mockito.any());
+
+        window.cleanUp();
+    }
 }
+
+
