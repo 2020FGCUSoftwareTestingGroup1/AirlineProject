@@ -42,7 +42,7 @@ public class TicketReportTest {
     }
 
     @Test
-    void showingFlightRecordCalled(){
+    void showingFlightRecordCalled() throws InterruptedException {
         List<Ticket> ticketList = new ArrayList<Ticket>();
         ticketList.add(new Ticket("1230", "123456a", "456asd", "First Class", 369, 93, "2021-12-23"));
         ticketList.add(new Ticket("1231", "123456a", "457asd", "Coach Class", 380, 92, "2021-12-23"));
