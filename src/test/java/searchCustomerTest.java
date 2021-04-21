@@ -69,6 +69,25 @@ class searchCustomerTest {
 
     }
 
+    @Test
+    public void updateCustomerGender() {
+      Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
+          "AJ24", "123 First Street", "1990-01-01", "Male",
+          200, null);
+
+      Mockito.when(mockDatabase.getCustomer("CS001")).thenReturn(customer);
+
+      window.menuItem("customerRootMenu").click();
+      window.menuItem("searchCustomer").click();
+      window.textBox("customerIdInput").setText("CS001");
+      window.button("findButton").click();
+
+      window.radioButton("femaleRadioButton").click();
+      window.button("updateButton").click();
+
+      Mockito.verify(mockDatabase).getCustomer(Mockito.any());
+    }
+
 
     @AfterEach
     void cleanup() {
