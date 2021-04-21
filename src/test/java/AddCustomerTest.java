@@ -241,6 +241,27 @@ public class AddCustomerTest {
 
         window.cleanUp();
     }
+
+    @Test
+    void cancel() {
+        // Create and set mock database.
+        IDatabase database = Mockito.mock(IDatabase.class);
+        Database.setDatabase(database);
+
+        // Create window for UI testing.
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+        window.show();
+
+        // Navigate to Add Customer screen.
+        window.menuItem("customerRootMenu").click();
+        window.menuItem("addCustomerMenuItem").click();
+
+        // Click the Cancel Button.
+        window.button("cancelButton").click();
+
+        window.cleanUp();
+    }
 }
 
 
