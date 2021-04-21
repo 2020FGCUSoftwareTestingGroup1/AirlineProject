@@ -4,11 +4,9 @@ import model.Customer;
 import model.Flight;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import view.Main;
 
@@ -17,13 +15,17 @@ import java.util.ArrayList;
 public class BookTicketTest {
     // tests for customerID, search by Flight, and Seat counter changes
 
+    FrameFixture window;
     // Create and set mock database.
+    @Mock
     IDatabase database = Mockito.mock(IDatabase.class);
 
     @BeforeEach
     void setup() {
         Database.setDatabase(database);
-
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        window = new FrameFixture(frame);
+        window.show();
     }
 
     /** This method will test when a user searches for a ticket through a customer id
@@ -33,11 +35,6 @@ public class BookTicketTest {
      */
     @Test
     void searchCustomerShowsUserInformation(){
-
-        // Create window for UI testing.
-        Main frame = GuiActionRunner.execute(() -> new Main());
-        var window = new FrameFixture(frame);
-        window.show();
 
         Mockito.when(database.getCustomer("CS001")).thenReturn(new Customer("CS001", "john",
                 "Alex", "34232222", "3443", "Uk", "1996-06-01",
@@ -49,14 +46,12 @@ public class BookTicketTest {
 
         //enter data to search box
         window.textBox("customerIDbox").setText("CS001");
-
         window.button("customerSearchBTN").click();
 
         window.label("fNameLabel").requireText("john");
         window.label("lNameLabel").requireText("Alex");
         window.label("passportIDLabel").requireText("3443");
 
-        window.cleanUp();
     }
 
     @Test
@@ -68,11 +63,6 @@ public class BookTicketTest {
         ArrayList <Flight> theFlights = new ArrayList<>();
         theFlights.add(myFlight);
 
-        // Create window for UI testing.
-        Main frame = GuiActionRunner.execute(() -> new Main());
-        var window = new FrameFixture(frame);
-        window.show();
-
         //return the instance of the flight
         Mockito.when(database.searchFlightsBySourceAndDestination("India","Uk")).thenReturn
                 (theFlights);
@@ -80,24 +70,16 @@ public class BookTicketTest {
         //navigate to Book Ticket screen
         window.menuItem("TicketMenuItem").click();
         window.menuItem("BookTicket").click();
-
         window.comboBox("flightDepart").selectItem(2);
-
         window.button("searchFlightBTN").click();
 
         //ensure the table was populated with expected amount of flights
         window.table("searchResultTable").requireRowCount(1);
 
-        window.cleanUp();
     }
 
     @Test
     void seatCounterChanges(){
-
-        // Create window for UI testing.
-        Main frame = GuiActionRunner.execute(() -> new Main());
-        var window = new FrameFixture(frame);
-        window.show();
 
         //navigate to Book Ticket screen
         window.menuItem("TicketMenuItem").click();
@@ -107,7 +89,6 @@ public class BookTicketTest {
         window.spinner("chooseNumSeats").increment();
         window.label("totalPrice").requireText("500");
 
-        window.cleanUp();
     }
     @Test
     void checkTableRowSelectShowsInfo(){
@@ -117,11 +98,6 @@ public class BookTicketTest {
                 "8.00AM","10.00PM", "50000");
         ArrayList <Flight> theFlights = new ArrayList<>();
         theFlights.add(myFlight);
-
-        // Create window for UI testing.
-        Main frame = GuiActionRunner.execute(() -> new Main());
-        var window = new FrameFixture(frame);
-        window.show();
 
         //return the instance of the flight
         Mockito.when(database.searchFlightsBySourceAndDestination("India","Uk")).thenReturn
@@ -134,22 +110,15 @@ public class BookTicketTest {
         //flight details
         window.comboBox("flightDepart").selectItem(2);
         window.button("searchFlightBTN").click();
-
         window.table("searchResultTable").selectRows(0).click();
 
         window.label("flightNum").requireText("FO001");
         window.label("flightName").requireText("JetBlue");
         window.label("departTime").requireText("8.00AM");
 
-        window.cleanUp();
     }
     @Test
     void showErrorMessageForNullCustomer(){
-
-        // Create window for UI testing.
-        Main frame = GuiActionRunner.execute(() -> new Main());
-        var window = new FrameFixture(frame);
-        window.show();
 
         //navigate to Book Ticket screen
         window.menuItem("TicketMenuItem").click();
@@ -158,7 +127,6 @@ public class BookTicketTest {
         window.button("customerSearchBTN").click();
         window.dialog().optionPane().requireMessage("Record not Found");
 
-        window.cleanUp();
     }
 
     @Test
@@ -170,11 +138,6 @@ public class BookTicketTest {
 
         ArrayList <Flight> theFlights = new ArrayList<>();
         theFlights.add(myFlight);
-
-        // Create window for UI testing.
-        Main frame = GuiActionRunner.execute(() -> new Main());
-        var window = new FrameFixture(frame);
-        window.show();
 
         Mockito.when(database.getNextTicketId()).thenReturn("TO001");
         Mockito.when(database.getCustomer("CS001")).thenReturn(new Customer("CS001", "john",
@@ -197,21 +160,14 @@ public class BookTicketTest {
         window.button("searchFlightBTN").click();
         window.table("searchResultTable").selectRows(0).click();
         window.spinner("chooseNumSeats").increment();
-
         window.button("bookTicketBTN").click();
 
         window.dialog().optionPane().requireMessage("All fields have not been filled");
 
-        window.cleanUp();
     }
 
     @Test
     void bookTicketWindowClosed(){
-
-        // Create window for UI testing.
-        Main frame = GuiActionRunner.execute(() -> new Main());
-        var window = new FrameFixture(frame);
-        window.show();
 
         //navigate to Book Ticket screen
         window.menuItem("TicketMenuItem").click();
@@ -226,10 +182,14 @@ public class BookTicketTest {
             }
         });
 
-        window.cleanUp();
     }
+    @Disabled
     @Test
     void testInvalidFormBranches(){
 
+    }
+    @AfterEach
+    void cleanup(){
+        window.cleanUp();
     }
 }
