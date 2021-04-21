@@ -2,25 +2,15 @@ import database.Database;
 import database.IDatabase;
 import model.Customer;
 import model.Flight;
-import model.Ticket;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.jupiter.api.*;
-import org.mockito.Mock;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import view.Main;
 
-import javax.swing.*;
-import javax.xml.crypto.Data;
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BookTicketTest {
     // tests for customerID, search by Flight, and Seat counter changes
@@ -168,13 +158,13 @@ public class BookTicketTest {
 
         window.cleanUp();
     }
-    @Disabled
+
     @Test
     void showErrorMessageForInvalidForm(){
 
         //create a flight and add to an arraylist to populate table
         Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
-                null,"10.00PM", "50000");
+                "10:00PM","10:00PM", "50000");
 
         ArrayList <Flight> theFlights = new ArrayList<>();
         theFlights.add(myFlight);
@@ -184,6 +174,7 @@ public class BookTicketTest {
         var window = new FrameFixture(frame);
         window.show();
 
+        Mockito.when(database.getNextTicketId()).thenReturn("TO001");
         Mockito.when(database.getCustomer("CS001")).thenReturn(new Customer("CS001", "john",
                 "Alex", "34232222", "3443", "Uk", "1996-06-01",
                 "Male", 34324234, null));
