@@ -524,8 +524,8 @@ public class BookTicket extends JInternalFrame {
 
         if (!isFormValid()) {
             JOptionPane.showMessageDialog(
-                    null,
-                    "A flight has not been selected",
+                    this,
+                    "All fields have not been filled",
                     "Error",
                     JOptionPane.ERROR_MESSAGE
             );
