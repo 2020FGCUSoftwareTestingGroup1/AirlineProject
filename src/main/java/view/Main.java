@@ -97,6 +97,7 @@ public class Main extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Flight");
+        jMenu3.setName("flightRootMenu");
 
         jMenuItem4.setText("Add Flight");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +106,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem4);
+        jMenuItem4.setName("addFlightMenuItem");
 
         jMenuBar1.add(jMenu3);
 

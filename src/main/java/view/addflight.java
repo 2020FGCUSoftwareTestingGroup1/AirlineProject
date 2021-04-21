@@ -28,6 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 
+import static javax.swing.JOptionPane.showMessageDialog;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -79,6 +81,15 @@ public class addflight extends JInternalFrame {
         departureLocationComboBox = new JComboBox<>();
 
         rootPanel.setBackground(new Color(51, 51, 255));
+
+        flightNameInput.setName("addFlightNameInput");
+        departTimeInput.setName("addDepartureInput");
+        arriveTimeInput.setName("addArrivalInput");
+        flightChargeInput.setName("addFlightChargeInput");
+        dateChooser.setName("addFlightDateInput");
+        addFlightButton.setName("addFlightButton");
+        cancelButton.setName("cancelFlightButton");
+        rootPanel.setName("addFlightPanel");
 
         flightIdLabel.setFont(new Font("Tahoma", Font.BOLD, 11)); // NOI18N
         flightIdLabel.setForeground(new Color(255, 255, 255));
@@ -234,8 +245,9 @@ public class addflight extends JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
+    public boolean canSubmitTravelTime(String time) { return time.matches("([01]?[0-9]|2[0-3]):[0-5][0-9]");}
+    public boolean validDollarAmount(String amount) { return amount.matches("^(?=.*[1-9])[0-9]*[.,]?[0-9]{1,2}$");}
+
      public void autoID() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -264,17 +276,47 @@ public class addflight extends JInternalFrame {
     private void onAddFlight(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String id = flightIdField.getText();
-        String flightname = flightNameInput.getText();
+        String flightname = "";
+
+        if (!flightNameInput.getText().isEmpty()) {
+            flightname = flightNameInput.getText();
+        } else {
+            showMessageDialog(null, "Enter Flight Name!");
+            return;
+        }
          
         String source = arrivalLocationComboBox.getSelectedItem().toString().trim();
         String depart = departureLocationComboBox.getSelectedItem().toString().trim();
          
         DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
-        String date = da.format(dateChooser.getDate());
+        String date = "";
 
-        String departtime = departTimeInput.getText();
-        String arrtime = arriveTimeInput.getText();
-        String flightcharge = flightChargeInput.getText();
+        if (dateChooser.getDate() != null) {
+            da.format(dateChooser.getDate());
+        } else {
+            showMessageDialog(null, "Select a date!");
+            return;
+        }
+
+        String departtime = "";
+        String arrtime = "";
+
+        if (canSubmitTravelTime(departTimeInput.getText()) && canSubmitTravelTime(arriveTimeInput.getText())) {
+            departtime = departTimeInput.getText();
+            arrtime = arriveTimeInput.getText();
+        } else {
+            showMessageDialog(null, "Make sure time is formatted 0-23");
+            return;
+        }
+
+        String flightcharge = "";
+
+        if (validDollarAmount(flightChargeInput.getText())) {
+            flightcharge = flightChargeInput.getText();
+        } else {
+            showMessageDialog(null, "Make sure Cost is formatted 123.21");
+            return;
+        }
          
         var flight = new Flight(id, flightname, source, depart, date, departtime, arrtime, flightcharge);
 
