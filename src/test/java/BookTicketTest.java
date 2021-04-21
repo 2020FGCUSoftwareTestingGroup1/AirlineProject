@@ -4,9 +4,11 @@ import model.Customer;
 import model.Flight;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
 import view.Main;
 
@@ -201,5 +203,33 @@ public class BookTicketTest {
         window.dialog().optionPane().requireMessage("All fields have not been filled");
 
         window.cleanUp();
+    }
+
+    @Test
+    void bookTicketWindowClosed(){
+
+        // Create window for UI testing.
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+        window.show();
+
+        //navigate to Book Ticket screen
+        window.menuItem("TicketMenuItem").click();
+        window.menuItem("BookTicket").click();
+
+        window.button("cancelBTN").click();
+
+        Assertions.assertThrows(Exception.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                window.button("bookTicketBTN").click();
+            }
+        });
+
+        window.cleanUp();
+    }
+    @Test
+    void testInvalidFormBranches(){
+
     }
 }

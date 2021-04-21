@@ -102,6 +102,7 @@ public class BookTicket extends JInternalFrame {
         bookTicketButton = new JButton();
         bookTicketButton.setName("bookTicketBTN");
         cancelTicketButton = new JButton();
+        cancelTicketButton.setName("cancelBTN");
         txttotal = new JLabel();
         txttotal.setName("totalPrice");
         txtdate = new JDateChooser();
