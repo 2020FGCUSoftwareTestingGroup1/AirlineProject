@@ -89,8 +89,11 @@ public class BookTicket extends JInternalFrame {
         priceLabel = new JLabel();
         seatCountLabel = new JLabel();
         flightNumberText = new JLabel();
+        flightNumberText.setName("flightNum");
         flightNameText = new JLabel();
+        flightNameText.setName("flightName");
         txtdept = new JLabel();
+        txtdept.setName("departTime");
         ticketClassCombobox = new JComboBox<>();
         txtprice = new JTextField();
         txtprice.setName("priceOfSeats");

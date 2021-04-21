@@ -120,5 +120,38 @@ public class BookTicketTest {
 
         window.cleanUp();
     }
+    @Test
+    void checkTableRowSelectShowsInfo(){
 
+        //create a flight and add to an arraylist to populate table
+        Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
+                "8.00AM","10.00PM", "50000");
+        ArrayList <Flight> theFlights = new ArrayList<>();
+        theFlights.add(myFlight);
+
+        // Create window for UI testing.
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+        window.show();
+
+        //return the instance of the flight & customer
+        Mockito.when(database.searchFlightsBySourceAndDestination("India","Uk")).thenReturn
+                (theFlights);
+
+        //navigate to Book Ticket screen
+        window.menuItem("TicketMenuItem").click();
+        window.menuItem("BookTicket").click();
+
+        //flight details
+        window.comboBox("flightDepart").selectItem(2);
+        window.button("searchFlightBTN").click();
+
+        window.table("searchResultTable").selectRows(0).click();
+
+        window.label("flightNum").requireText("FO001");
+        window.label("flightName").requireText("JetBlue");
+        window.label("departTime").requireText("8.00AM");
+
+        window.cleanUp();
+    }
 }
