@@ -50,6 +50,19 @@ class searchCustomerTest {
     }
 
     @Test
+    public void findNullCustomer() {
+      Mockito.when(mockDatabase.getCustomer("CS001")).thenReturn(null);
+
+      window.menuItem("customerRootMenu").click();
+      window.menuItem("searchCustomer").click();
+      window.textBox("customerIdInput").setText("CS001");
+      window.button("findButton").click();
+      window.dialog().optionPane().requireMessage("Record not Found");
+
+      Mockito.verify(mockDatabase).getCustomer(Mockito.any());
+    }
+
+    @Test
     public void updateCustomer() {
       Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
           "AJ24", "123 First Street", "1990-01-01", "Male",
