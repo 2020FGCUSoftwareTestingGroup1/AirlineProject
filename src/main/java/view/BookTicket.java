@@ -1,6 +1,5 @@
 package view;
 
-import com.toedter.calendar.JDateChooser;
 import database.Database;
 import database.IDatabase;
 import model.Customer;
@@ -12,9 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;

@@ -14,6 +14,9 @@ import view.Main;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * The BookTicketTest class will cover all tests based on the Book Ticket Scene and its implementations
+ */
 public class BookTicketTest {
     // tests for customerID, search by Flight, and Seat counter changes
     FrameFixture window;
@@ -21,6 +24,10 @@ public class BookTicketTest {
     @Mock
     IDatabase database = Mockito.mock(IDatabase.class);
 
+    /**
+     * The BeforeEach annotation is useful as it setups up key reoccurring features
+     * for all tests in the test suite
+     */
     @BeforeEach
     void setup() {
         Database.setDatabase(database);
@@ -53,6 +60,9 @@ public class BookTicketTest {
         window.label("passportIDLabel").requireText("3443");
     }
 
+    /**
+     * Ensures that the data/values of a Flight Object shows up on the Table
+     */
     @Test
     void searchFlightShowsInfo(){
         //create a flight and add to an arraylist to populate table
@@ -75,6 +85,10 @@ public class BookTicketTest {
         window.table("searchResultTable").requireRowCount(1);
     }
 
+    /**
+     * This test ensures that the total cost of a ticket is correct
+     * when given a number of seats and price value
+     */
     @Test
     void seatCounterChanges(){
         //navigate to Book Ticket screen
@@ -86,6 +100,10 @@ public class BookTicketTest {
         window.label("totalPrice").requireText("500");
     }
 
+    /**
+     * This test allows us to see if the selected flight populates
+     * the given fields on the right side of the scene
+     */
     @Test
     void checkTableRowSelectShowsInfo(){
         //create a flight and add to an arraylist to populate table
@@ -112,6 +130,10 @@ public class BookTicketTest {
         window.label("departTime").requireText("8.00AM");
     }
 
+    /**
+     * This test will ensure that all branches of false forms will
+     * return false and thus not create a ticket
+     */
     @Test
     void producesCorrectFormResults() {
         var ticket = new BookTicket();
@@ -128,6 +150,9 @@ public class BookTicketTest {
         Assertions.assertFalse(ticket.isFormValid("TO001", "FO001", "CO001", "Business", "123", "1", null));
     }
 
+    /**
+     * This test shows a unique error message when no customer is added
+     */
     @Test
     void showErrorMessageForNullCustomer(){
 
@@ -139,6 +164,10 @@ public class BookTicketTest {
         window.dialog().optionPane().requireMessage("Record not Found");
     }
 
+    /**
+     * This test will assert that the error message comes up
+     * if/when the book button is clicked but a field is missing
+     */
     @Test
     void showErrorMessageForInvalidForm(){
         //create a flight and add to an arraylist to populate table
@@ -174,6 +203,9 @@ public class BookTicketTest {
         window.dialog().optionPane().requireMessage("All fields have not been filled");
     }
 
+    /**
+     * Ensure that the book ticket scene closes on cancel
+     */
     @Test
     void bookTicketWindowClosed(){
 
@@ -186,6 +218,10 @@ public class BookTicketTest {
         Assertions.assertThrows(Exception.class, () -> window.button("bookTicketBTN").click());
     }
 
+    /**
+     * This test will ensure that the exception is handled
+     * @throws SQLException
+     */
     @Test
     void exceptionHandledOnBookTicket() throws SQLException {
         Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
@@ -220,6 +256,9 @@ public class BookTicketTest {
         window.button("bookTicketBTN").click();
     }
 
+    /**
+     * This test will affirm that a ticket is created when all other parameters are filled in
+     */
     @Test
     void testTicketCreated(){
         //create a flight and add to an arraylist to populate table
@@ -252,6 +291,10 @@ public class BookTicketTest {
         window.spinner("chooseNumSeats").increment();
         window.button("bookTicketBTN").click();
     }
+
+    /**
+     * This tests what happens when the FlightID is left blank, displaying the proper message
+     */
     @Test
     void checkBranchFightIdBlank(){
         //create a flight and add to an arraylist to populate table
@@ -286,6 +329,10 @@ public class BookTicketTest {
 
         window.dialog().optionPane().requireMessage("All fields have not been filled");
     }
+
+    /**
+     * Similar to the above test, make sure the customerID is not blank when booking a ticket
+     */
     @Test
     void customerIdIsBlank(){
         //create a flight and add to an arraylist to populate table
@@ -321,6 +368,9 @@ public class BookTicketTest {
         window.dialog().optionPane().requireMessage("All fields have not been filled");
     }
 
+    /**
+     * Test assures that an invalid form throws the proper exception
+     */
     @Test
     void invalidBooking(){
         Assertions.assertThrows(Exception.class, new Executable() {
@@ -331,7 +381,9 @@ public class BookTicketTest {
         });
     }
 
-
+    /**
+     * The AfterEach annotation allows us to clean up the window scenes after each test
+     */
     @AfterEach
     void cleanup(){
         window.cleanUp();
