@@ -1,5 +1,6 @@
 import database.Database;
 import database.IDatabase;
+import java.util.Date;
 import model.Customer;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
@@ -174,6 +175,26 @@ public class AddCustomerTest {
         Mockito.verify(database).saveCustomer(Mockito.any());
 
         window.cleanUp();
+    }
+
+    @Test
+    void addCustomerWithInvalidDOB() throws SQLException {
+
+        // Create and set mock database.
+        IDatabase database = Mockito.mock(IDatabase.class);
+        Database.setDatabase(database);
+
+        addCustomer customerScreen = new addCustomer();
+
+        Assertions.assertFalse(customerScreen.isValid("John", "", "", "", "", true,
+            false, null, null));
+
+        Assertions.assertFalse(customerScreen.isValid("John", "", "", "", "", true,
+            false, new Date(), new byte[1024]));
+
+        Assertions.assertFalse(customerScreen.isValid("John", "", "", "", "", true,
+            false, new Date(), new byte[0]));
+
     }
 
     private void enterCustomerInfo(FrameFixture window, Customer customer) throws ParseException {
