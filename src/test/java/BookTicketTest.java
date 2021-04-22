@@ -120,7 +120,7 @@ public class BookTicketTest {
         window.button("customerSearchBTN").click();
         window.dialog().optionPane().requireMessage("Record not Found");
     }
-    @Disabled
+
     @Test
     void showErrorMessageForInvalidForm(){
         //create a flight and add to an arraylist to populate table
@@ -130,7 +130,7 @@ public class BookTicketTest {
         ArrayList <Flight> theFlights = new ArrayList<>();
         theFlights.add(myFlight);
 
-        Mockito.when(database.getNextTicketId()).thenReturn("TO001");
+        Mockito.when(database.getNextTicketId()).thenReturn("");
         Mockito.when(database.getCustomer("CS001")).thenReturn(new Customer("CS001", "john",
                 "Alex", "34232222", "3443", "Uk", "1996-06-01",
                 "Male", 34324234, null));
@@ -204,6 +204,74 @@ public class BookTicketTest {
         window.table("searchResultTable").selectRows(0).click();
         window.spinner("chooseNumSeats").increment();
         window.button("bookTicketBTN").click();
+    }
+    @Test
+    void checkBranchFightIdBlank(){
+        //create a flight and add to an arraylist to populate table
+        Flight myFlight = new Flight("", "JetBlue", "India","Uk", "2019-06-14",
+                "10:00PM","10:00PM", "50000");
+
+        ArrayList <Flight> theFlights = new ArrayList<>();
+        theFlights.add(myFlight);
+
+        Mockito.when(database.getNextTicketId()).thenReturn("TO001");
+        Mockito.when(database.getCustomer("CS001")).thenReturn(new Customer("CS001", "john",
+                "Alex", "34232222", "3443", "Uk", "1996-06-01",
+                "Male", 34324234, null));
+        //return the instance of the flight
+        Mockito.when(database.searchFlightsBySourceAndDestination("India","Uk")).thenReturn
+                (theFlights);
+
+        //navigate to Book Ticket screen
+        window.menuItem("TicketMenuItem").click();
+        window.menuItem("BookTicket").click();
+
+        //enter data to search box
+        window.textBox("customerIDbox").setText("CS001");
+        window.button("customerSearchBTN").click();
+
+        //flight details
+        window.comboBox("flightDepart").selectItem(2);
+        window.button("searchFlightBTN").click();
+        window.table("searchResultTable").selectRows(0).click();
+        window.spinner("chooseNumSeats").increment();
+        window.button("bookTicketBTN").click();
+
+        window.dialog().optionPane().requireMessage("All fields have not been filled");
+    }
+    @Test
+    void customerIdIsBlank(){
+        //create a flight and add to an arraylist to populate table
+        Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
+                "10:00PM","10:00PM", "50000");
+
+        ArrayList <Flight> theFlights = new ArrayList<>();
+        theFlights.add(myFlight);
+
+        Mockito.when(database.getNextTicketId()).thenReturn("TO001");
+        Mockito.when(database.getCustomer("CS001")).thenReturn(new Customer("CS001", "john",
+                "Alex", "34232222", "3443", "Uk", "1996-06-01",
+                "Male", 34324234, null));
+        //return the instance of the flight
+        Mockito.when(database.searchFlightsBySourceAndDestination("India","Uk")).thenReturn
+                (theFlights);
+        //navigate to Book Ticket screen
+        window.menuItem("TicketMenuItem").click();
+        window.menuItem("BookTicket").click();
+
+        //enter data to search box
+        window.textBox("customerIDbox").setText("CS001");
+        window.button("customerSearchBTN").click();
+        window.textBox("customerIDbox").setText("");
+
+        //flight details
+        window.comboBox("flightDepart").selectItem(2);
+        window.button("searchFlightBTN").click();
+        window.table("searchResultTable").selectRows(0).click();
+        window.spinner("chooseNumSeats").increment();
+        window.button("bookTicketBTN").click();
+
+        window.dialog().optionPane().requireMessage("All fields have not been filled");
     }
 
     @AfterEach
