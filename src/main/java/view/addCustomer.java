@@ -4,6 +4,7 @@ package view;
 import com.toedter.calendar.JDateChooser;
 import database.Database;
 import database.IDatabase;
+import java.util.Date;
 import model.Customer;
 
 import java.awt.*;
@@ -67,14 +68,21 @@ public class addCustomer extends javax.swing.JInternalFrame {
         var validDob = txtdob != null;
         var validImage = userimage != null && userimage.length > 0;
 
-        return validFirstName &&
-            validLastName &&
-            validNic &&
-            validPassport &&
-            validContact &&
-            validButtons &&
-            validDob &&
-            validImage;
+        return isValid(txtfirstname.getText(), txtlastname.getText(), txtnic.getText(), txtpassport.getText(), txtcontact.getText(),
+            maleRadioButton.isSelected(), femaleRadioButton.isSelected(), txtdob.getDate(), userimage);
+    }
+
+    public boolean isValid(String validFirstName, String validLastName, String validNic,
+        String validPassport, String validContact, boolean isMale, boolean isFemale, Date validDob,
+        byte[] validImage) {
+        return canSubmitName(validFirstName) &&
+            canSubmitName(validLastName) &&
+            validNic.matches("^\\d+$") &&
+            canSubmitPassportID(validPassport) &&
+            validContact.matches("^\\d+$") &&
+            (isMale || isFemale) &&
+            validDob != null &&
+            (validImage != null && validImage.length > 0);
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -435,20 +443,25 @@ public class addCustomer extends javax.swing.JInternalFrame {
          String lastname = txtlastname.getText();
         
         DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
-        String date = da.format(txtdob.getDate());
+        if (txtdob.getDate() == null) {
+            showMessageDialog(null, "Please enter a valid date of birth.");
+        } else {
+            String date = da.format(txtdob.getDate());
 
-        String Gender = (maleRadioButton.isSelected()) ? "Male" : "Female";
-        
-        String contact = txtcontact.getText();
-         
-        try {
-            var customer = new Customer(id, firstname, lastname, nic, passport, address, date, Gender, Integer.valueOf(contact), userimage);
+            String Gender = (maleRadioButton.isSelected()) ? "Male" : "Female";
 
-            database.saveCustomer(customer);
+            String contact = txtcontact.getText();
 
-            showMessageDialog(null,"Registation Created");
-        } catch (SQLException ex) {
-            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                var customer = new Customer(id, firstname, lastname, nic, passport, address, date,
+                    Gender, Integer.valueOf(contact), userimage);
+
+                database.saveCustomer(customer);
+
+                showMessageDialog(null, "Registation Created");
+            } catch (SQLException ex) {
+                Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
