@@ -8,8 +8,10 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import view.BookTicket;
 import view.Main;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BookTicketTest {
@@ -111,6 +113,22 @@ public class BookTicketTest {
     }
 
     @Test
+    void producesCorrectFormResults() {
+        var ticket = new BookTicket();
+
+        Assertions.assertTrue(ticket.isFormValid("TO001", "FO001", "CO001", "Business", "123", "1", "2020-01-01"));
+
+        Assertions.assertFalse(ticket.isFormValid("", "FO001", "CO001", "Business", "123", "1", "2020-01-01"));
+        Assertions.assertFalse(ticket.isFormValid("TO001", "", "CO001", "Business", "123", "1", "2020-01-01"));
+        Assertions.assertFalse(ticket.isFormValid("TO001", "", "", "", "", "", ""));
+        Assertions.assertFalse(ticket.isFormValid("TO001", "FO001", "", "Business", "123", "1", "2020-01-01"));
+        Assertions.assertFalse(ticket.isFormValid("TO001", "FO001", "CO001", "", "123", "1", "2020-01-01"));
+        Assertions.assertFalse(ticket.isFormValid("TO001", "FO001", "CO001", "Business", "", "1", "2020-01-01"));
+        Assertions.assertFalse(ticket.isFormValid("TO001", "FO001", "CO001", "Business", "123", "", "2020-01-01"));
+        Assertions.assertFalse(ticket.isFormValid("TO001", "FO001", "CO001", "Business", "123", "1", null));
+    }
+
+    @Test
     void showErrorMessageForNullCustomer(){
 
         //navigate to Book Ticket screen
@@ -165,12 +183,41 @@ public class BookTicketTest {
 
         window.button("cancelBTN").click();
 
-        Assertions.assertThrows(Exception.class, new Executable() {
-            @Override
-            public void execute() throws Throwable {
-                window.button("bookTicketBTN").click();
-            }
-        });
+        Assertions.assertThrows(Exception.class, () -> window.button("bookTicketBTN").click());
+    }
+
+    @Test
+    void exceptionHandledOnBookTicket() throws SQLException {
+        Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
+                "10:00PM","10:00PM", "50000");
+
+        ArrayList <Flight> theFlights = new ArrayList<>();
+        theFlights.add(myFlight);
+
+        Mockito.when(database.getNextTicketId()).thenReturn("");
+        Mockito.when(database.getCustomer("CS001")).thenReturn(new Customer("CS001", "john",
+                "Alex", "34232222", "3443", "Uk", "1996-06-01",
+                "Male", 34324234, null));
+        //return the instance of the flight
+        Mockito.when(database.searchFlightsBySourceAndDestination("India","Uk")).thenReturn
+                (theFlights);
+
+        Mockito.doThrow(SQLException.class).when(database).saveTicket(Mockito.any());
+
+        //navigate to Book Ticket screen
+        window.menuItem("TicketMenuItem").click();
+        window.menuItem("BookTicket").click();
+
+        //enter data to search box
+        window.textBox("customerIDbox").setText("CS001");
+        window.button("customerSearchBTN").click();
+
+        //flight details
+        window.comboBox("flightDepart").selectItem(2);
+        window.button("searchFlightBTN").click();
+        window.table("searchResultTable").selectRows(0).click();
+        window.spinner("chooseNumSeats").increment();
+        window.button("bookTicketBTN").click();
     }
 
     @Test

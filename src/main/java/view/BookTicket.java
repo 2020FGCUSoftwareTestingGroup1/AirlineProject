@@ -505,6 +505,24 @@ public class BookTicket extends JInternalFrame {
         
     }//GEN-LAST:event_txtseatsStateChanged
 
+    public boolean isFormValid(
+        String ticketid,
+        String flightid,
+        String custid,
+        String flightclass,
+        String price,
+        String seats,
+        String date
+    ) {
+        return !ticketid.isBlank() &&
+                !flightid.isBlank() &&
+                !custid.isBlank() &&
+                !flightclass.isBlank() &&
+                !price.isBlank() &&
+                !seats.isBlank() &&
+                date != null;
+    }
+
     public boolean isFormValid() {
         String ticketid = txtticketno.getText();
         String flightid = flightNumberText.getText();
@@ -514,9 +532,7 @@ public class BookTicket extends JInternalFrame {
         String seats = txtseats.getValue().toString();
         String date = txtdate;
 
-        return !ticketid.isBlank() && !flightid.isBlank() &&
-                !custid.isBlank() && !flightclass.isBlank() && !price.isBlank() &&
-                !seats.isBlank() && date != null;
+        return isFormValid(ticketid, flightid, custid, flightclass, price, seats, date);
     }
 
     private void onBookFlight(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
