@@ -105,7 +105,6 @@ public class BookTicket extends JInternalFrame {
         cancelTicketButton.setName("cancelBTN");
         txttotal = new JLabel();
         txttotal.setName("totalPrice");
-        txtdate = new JDateChooser();
 
         txtseats.setModel(new SpinnerNumberModel(0, 0, 100, 1));
         ((JSpinner.DefaultEditor) txtseats.getEditor()).getTextField().setEditable(false);
@@ -487,7 +486,8 @@ public class BookTicket extends JInternalFrame {
        flightNumberText.setText(Df.getValueAt(selectIndex, 0).toString());
        flightNameText.setText(Df.getValueAt(selectIndex, 1).toString());
        txtdept.setText(Df.getValueAt(selectIndex, 5).toString());
-        txtprice.setText(Df.getValueAt(selectIndex, 7).toString());
+       txtprice.setText(Df.getValueAt(selectIndex, 7).toString());
+       txtdate = Df.getValueAt(selectIndex,4).toString();
         
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -512,7 +512,7 @@ public class BookTicket extends JInternalFrame {
         String flightclass = ticketClassCombobox.getSelectedItem().toString().trim();
         String price = txtprice.getText();
         String seats = txtseats.getValue().toString();
-        Date date = txtdate.getDate();
+        String date = txtdate;
 
 
         return !ticketid.isBlank() && !flightid.isBlank() &&
@@ -539,8 +539,8 @@ public class BookTicket extends JInternalFrame {
         String flightclass = ticketClassCombobox.getSelectedItem().toString().trim();
         String price = txtprice.getText();
         String seats = txtseats.getValue().toString();
-        DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
-        String date = da.format(txtdate.getDate());
+        //DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
+        String date = txtdate;
 
         Ticket ticket = new Ticket(
                 ticketid, flightid, custid,
@@ -599,5 +599,5 @@ public class BookTicket extends JInternalFrame {
     private JLabel txtticketno;
     private JLabel txttotal;
     // End of variables declaration//GEN-END:variables
-    private JDateChooser txtdate;
+    private String txtdate;
 }
