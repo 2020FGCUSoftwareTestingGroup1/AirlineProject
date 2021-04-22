@@ -264,7 +264,7 @@ public class AddCustomerTest {
     }
 
     @Test
-    void cancel() {
+    void cancelButtonDismissesPanel() {
         // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);

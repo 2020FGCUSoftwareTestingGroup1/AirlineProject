@@ -4,14 +4,11 @@ import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
 import view.Main;
 import view.addflight;
 
-import javax.swing.*;
-import javax.xml.crypto.Data;
-import java.util.IdentityHashMap;
+import java.sql.SQLException;
 
 public class AddFlightTest {
     @Test
@@ -100,6 +97,8 @@ public class AddFlightTest {
 
         window.button("addFlightButton").click();
         window.button("cancelFlightButton").click();
+        window.dialog().requireModal().optionPane().requireMessage("Enter Flight Name!");
+
         window.cleanUp();
     }
 
@@ -122,6 +121,7 @@ public class AddFlightTest {
 
         window.button("addFlightButton").click();
         window.button("cancelFlightButton").click();
+        window.dialog().requireModal().optionPane().requireMessage("Select a date!");
         window.cleanUp();
     }
 
@@ -144,6 +144,8 @@ public class AddFlightTest {
 
         window.button("addFlightButton").click();
         window.button("cancelFlightButton").click();
+        window.dialog().requireModal().optionPane().requireMessage("Make sure time is formatted 0-23");
+
         window.cleanUp();
     }
 
@@ -166,6 +168,8 @@ public class AddFlightTest {
 
         window.button("addFlightButton").click();
         window.button("cancelFlightButton").click();
+        window.dialog().requireModal().optionPane().requireMessage("Make sure time is formatted 0-23");
+
         window.cleanUp();
     }
 
@@ -188,6 +192,33 @@ public class AddFlightTest {
 
         window.button("addFlightButton").click();
         window.button("cancelFlightButton").click();
+        window.dialog().requireModal().optionPane().requireMessage("Make sure Cost is formatted 123.21");
         window.cleanUp();
+
+    }
+
+    @Test
+    public void catchesExceptionOnFailedUpdate() throws SQLException {
+        IDatabase database = Mockito.mock(IDatabase.class);
+        Database.setDatabase(database);
+
+        Mockito.when(database.getNextFlightId()).thenReturn("FO001");
+        Mockito.doThrow(SQLException.class).when(database).saveFlight(Mockito.any());
+
+        Main frame = GuiActionRunner.execute(() -> new Main());
+        var window = new FrameFixture(frame);
+
+        window.show();
+        window.menuItem("flightRootMenu").click();
+        window.menuItem("addFlightMenuItem").click();
+        window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
+        window.textBox("addFlightNameInput").setText("Name");
+        window.textBox("addDepartureInput").setText("12:00");
+        window.textBox("addArrivalInput").setText("2:34");
+        window.textBox("addFlightChargeInput").setText("123");
+
+        window.button("addFlightButton").click();
+        window.cleanUp();
+        Mockito.verify(database).saveFlight(Mockito.any());
     }
 }

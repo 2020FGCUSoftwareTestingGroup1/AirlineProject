@@ -1,20 +1,18 @@
-import static org.junit.jupiter.api.Assertions.*;
-
 import database.Database;
 import database.IDatabase;
-import java.nio.file.Path;
 import model.Customer;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import view.Main;
-import view.searchCustomer;
+
+import java.nio.file.Path;
+import java.sql.SQLException;
 
 class searchCustomerTest {
 
@@ -49,6 +47,25 @@ class searchCustomerTest {
 
       Mockito.verify(mockDatabase).getCustomer(Mockito.any());
     }
+
+  @Test
+  public void catchesExceptionOnFailedUpdate() throws SQLException {
+    Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
+            "AJ24", "123 First Street", "1990-01-01", "Male",
+            200, new byte[1024]);
+
+    Mockito.when(mockDatabase.getCustomer("CS001")).thenReturn(customer);
+    Mockito.doThrow(SQLException.class).when(mockDatabase).updateCustomer(Mockito.any());
+
+    window.menuItem("customerRootMenu").click();
+    window.menuItem("searchCustomer").click();
+    window.textBox("customerIdInput").setText("CS001");
+    window.button("findButton").click();
+    window.button("updateButton").click();
+
+    Mockito.verify(mockDatabase).getCustomer(Mockito.any());
+    Mockito.verify(mockDatabase).updateCustomer(Mockito.any());
+  }
 
     @Test
     public void findNullCustomer() {
