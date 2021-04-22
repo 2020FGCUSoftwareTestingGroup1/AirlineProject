@@ -514,7 +514,6 @@ public class BookTicket extends JInternalFrame {
         String seats = txtseats.getValue().toString();
         String date = txtdate;
 
-
         return !ticketid.isBlank() && !flightid.isBlank() &&
                 !custid.isBlank() && !flightclass.isBlank() && !price.isBlank() &&
                 !seats.isBlank() && date != null;

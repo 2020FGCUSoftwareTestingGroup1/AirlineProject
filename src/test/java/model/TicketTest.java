@@ -1,7 +1,9 @@
 package model;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,5 +36,16 @@ class TicketTest {
     @DisplayName("Creates a valid Ticket without an error.")
     void successfullyCreatesValidTicket() {
         assertDoesNotThrow(() -> new Ticket("", "", "", "", 0, 0, "2020-01-22"));
+    }
+
+    @Test
+    void getId() {
+        Assertions.assertThrows(Exception.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                Ticket sample = new Ticket("123", "abcd", "ovgarcia", "First",  333, 23, "Today lol");
+                sample.setDate("lol");
+            }
+        });
     }
 }

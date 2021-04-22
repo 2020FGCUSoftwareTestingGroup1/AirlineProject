@@ -274,6 +274,17 @@ public class BookTicketTest {
         window.dialog().optionPane().requireMessage("All fields have not been filled");
     }
 
+    @Test
+    void invalidBooking(){
+        Assertions.assertThrows(Exception.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                window.button("bookTicketBtn").click();
+            }
+        });
+    }
+
+
     @AfterEach
     void cleanup(){
         window.cleanUp();

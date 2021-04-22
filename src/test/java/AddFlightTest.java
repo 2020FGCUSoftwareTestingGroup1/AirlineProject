@@ -125,6 +125,7 @@ public class AddFlightTest {
         window.cleanUp();
     }
 
+    @Test
     void checksInvalidDepartureTimePopUp(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
