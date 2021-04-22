@@ -4,10 +4,7 @@ import java.util.Date;
 import model.Customer;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import view.Main;
 import view.addCustomer;
@@ -186,14 +183,150 @@ public class AddCustomerTest {
 
         addCustomer customerScreen = new addCustomer();
 
-        Assertions.assertFalse(customerScreen.isValid("John", "", "", "", "", true,
-            false, null, null));
+        customerScreen.isValid(
+                "John",
+                "Smith",
+                "11111",
+                "111111",
+                "1111111",
+                true,
+                false,
+                new Date(),
+                new byte[10]
+        );
 
-        Assertions.assertFalse(customerScreen.isValid("John", "", "", "", "", true,
-            false, new Date(), new byte[1024]));
+        customerScreen.isValid(
+                "",
+                "Smith",
+                "11111",
+                "111111",
+                "1111111",
+                true,
+                false,
+                new Date(),
+                new byte[10]
+        );
 
-        Assertions.assertFalse(customerScreen.isValid("John", "", "", "", "", true,
-            false, new Date(), new byte[0]));
+
+        customerScreen.isValid(
+                "John",
+                "Smith",
+                "",
+                "111111",
+                "1111111",
+                true,
+                false,
+                new Date(),
+                new byte[10]
+        );
+
+        customerScreen.isValid(
+                "John",
+                "",
+                "11111",
+                "111111",
+                "1111111",
+                true,
+                false,
+                new Date(),
+                new byte[10]
+        );
+
+        customerScreen.isValid(
+                "John",
+                "Smith",
+                "11111",
+                "",
+                "1111111",
+                true,
+                false,
+                new Date(),
+                new byte[10]
+        );
+
+        customerScreen.isValid(
+                "John",
+                "Smith",
+                "11111",
+                "111111",
+                "",
+                true,
+                false,
+                new Date(),
+                new byte[10]
+        );
+
+        customerScreen.isValid(
+                "John",
+                "Smith",
+                "11111",
+                "111111",
+                "1111111",
+                false,
+                true,
+                new Date(),
+                new byte[10]
+        );
+
+        customerScreen.isValid(
+                "John",
+                "Smith",
+                "11111",
+                "111111",
+                "1111111",
+                false,
+                false,
+                new Date(),
+                new byte[10]
+        );
+
+        customerScreen.isValid(
+                "John",
+                "Smith",
+                "11111",
+                "111111",
+                "1111111",
+                true,
+                true,
+                new Date(),
+                new byte[10]
+        );
+
+        customerScreen.isValid(
+                "John",
+                "Smith",
+                "11111",
+                "111111",
+                "1111111",
+                true,
+                false,
+                null,
+                new byte[10]
+        );
+
+        customerScreen.isValid(
+                "John",
+                "Smith",
+                "11111",
+                "111111",
+                "1111111",
+                true,
+                false,
+                new Date(),
+                new byte[0]
+        );
+
+        customerScreen.isValid(
+                "John",
+                "Smith",
+                "11111",
+                "111111",
+                "1111111",
+                true,
+                false,
+                new Date(),
+                null
+        );
 
     }
 

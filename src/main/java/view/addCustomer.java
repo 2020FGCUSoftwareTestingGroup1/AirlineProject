@@ -59,15 +59,6 @@ public class addCustomer extends javax.swing.JInternalFrame {
     public boolean canSubmitPassportID(String PassportID) { return PassportID.matches("[a-zA-Z0-9]{6,9}");}
     
     public boolean canSubmit() {
-        var validFirstName = canSubmitName(txtfirstname.getText());
-        var validLastName = canSubmitName(txtlastname.getText());
-        var validNic = txtnic.getText().matches("^\\d+$");
-        var validPassport = canSubmitPassportID(txtpassport.getText());
-        var validContact = txtcontact.getText().matches("^\\d+$");
-        var validButtons = (maleRadioButton.isSelected() || femaleRadioButton.isSelected());
-        var validDob = txtdob != null;
-        var validImage = userimage != null && userimage.length > 0;
-
         return isValid(txtfirstname.getText(), txtlastname.getText(), txtnic.getText(), txtpassport.getText(), txtcontact.getText(),
             maleRadioButton.isSelected(), femaleRadioButton.isSelected(), txtdob.getDate(), userimage);
     }
@@ -443,25 +434,21 @@ public class addCustomer extends javax.swing.JInternalFrame {
          String lastname = txtlastname.getText();
         
         DateFormat da = new SimpleDateFormat("yyyy-MM-dd");
-        if (txtdob.getDate() == null) {
-            showMessageDialog(null, "Please enter a valid date of birth.");
-        } else {
-            String date = da.format(txtdob.getDate());
+        String date = da.format(txtdob.getDate());
 
-            String Gender = (maleRadioButton.isSelected()) ? "Male" : "Female";
+        String Gender = (maleRadioButton.isSelected()) ? "Male" : "Female";
 
-            String contact = txtcontact.getText();
+        String contact = txtcontact.getText();
 
-            try {
-                var customer = new Customer(id, firstname, lastname, nic, passport, address, date,
-                    Gender, Integer.valueOf(contact), userimage);
+        try {
+            var customer = new Customer(id, firstname, lastname, nic, passport, address, date,
+                Gender, Integer.valueOf(contact), userimage);
 
-                database.saveCustomer(customer);
+            database.saveCustomer(customer);
 
-                showMessageDialog(null, "Registation Created");
-            } catch (SQLException ex) {
-                Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            showMessageDialog(null, "Registation Created");
+        } catch (SQLException ex) {
+            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
