@@ -58,25 +58,4 @@ public class AddCustomerIntegrationTest {
                 "- Contact number cannot be empty\n" +
                 "- A photo must be specified");
     }
-
-    @Disabled
-    @Test
-    void createdCustomerAppearsWhenSearched() {
-        window.menuItem("customerRootMenu").click();
-        window.menuItem("addCustomerMenuItem").click();
-
-        window.textBox("addCustomerFirstNameInput").setText("John");
-        window.textBox("addCustomerFirstNameInput").setText("John");
-        window.textBox("addCustomerFirstNameInput").setText("John");
-        window.textBox("addCustomerFirstNameInput").setText("John");
-        window.textBox("addCustomerFirstNameInput").setText("John");
-        window.textBox("addCustomerFirstNameInput").setText("John");
-        window.textBox("addCustomerFirstNameInput").setText("John");
-        window.textBox("addCustomerFirstNameInput").setText("John");
-        window.textBox("addCustomerFirstNameInput").setText("John");
-
-        window.panel("addCustomerDateInput").textBox().setText("Apr 22, 2021");
-
-    }
-
 }
