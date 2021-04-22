@@ -3,39 +3,24 @@ import database.IDatabase;
 import model.Ticket;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import view.Main;
 
-import javax.xml.crypto.Data;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TicketReportTest {
     FrameFixture window;
     
-    @Rule
-    public MockitoRule initRule = MockitoJUnit.rule();
-    
-    @Mock
-    IDatabase mockDatabase;
+    IDatabase mockDatabase = Mockito.mock(IDatabase.class);
 
     @BeforeEach
     void setup() {
-        MockitoAnnotations.openMocks(this);
         Database.setDatabase(mockDatabase);
-
         Main frame = GuiActionRunner.execute(()-> new Main()) ;
         window = new FrameFixture(frame);
         window.show();
@@ -55,7 +40,7 @@ public class TicketReportTest {
         window.menuItem("TicketReportItem").click();
 
 
-        Assert.assertEquals(5, window.table("TicketTable").rowCount());
+        Assertions.assertEquals(5, window.table("TicketTable").rowCount());
         Mockito.verify(mockDatabase).getTickets();
     }
 

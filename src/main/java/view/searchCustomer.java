@@ -105,17 +105,8 @@ public class searchCustomer extends JInternalFrame {
         addressLabel.setForeground(new java.awt.Color(255, 255, 255));
         addressLabel.setText("Address");
 
-        lastNameInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                txtlastnameActionPerformed(evt);
-            }
-        });
-
-        passportIdInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                txtpassportActionPerformed(evt);
-            }
-        });
+        lastNameInput.addActionListener(this::txtlastnameActionPerformed);
+        passportIdInput.addActionListener(this::txtpassportActionPerformed);
 
         addressInput.setColumns(20);
         addressInput.setRows(5);

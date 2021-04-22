@@ -186,6 +186,25 @@ public class RealDatabase implements IDatabase {
     }
 
     @Override
+    public String getNextFlightId() {
+        try {
+            Statement s = con.createStatement();
+            ResultSet rs = s.executeQuery("select MAX(id) from flight");
+            rs.next();
+
+            if (rs.getString("MAX(id)") == null) {
+                return ("FO001");
+            } else {
+                long id = Long.parseLong(rs.getString("MAX(id)").substring(2));
+                id++;
+                return ("FO" + String.format("%03d", id));
+            }
+        } catch (SQLException e) {
+            return "FO001";
+        }
+    }
+
+    @Override
     public List<Flight> searchFlightsBySourceAndDestination(String source, String depart) {
         ArrayList<Flight> flights = new ArrayList<>();
 

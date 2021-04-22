@@ -36,7 +36,11 @@ test {
 jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
 
-    classDirectories.setFrom(fileTree(dir: "build/classes/java/main"))
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: 'database/**')
+        }))
+    }
 
     reports {
         xml.enabled true

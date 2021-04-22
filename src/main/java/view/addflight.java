@@ -48,9 +48,6 @@ public class addflight extends JInternalFrame {
         autoID();
     }
     
-    Connection con;
-    PreparedStatement pst;
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -249,28 +246,7 @@ public class addflight extends JInternalFrame {
     public boolean validDollarAmount(String amount) { return amount.matches("^(?=.*[1-9])[0-9]*[.,]?[0-9]{1,2}$");}
 
      public void autoID() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/airline","root","");
-            Statement s = con.createStatement();
-            ResultSet rs = s.executeQuery("select MAX(id) from flight");
-            rs.next();
-            rs.getString("MAX(id)");
-            if(rs.getString("MAX(id)") == null)
-            {
-                flightIdField.setText("FO001");
-            }
-            else
-            {
-                long id = Long.parseLong(rs.getString("MAX(id)").substring(2,rs.getString("MAX(id)").length()));
-                id++;
-                 flightIdField.setText("FO" + String.format("%03d", id));
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(addCustomer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        flightIdField.setText(database.getNextFlightId());
     }
     
     private void onAddFlight(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

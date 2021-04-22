@@ -21,7 +21,9 @@ public interface IDatabase {
     String getNextTicketId();
     String getNextCustomerId();
     String getNextUserId();
+    String getNextFlightId();
 
     List<Flight> searchFlightsBySourceAndDestination(String source, String depart);
     void updateCustomer(Customer customer) throws SQLException;
+
 }
