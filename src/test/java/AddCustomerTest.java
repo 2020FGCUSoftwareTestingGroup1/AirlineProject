@@ -48,6 +48,7 @@ public class AddCustomerTest {
      * @Returns Bool
      */
     @Test
+    @Tag("unit")
     void canSubmitNameReturnsTrue() {
 
         addCustomer customerScreen = new addCustomer();
@@ -72,6 +73,7 @@ public class AddCustomerTest {
      * - Just letters with spaces.
      */
     @Test
+    @Tag("unit")
     void canSubmitNameReturnsFalse() {
         addCustomer customerScreen = new addCustomer();
 
@@ -105,6 +107,7 @@ public class AddCustomerTest {
 
 
     @Test
+    @Tag("unit")
     void canSubmitPassportIDReturnsTrue() {
         addCustomer customerScreen = new addCustomer();
 
@@ -115,6 +118,7 @@ public class AddCustomerTest {
         Assertions.assertTrue(validPassportIDHigherBVA);
     }
 
+    @Tag("unit")
     @Test
     void canSubmitPassportIDReturnsFalse() {
         addCustomer customerScreen = new addCustomer();
@@ -127,6 +131,7 @@ public class AddCustomerTest {
     }
 
     @Test
+    @Tag("ui")
     void saveCustomerIsCalledGivenValidCustomer() throws SQLException {
         // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
@@ -175,6 +180,7 @@ public class AddCustomerTest {
     }
 
     @Test
+    @Tag("ui")
     void addCustomerWithInvalidDOB() throws SQLException {
 
         // Create and set mock database.
@@ -356,6 +362,7 @@ public class AddCustomerTest {
     }
 
     @Test
+    @Tag("ui")
     void saveCustomerIsCalledGivenValidFemaleCustomer() throws SQLException, ParseException {
         // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
@@ -397,6 +404,7 @@ public class AddCustomerTest {
     }
 
     @Test
+    @Tag("ui")
     void cancelButtonDismissesPanel() {
         // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);

@@ -35,6 +35,7 @@ public class BookTicketTest {
      * the program will fill in first name, last name, and passport id
      */
     @Test
+    @Tag("ui")
     void searchCustomerShowsUserInformation(){
         Mockito.when(database.getCustomer("CS001")).thenReturn(new Customer("CS001", "john",
                 "Alex", "34232222", "3443", "Uk", "1996-06-01",
@@ -54,6 +55,7 @@ public class BookTicketTest {
     }
 
     @Test
+    @Tag("ui")
     void searchFlightShowsInfo(){
         //create a flight and add to an arraylist to populate table
         Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
@@ -76,6 +78,7 @@ public class BookTicketTest {
     }
 
     @Test
+    @Tag("ui")
     void seatCounterChanges(){
         //navigate to Book Ticket screen
         window.menuItem("TicketMenuItem").click();
@@ -87,6 +90,7 @@ public class BookTicketTest {
     }
 
     @Test
+    @Tag("ui")
     void checkTableRowSelectShowsInfo(){
         //create a flight and add to an arraylist to populate table
         Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
@@ -113,6 +117,7 @@ public class BookTicketTest {
     }
 
     @Test
+    @Tag("unit")
     void producesCorrectFormResults() {
         var ticket = new BookTicket();
 
@@ -129,6 +134,7 @@ public class BookTicketTest {
     }
 
     @Test
+    @Tag("ui")
     void showErrorMessageForNullCustomer(){
 
         //navigate to Book Ticket screen
@@ -140,6 +146,7 @@ public class BookTicketTest {
     }
 
     @Test
+    @Tag("ui")
     void showErrorMessageForInvalidForm(){
         //create a flight and add to an arraylist to populate table
         Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
@@ -175,6 +182,7 @@ public class BookTicketTest {
     }
 
     @Test
+    @Tag("ui")
     void bookTicketWindowClosed(){
 
         //navigate to Book Ticket screen
@@ -187,6 +195,7 @@ public class BookTicketTest {
     }
 
     @Test
+    @Tag("ui")
     void exceptionHandledOnBookTicket() throws SQLException {
         Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
                 "10:00PM","10:00PM", "50000");
@@ -221,6 +230,7 @@ public class BookTicketTest {
     }
 
     @Test
+    @Tag("ui")
     void testTicketCreated(){
         //create a flight and add to an arraylist to populate table
         Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
@@ -252,7 +262,9 @@ public class BookTicketTest {
         window.spinner("chooseNumSeats").increment();
         window.button("bookTicketBTN").click();
     }
+
     @Test
+    @Tag("ui")
     void checkBranchFightIdBlank(){
         //create a flight and add to an arraylist to populate table
         Flight myFlight = new Flight("", "JetBlue", "India","Uk", "2019-06-14",
@@ -286,7 +298,9 @@ public class BookTicketTest {
 
         window.dialog().optionPane().requireMessage("All fields have not been filled");
     }
+
     @Test
+    @Tag("ui")
     void customerIdIsBlank(){
         //create a flight and add to an arraylist to populate table
         Flight myFlight = new Flight("FO001", "JetBlue", "India","Uk", "2019-06-14",
@@ -322,6 +336,7 @@ public class BookTicketTest {
     }
 
     @Test
+    @Tag("ui")
     void invalidBooking(){
         Assertions.assertThrows(Exception.class, new Executable() {
             @Override

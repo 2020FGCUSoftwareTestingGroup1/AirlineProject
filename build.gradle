@@ -29,23 +29,50 @@ application {
 
 test {
     useJUnitPlatform()
-    // report is always generated after tests run
-    finalizedBy jacocoTestReport
+    finalizedBy coverageCollector("test.exec")
 }
 
-jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
+task testUnit(type: Test) {
+    group = "verification"
 
-    afterEvaluate {
-        classDirectories.setFrom(files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: 'database/**')
-        }))
+    useJUnitPlatform {
+        includeTags 'unit'
     }
 
-    reports {
-        xml.enabled true
-        csv.enabled false
-        html.destination file("${buildDir}/jacocoHtml")
+    finalizedBy coverageCollector("testUnit.exec")
+
+}
+
+task testUi(type: Test) {
+    group = "verification"
+
+    useJUnitPlatform {
+        includeTags 'ui'
+    }
+
+    finalizedBy coverageCollector("testUi.exec")
+}
+
+def coverageCollector(String execLocation) {
+    return tasks.create(execLocation, JacocoReport) {
+        group = null
+
+        println(fileTree(dir: "$project.buildDir/classes"))
+
+        afterEvaluate {
+            /**
+             * DB excluded since it is all interface and production code for connecting to an actual SQL database
+             * and we can't guarantee the state of a real server without something of a staging environment.
+             */
+            classDirectories.setFrom(files(fileTree(dir: "$project.buildDir/classes", exclude: '**/database/**')))
+        }
+
+        reports {
+            xml.enabled false
+            csv.enabled false
+            html.destination file("${buildDir}/jacocoHtml")
+        }
+        executionData(file("$buildDir/jacoco/$execLocation"))
     }
 }
 

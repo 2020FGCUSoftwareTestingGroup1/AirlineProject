@@ -3,6 +3,7 @@ import database.IDatabase;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import view.Main;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 
 public class AddFlightTest {
     @Test
+    @Tag("unit")
     void validDepartureTime(){
         addflight flightScreen = new addflight();
 
@@ -23,7 +25,8 @@ public class AddFlightTest {
     }
 
     @Test
-    void ValidArrivaleTime(){
+    @Tag("unit")
+    void validArrivalTime(){
         addflight flightScreen = new addflight();
 
         boolean isValidArrivalTime = flightScreen.canSubmitTravelTime("12:34");
@@ -31,6 +34,7 @@ public class AddFlightTest {
     }
 
     @Test
+    @Tag("unit")
     void invalidDepartureTime(){
         addflight flightScreen = new addflight();
 
@@ -41,6 +45,7 @@ public class AddFlightTest {
     }
 
     @Test
+    @Tag("unit")
     void validFlightCost(){
         addflight flightScreen = new addflight();
         boolean isValidFlightCost = flightScreen.validDollarAmount("23");
@@ -48,6 +53,7 @@ public class AddFlightTest {
     }
 
     @Test
+    @Tag("ui")
     void checksValidFlightNameInput(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -79,6 +85,7 @@ public class AddFlightTest {
     }
 
     @Test
+    @Tag("ui")
     void checksInvalidFlightNamePopUP(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -103,6 +110,7 @@ public class AddFlightTest {
     }
 
     @Test
+    @Tag("ui")
     void checksInvalidFlightDatePopUp(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -126,6 +134,7 @@ public class AddFlightTest {
     }
 
     @Test
+    @Tag("ui")
     void checksInvalidDepartureTimePopUp(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -150,6 +159,7 @@ public class AddFlightTest {
     }
 
     @Test
+    @Tag("ui")
     void checksArrivalTimePopUp(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -174,6 +184,7 @@ public class AddFlightTest {
     }
 
     @Test
+    @Tag("ui")
     void checksInvalidFlightChargePopUp(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -198,6 +209,7 @@ public class AddFlightTest {
     }
 
     @Test
+    @Tag("ui")
     public void catchesExceptionOnFailedUpdate() throws SQLException {
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);

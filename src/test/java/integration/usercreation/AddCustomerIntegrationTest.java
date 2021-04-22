@@ -4,10 +4,7 @@ import database.Database;
 import database.IDatabase;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -35,6 +32,7 @@ public class AddCustomerIntegrationTest {
     }
 
     @Test
+    @Tag("ui")
     void displaysNextCustomerIdOnOpen() {
         Mockito.when(mockDatabase.getNextCustomerId()).thenReturn("CS001");
 
@@ -44,6 +42,7 @@ public class AddCustomerIntegrationTest {
     }
 
     @Test
+    @Tag("ui")
     void errorShownWhenMissingField() {
         Mockito.when(mockDatabase.getNextCustomerId()).thenReturn("CS001");
         window.menuItem("customerRootMenu").click();

@@ -4,6 +4,7 @@ import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import view.Login;
@@ -37,6 +38,7 @@ public class LoginTest {
      * We do this to ensure security to our software system.
      */
     @Test
+    @Tag("unit")
     void userNameAndPasswordReturnsTrue() {
         Mockito.when(database.loginUser("username", "password")).thenReturn(true);
 
@@ -46,6 +48,7 @@ public class LoginTest {
     }
 
     @Test
+    @Tag("unit")
     void userNameReturnsTrueButPasswordReturnsFalse() {
         Mockito.when(database.loginUser("username", "password")).thenReturn(true);
 
@@ -56,19 +59,19 @@ public class LoginTest {
     }
 
     @Test
+    @Tag("unit")
     void userNameReturnsFalseButPasswordReturnsTrue() {
         Mockito.when(database.loginUser("username", "password")).thenReturn(true);
 
         String name = "Lui";
         String pw = "password";
         Assertions.assertFalse(database.loginUser(name, pw));
-
     }
 
     @Test
+    @Tag("unit")
     void userNameAndPasswordReturnsFalse() {
         Mockito.when(database.loginUser("username", "password")).thenReturn(true);
-
 
         String name = "Lui";
         String pw = "123";
@@ -77,6 +80,7 @@ public class LoginTest {
     }
 
     @Test
+    @Tag("ui")
     void mainWindowOpenedOnSuccessfulLogin() {
         Login frame = GuiActionRunner.execute(() -> new Login());
         FrameFixture window = new FrameFixture(frame);
@@ -95,6 +99,7 @@ public class LoginTest {
     }
 
     @Test
+    @Tag("ui")
     void errorDialogDisplayedOnLoginFailure() {
         Login frame = GuiActionRunner.execute(() -> new Login());
         FrameFixture window = new FrameFixture(frame);
@@ -113,6 +118,7 @@ public class LoginTest {
     }
 
     @Test
+    @Tag("ui")
     void showsErrorMessageOnMissingUsernameOrPassword() {
         testUsernameAndPasswordEntry("username", "");
         testUsernameAndPasswordEntry("", "password");

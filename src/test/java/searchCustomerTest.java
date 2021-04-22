@@ -5,6 +5,7 @@ import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -33,6 +34,7 @@ class searchCustomerTest {
     }
 
     @Test
+    @Tag("ui")
     public void findValidCustomer() {
       Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
           "AJ24", "123 First Street", "1990-01-01", "Male",
@@ -49,6 +51,7 @@ class searchCustomerTest {
     }
 
   @Test
+  @Tag("ui")
   public void catchesExceptionOnFailedUpdate() throws SQLException {
     Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
             "AJ24", "123 First Street", "1990-01-01", "Male",
@@ -68,6 +71,7 @@ class searchCustomerTest {
   }
 
     @Test
+    @Tag("ui")
     public void findNullCustomer() {
       Mockito.when(mockDatabase.getCustomer("CS001")).thenReturn(null);
 
@@ -81,6 +85,7 @@ class searchCustomerTest {
     }
 
     @Test
+    @Tag("ui")
     public void updateCustomer() {
       Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
           "AJ24", "123 First Street", "1990-01-01", "Male",
@@ -101,6 +106,7 @@ class searchCustomerTest {
     }
 
     @Test
+    @Tag("ui")
     public void updateCustomerGender() {
       Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
           "AJ24", "123 First Street", "1990-01-01", "Male",
@@ -120,6 +126,7 @@ class searchCustomerTest {
     }
 
     @Test
+    @Tag("ui")
     public void updateCustomerPhoto() {
       Customer customer = new Customer("CS001", "Joseph", "Madre", "1",
           "AJ24", "123 First Street", "1990-01-01", "Male",

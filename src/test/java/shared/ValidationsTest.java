@@ -1,18 +1,21 @@
 package shared;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidationsTest {
 
+    @Tag("unit")
     @Test
     @DisplayName("Returns true for a name that doesn't have a space or hyphen")
     void returnsTrueForANameWithNoHyphenOrSpace() {
         assertTrue(Validation.isValidName("John"));
     }
 
+    @Tag("unit")
     @Test
     @DisplayName("Returns false for a name that doesn't have letters.")
     void returnsFalseForNoLetters() {
@@ -21,6 +24,7 @@ class ValidationsTest {
         assertFalse(Validation.isValidName("!"));
     }
 
+    @Tag("unit")
     @Test
     @DisplayName("Returns false for names with letters and numbers.")
     void returnsFalseForLettersAndNumbers() {
@@ -31,6 +35,7 @@ class ValidationsTest {
         assertFalse(Validation.isValidName("1John Doe"));
     }
 
+    @Tag("unit")
     @Test
     @DisplayName("Returns true for a name with a hyphen or space in the middle.")
     void returnsTrueForNameWithHyphenOrSpace() {

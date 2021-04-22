@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import view.userCreation;
 
@@ -40,6 +41,7 @@ class UserCreationTest {
      */
 
     @Test
+    @Tag("unit")
     @DisplayName("Given a valid first name, last name, username, password, isValidUser returns true")
     void canSuccessfullyCreateUserGivenAllParameters() {
         var userCreation = new userCreation();
@@ -53,6 +55,7 @@ class UserCreationTest {
     }
 
     @Test
+    @Tag("unit")
     @DisplayName("Given an invalid combination of first name, last name, username, and password, returns false.")
     void isValidUserFailsWhenMissingParameters() {
         var userCreation = new userCreation();
