@@ -6,6 +6,7 @@ import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -39,6 +40,7 @@ public class UserCreationIntegrationTest {
      * @throws SQLException
      */
     @Test
+    @Tag("ui")
     void newUserCreatedGivenValidInputs() throws SQLException {
         Mockito.when(mockDatabase.getTickets()).thenReturn(Collections.emptyList());
 
@@ -60,6 +62,7 @@ public class UserCreationIntegrationTest {
      * first name, and last name.
      */
     @Test
+    @Tag("ui")
     void noUserCreatedGivenInvalid() throws SQLException {
         window.menuItem("userMenuItem").click();
         window.menuItem("userCreationScreenButton").click();

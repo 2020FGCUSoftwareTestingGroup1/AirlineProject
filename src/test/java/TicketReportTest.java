@@ -3,10 +3,7 @@ import database.IDatabase;
 import model.Ticket;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import view.Main;
 
@@ -27,6 +24,7 @@ public class TicketReportTest {
     }
 
     @Test
+    @Tag("ui")
     void showingFlightRecordCalled() throws InterruptedException {
         List<Ticket> ticketList = new ArrayList<Ticket>();
         ticketList.add(new Ticket("1230", "123456a", "456asd", "First Class", 369, 93, "2021-12-23"));

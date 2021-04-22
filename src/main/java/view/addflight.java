@@ -246,7 +246,8 @@ public class addflight extends JInternalFrame {
     public boolean validDollarAmount(String amount) { return amount.matches("^(?=.*[1-9])[0-9]*[.,]?[0-9]{1,2}$");}
 
      public void autoID() {
-        flightIdField.setText(database.getNextFlightId());
+        flightId = database.getNextFlightId();
+        flightIdField.setText(flightId);
     }
     
     private void onAddFlight(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -313,6 +314,9 @@ public class addflight extends JInternalFrame {
         this.hide();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public String getFlightId() {
+        return flightId;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JButton addFlightButton;
@@ -335,4 +339,5 @@ public class addflight extends JInternalFrame {
     private JTextField flightNameInput;
     private JComboBox<String> arrivalLocationComboBox;
     // End of variables declaration//GEN-END:variables
+    private String flightId;
 }

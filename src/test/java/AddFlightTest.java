@@ -3,6 +3,7 @@ import database.IDatabase;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import view.Main;
@@ -10,8 +11,30 @@ import view.addflight;
 
 import java.sql.SQLException;
 
+/**
+ * This AddFlightTest class contains the tests in order to ensure valid/invalid entries for the following fields
+ *
+ * Departure Time
+ * Arrival Time
+ * Flight Name
+ * Flight Charge
+ * Flight Date
+ *
+ * This class also handles GUI testing in order to make sure that all of the user interface elements
+ * are able to be given valid inputs.
+ */
 public class AddFlightTest {
+
+    /**
+     * This test case asserts that a valid departure time is given.
+     *
+     * Equivalence Classes:
+     * proper format:
+     * 0-23
+     * Only Ints:
+     */
     @Test
+    @Tag("unit")
     void validDepartureTime(){
         addflight flightScreen = new addflight();
 
@@ -22,32 +45,66 @@ public class AddFlightTest {
         Assertions.assertTrue(isValidUpperBVADepartureTime);
     }
 
+    /**
+     * This test case ensures that a valid arrival time is given
+     *
+     * Equivalence Classes:
+     * proper format:
+     * 0-23
+     * Only Ints:
+     */
     @Test
-    void ValidArrivaleTime(){
+    @Tag("unit")
+    void validArrivalTime(){
         addflight flightScreen = new addflight();
 
         boolean isValidArrivalTime = flightScreen.canSubmitTravelTime("12:34");
         Assertions.assertTrue(isValidArrivalTime);
     }
 
+
+    /**
+     * This test case asserts that an invalid departure time is given.
+     *
+     * Equivalence Classes:
+     * Improper format:
+     * 0-23
+     * Only Alpha:
+     * asdlkjs
+     */
     @Test
+    @Tag("unit")
     void invalidDepartureTime(){
         addflight flightScreen = new addflight();
 
         boolean isNotValidUpperBVADepartureTime = flightScreen.canSubmitTravelTime("24:00");
         boolean departureTimeNotFormatedProperly = flightScreen.canSubmitTravelTime("1234");
+        boolean invalidDepartureTimeAlpha = flightScreen.canSubmitTravelTime("addf");
         Assertions.assertFalse(isNotValidUpperBVADepartureTime);
         Assertions.assertFalse(departureTimeNotFormatedProperly);
+        Assertions.assertFalse(invalidDepartureTimeAlpha);
     }
 
+    /**
+     * This test case asserts that a valid flight charge input is given.
+     *
+     * Equivalence Classes:
+     * only Ints
+     * only . or , as special characters
+     */
     @Test
+    @Tag("unit")
     void validFlightCost(){
         addflight flightScreen = new addflight();
         boolean isValidFlightCost = flightScreen.validDollarAmount("23");
         Assertions.assertTrue(isValidFlightCost);
     }
 
+    /**
+     * This test case asserts that a valid flight object is created.
+     */
     @Test
+    @Tag("ui")
     void checksValidFlightNameInput(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -66,19 +123,17 @@ public class AddFlightTest {
         window.textBox("addFlightChargeInput").setText("23.2");
 
         window.button("addFlightButton").click();
-        window.button("cancelFlightButton").click();
+        //window.button("cancelFlightButton").click();
 
-
-//        Assertions.assertThrows(Exception.class, new Executable() {
-//            @Override
-//            public void execute() throws Throwable {
-//                window.panel("addFlightPanel");
-//            }
-//        });
         window.cleanUp();
     }
 
+    /**
+     * This test asserts that the invalid flight name notification window pops up when
+     * an invalid flight name pops up.
+     */
     @Test
+    @Tag("ui")
     void checksInvalidFlightNamePopUP(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -102,12 +157,15 @@ public class AddFlightTest {
         window.cleanUp();
     }
 
+    /**
+     * This test checks to ensure that the invalid flight date notification window pops up.
+     */
     @Test
+    @Tag("ui")
     void checksInvalidFlightDatePopUp(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
 
-        //
         Main frame = GuiActionRunner.execute(() -> new Main());
         var window = new FrameFixture(frame);
 
@@ -125,7 +183,11 @@ public class AddFlightTest {
         window.cleanUp();
     }
 
+    /**
+     * This test case asserts that the invalid departure time notification window pops up.
+     */
     @Test
+    @Tag("ui")
     void checksInvalidDepartureTimePopUp(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -149,7 +211,11 @@ public class AddFlightTest {
         window.cleanUp();
     }
 
+    /**
+     * This test case asserts that the invalid arrival time notification window pops up.
+     */
     @Test
+    @Tag("ui")
     void checksArrivalTimePopUp(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -173,7 +239,11 @@ public class AddFlightTest {
         window.cleanUp();
     }
 
+    /**
+     * This test asserts that the invalid flight charge notification window pops up.
+     */
     @Test
+    @Tag("ui")
     void checksInvalidFlightChargePopUp(){
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
@@ -197,7 +267,12 @@ public class AddFlightTest {
 
     }
 
+    /**
+     * This test case asserts that an exception is thrown if there is a failed flight update.
+     * @throws SQLException
+     */
     @Test
+    @Tag("ui")
     public void catchesExceptionOnFailedUpdate() throws SQLException {
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);

@@ -235,7 +235,12 @@ public class userCreation extends JInternalFrame {
 
     
      public void autoID() {
-        userGivenId.setText(database.getNextUserId());
+        nextCustomerId = database.getNextUserId();
+        userGivenId.setText(nextCustomerId);
+    }
+
+    public String getNextCustomerId() {
+        return nextCustomerId;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -253,4 +258,6 @@ public class userCreation extends JInternalFrame {
     private JLabel userGivenId;
     private JTextField txtusername;
     // End of variables declaration//GEN-END:variables
+
+    private String nextCustomerId;
 }
