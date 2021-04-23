@@ -190,7 +190,7 @@ public class AddCustomerTest {
 
         window.panel("addCustomerDateInput").textBox().setText("Apr 22, 2021");
 
-        // Submit customer.
+
         window.button("addCustomerAddButton").click();
 
         Mockito.verify(database).saveCustomer(Mockito.any());
