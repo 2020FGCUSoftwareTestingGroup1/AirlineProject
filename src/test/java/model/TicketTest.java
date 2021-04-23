@@ -9,6 +9,10 @@ import org.junit.jupiter.api.function.Executable;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TicketTest {
+
+    /**
+     * Unit test that throws an exception when the price that is given is negative.
+     */
     @Test
     @Tag("unit")
     @DisplayName("Throws exception when given a negative price")
@@ -18,6 +22,9 @@ class TicketTest {
         }, "Ticket price cannot be below 0.");
     }
 
+    /**
+     * Unit test that throws an exception when given a negative number of seats.
+     */
     @Test
     @Tag("unit")
     @DisplayName("Throws exception when given a negative number of seats")
@@ -35,6 +42,10 @@ class TicketTest {
         }, "Number of seats cannot be below 0.");
     }
 
+    /**
+     * Unit test that ensures that no exception is thrown when a valid ticket is created without
+     * error.
+     */
     @Test
     @Tag("unit")
     @DisplayName("Creates a valid Ticket without an error.")
@@ -42,6 +53,9 @@ class TicketTest {
         assertDoesNotThrow(() -> new Ticket("", "", "", "", 0, 0, "2020-01-22"));
     }
 
+    /**
+     * Unit test that ensures that an exception is thrown when an invalid ticket is created.
+     */
     @Test
     @Tag("unit")
     void throwsOnError() {
