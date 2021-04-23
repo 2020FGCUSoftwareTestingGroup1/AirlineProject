@@ -32,6 +32,11 @@ import java.text.SimpleDateFormat;
 @Tag("unittest")
 public class AddCustomerTest {
 
+    /**
+     * The setup method is ran before each test is executed. It opens a mock of the test class,
+     * sets the database to the mock database, and executes and opens a window frame which shows
+     * the main screen of the project.
+     */
     @BeforeEach
     void setup() {
         Database.setDatabase(Mockito.mock(IDatabase.class));
@@ -105,7 +110,10 @@ public class AddCustomerTest {
         Assertions.assertFalse(isInvalidAlphaWithSpaceCase);
     }
 
-
+    /**
+     * Unit testing method which handles all the valid cases that the user can input for the
+     * passport ID.
+     */
     @Test
     @Tag("unit")
     void canSubmitPassportIDReturnsTrue() {
@@ -118,18 +126,29 @@ public class AddCustomerTest {
         Assertions.assertTrue(validPassportIDHigherBVA);
     }
 
+    /**
+     * Unit testing method which handles all the invalid cases that a user can input for the
+     * passport ID.
+     */
     @Tag("unit")
     @Test
     void canSubmitPassportIDReturnsFalse() {
         addCustomer customerScreen = new addCustomer();
 
+        // Characters are too low
         boolean inValidPassportIDLowerBVA = customerScreen.canSubmitPassportID("abc22");
+        // Characters are too high
         boolean inValidPassportIDHigherBVA = customerScreen.canSubmitPassportID("123abc4567");
 
         Assertions.assertFalse(inValidPassportIDLowerBVA);
         Assertions.assertFalse(inValidPassportIDHigherBVA);
     }
 
+    /**
+     * Integration testing method which verifies that a new customer's fields are all inputted
+     * correctly and that a new customer has been uploaded.
+     * @throws SQLException In the event that any of the customer's fields are invalid.
+     */
     @Test
     @Tag("ui")
     void saveCustomerIsCalledGivenValidCustomer() throws SQLException {
@@ -179,9 +198,17 @@ public class AddCustomerTest {
         window.cleanUp();
     }
 
+    /**
+     * Integration testing method that tests for a user adding a new customer with an invalid date
+     * of birth.
+     *
+     * Customer's are checked using an instance of addCustomer, and we use the isValid() method
+     * within that class to test for a valid customer. The one that should be invalid is the
+     * customer whose date of birth entered is null.
+     */
     @Test
     @Tag("ui")
-    void addCustomerWithInvalidDOB() throws SQLException {
+    void addCustomerWithInvalidDOB() {
 
         // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
@@ -298,6 +325,7 @@ public class AddCustomerTest {
                 new byte[10]
         );
 
+        //Invalid Customer - DOB is null
         customerScreen.isValid(
                 "John",
                 "Smith",
@@ -361,6 +389,12 @@ public class AddCustomerTest {
         window.panel("addCustomerDateInput").textBox().setText("Apr 01, 2020");
     }
 
+    /**
+     * An integration testing method which tests for a valid female customer. This testing method
+     * is to ensure that the female radio box works as intended.
+     * @throws SQLException In the event that an invalid customer is being added.
+     * @throws ParseException In the event that the customer's info is being added incorrectly.
+     */
     @Test
     @Tag("ui")
     void saveCustomerIsCalledGivenValidFemaleCustomer() throws SQLException, ParseException {
@@ -403,6 +437,10 @@ public class AddCustomerTest {
         window.cleanUp();
     }
 
+    /**
+     * Integration testing method that tests that the cancel button is properly working as
+     * intended. The cancel button should close the current screen that is opened.
+     */
     @Test
     @Tag("ui")
     void cancelButtonDismissesPanel() {
