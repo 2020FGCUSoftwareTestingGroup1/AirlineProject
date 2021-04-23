@@ -47,6 +47,10 @@ public class LoginTest {
         Assertions.assertTrue(database.loginUser(name, pw));
     }
 
+    /**
+     * Unit testing method to check for a valid username and an invalid password. This test should
+     * assert false and prevent the user from logging in.
+     */
     @Test
     @Tag("unit")
     void userNameReturnsTrueButPasswordReturnsFalse() {
@@ -58,6 +62,10 @@ public class LoginTest {
 
     }
 
+    /**
+     * Unit testing method to check for an invalid username and a valid password. This test should
+     * assert false and prevent the user from logging in.
+     */
     @Test
     @Tag("unit")
     void userNameReturnsFalseButPasswordReturnsTrue() {
@@ -68,6 +76,10 @@ public class LoginTest {
         Assertions.assertFalse(database.loginUser(name, pw));
     }
 
+    /**
+     * Unit testing method to check for an invalid username and an invalid password. This test should
+     * assert false and prevent the user from logging in.
+     */
     @Test
     @Tag("unit")
     void userNameAndPasswordReturnsFalse() {
@@ -79,6 +91,9 @@ public class LoginTest {
 
     }
 
+    /**
+     * UI Testing method which ensures that the main window is opened on successful login.
+     */
     @Test
     @Tag("ui")
     void mainWindowOpenedOnSuccessfulLogin() {
@@ -98,6 +113,9 @@ public class LoginTest {
         Mockito.verify(database, Mockito.times(1)).loginUser("username", "password");
     }
 
+    /**
+     * UI Testing method which ensures that an error dialog is displayed on login failure.
+     */
     @Test
     @Tag("ui")
     void errorDialogDisplayedOnLoginFailure() {
@@ -117,6 +135,10 @@ public class LoginTest {
         window.cleanUp();
     }
 
+    /**
+     * UI testing method which ensures that an error message is shown when a user tries to login
+     * with a missing username or password.
+     */
     @Test
     @Tag("ui")
     void showsErrorMessageOnMissingUsernameOrPassword() {
@@ -125,6 +147,11 @@ public class LoginTest {
         testUsernameAndPasswordEntry("", "");
     }
 
+    /**
+     * Testing method which tests for a username and password entry.
+     * @param username username input
+     * @param password password input
+     */
     private void testUsernameAndPasswordEntry(String username, String password) {
         Login frame = GuiActionRunner.execute(() -> new Login());
         FrameFixture window = new FrameFixture(frame);
