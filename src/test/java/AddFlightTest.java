@@ -106,24 +106,28 @@ public class AddFlightTest {
     @Test
     @Tag("ui")
     void checksValidFlightNameInput(){
+        // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
 
-        //
+        // Create window for UI testing.
         Main frame = GuiActionRunner.execute(() -> new Main());
         var window = new FrameFixture(frame);
-
         window.show();
+
+        // Navigate to the Add Flight Screen.
         window.menuItem("flightRootMenu").click();
         window.menuItem("addFlightMenuItem").click();
+
+        // Enter test data in screen.
         window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
         window.textBox("addFlightNameInput").setText("lkj");
         window.textBox("addDepartureInput").setText("12:00");
         window.textBox("addArrivalInput").setText("2:34");
         window.textBox("addFlightChargeInput").setText("23.2");
 
+        // Submit flight.
         window.button("addFlightButton").click();
-        //window.button("cancelFlightButton").click();
 
         window.cleanUp();
     }
@@ -135,21 +139,26 @@ public class AddFlightTest {
     @Test
     @Tag("ui")
     void checksInvalidFlightNamePopUP(){
+        // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
 
-        //
+        // Create window for UI testing.
         Main frame = GuiActionRunner.execute(() -> new Main());
         var window = new FrameFixture(frame);
-
         window.show();
+
+        // Navigate to the Add Flight Screen.
         window.menuItem("flightRootMenu").click();
         window.menuItem("addFlightMenuItem").click();
+
+        // Enter test data in screen.
         window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
         window.textBox("addDepartureInput").setText("12:00");
         window.textBox("addArrivalInput").setText("2:34");
         window.textBox("addFlightChargeInput").setText("23.2");
 
+        // Submit flight.
         window.button("addFlightButton").click();
         window.button("cancelFlightButton").click();
         window.dialog().requireModal().optionPane().requireMessage("Enter Flight Name!");
@@ -163,23 +172,30 @@ public class AddFlightTest {
     @Test
     @Tag("ui")
     void checksInvalidFlightDatePopUp(){
+        // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
 
+        // Create window for UI testing.
         Main frame = GuiActionRunner.execute(() -> new Main());
         var window = new FrameFixture(frame);
-
         window.show();
+
+        // Navigate to the Add Flight Screen.
         window.menuItem("flightRootMenu").click();
         window.menuItem("addFlightMenuItem").click();
+
+        // Enter test data in screen.
         window.textBox("addFlightNameInput").setText("lkj");
         window.textBox("addDepartureInput").setText("12:00");
         window.textBox("addArrivalInput").setText("2:34");
         window.textBox("addFlightChargeInput").setText("23.2");
 
+        // Submit flight.
         window.button("addFlightButton").click();
         window.button("cancelFlightButton").click();
         window.dialog().requireModal().optionPane().requireMessage("Select a date!");
+
         window.cleanUp();
     }
 
@@ -189,21 +205,26 @@ public class AddFlightTest {
     @Test
     @Tag("ui")
     void checksInvalidDepartureTimePopUp(){
+        // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
 
-        //
+        // Create window for UI testing.
         Main frame = GuiActionRunner.execute(() -> new Main());
         var window = new FrameFixture(frame);
-
         window.show();
+
+        // Navigate to the Add Flight Screen.
         window.menuItem("flightRootMenu").click();
         window.menuItem("addFlightMenuItem").click();
+
+        // Enter test data in screen.
         window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
         window.textBox("addFlightNameInput").setText("lkj");
         window.textBox("addArrivalInput").setText("2:34");
         window.textBox("addFlightChargeInput").setText("23.2");
 
+        // Submit flight.
         window.button("addFlightButton").click();
         window.button("cancelFlightButton").click();
         window.dialog().requireModal().optionPane().requireMessage("Make sure time is formatted 0-23");
@@ -217,21 +238,26 @@ public class AddFlightTest {
     @Test
     @Tag("ui")
     void checksArrivalTimePopUp(){
+        // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
 
-        //
+        // Create window for UI testing.
         Main frame = GuiActionRunner.execute(() -> new Main());
         var window = new FrameFixture(frame);
-
         window.show();
+
+        // Navigate to the Add Flight Screen.
         window.menuItem("flightRootMenu").click();
         window.menuItem("addFlightMenuItem").click();
+
+        // Enter test data in screen.
         window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
         window.textBox("addFlightNameInput").setText("lkj");
         window.textBox("addDepartureInput").setText("12:00");
         window.textBox("addFlightChargeInput").setText("23.2");
 
+        // Submit flight.
         window.button("addFlightButton").click();
         window.button("cancelFlightButton").click();
         window.dialog().requireModal().optionPane().requireMessage("Make sure time is formatted 0-23");
@@ -245,24 +271,30 @@ public class AddFlightTest {
     @Test
     @Tag("ui")
     void checksInvalidFlightChargePopUp(){
+        // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
 
-        //
+        // Create window for UI testing.
         Main frame = GuiActionRunner.execute(() -> new Main());
         var window = new FrameFixture(frame);
-
         window.show();
+
+        // Navigate to the Add Flight Screen.
         window.menuItem("flightRootMenu").click();
         window.menuItem("addFlightMenuItem").click();
+
+        // Enter test data in screen.
         window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
         window.textBox("addFlightNameInput").setText("lkj");
         window.textBox("addDepartureInput").setText("12:00");
         window.textBox("addArrivalInput").setText("2:34");
 
+        // Submit flight.
         window.button("addFlightButton").click();
         window.button("cancelFlightButton").click();
         window.dialog().requireModal().optionPane().requireMessage("Make sure Cost is formatted 123.21");
+
         window.cleanUp();
 
     }
@@ -274,26 +306,35 @@ public class AddFlightTest {
     @Test
     @Tag("ui")
     public void catchesExceptionOnFailedUpdate() throws SQLException {
+        // Create and set mock database.
         IDatabase database = Mockito.mock(IDatabase.class);
         Database.setDatabase(database);
 
+        // Mock Flight ID.
         Mockito.when(database.getNextFlightId()).thenReturn("FO001");
         Mockito.doThrow(SQLException.class).when(database).saveFlight(Mockito.any());
 
+        // Create window for UI testing.
         Main frame = GuiActionRunner.execute(() -> new Main());
         var window = new FrameFixture(frame);
-
         window.show();
+
+        // Navigate to the Add Flight Screen.
         window.menuItem("flightRootMenu").click();
         window.menuItem("addFlightMenuItem").click();
+
+        // Enter test data in screen.
         window.panel("addFlightDateInput").textBox().setText("Apr 22, 2021");
         window.textBox("addFlightNameInput").setText("Name");
         window.textBox("addDepartureInput").setText("12:00");
         window.textBox("addArrivalInput").setText("2:34");
         window.textBox("addFlightChargeInput").setText("123");
 
+        // Submit flight.
         window.button("addFlightButton").click();
+
         window.cleanUp();
+
         Mockito.verify(database).saveFlight(Mockito.any());
     }
 }
