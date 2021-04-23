@@ -44,14 +44,14 @@ task testUnit(type: Test) {
 
 }
 
-task testUi(type: Test) {
+task testIntegration(type: Test) {
     group = "verification"
 
     useJUnitPlatform {
         includeTags 'ui'
     }
 
-    finalizedBy coverageCollector("testUi.exec")
+    finalizedBy coverageCollector("testIntegration.exec")
 }
 
 task testPerformance(type: Test) {
